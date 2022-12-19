@@ -14,7 +14,7 @@ export const enum PageIDs {
 class App {
 
     private static container: HTMLElement = document.body;
-    private static defaultPageID: string = 'current-page'
+    private static defaultPageID = 'current-page'
     private initialPage: MainPage;
     private header: Header;
 
