@@ -55,7 +55,8 @@ class Header extends Component {
         const clearBtn = document.createElement('button')
         clearBtn.classList.add('header-search-input-clear-btn') 
         searchInput.addEventListener('focus', () => {
-            clearBtn.classList.add('header-search-input-clear-btn-visible')
+            searchInput.value != '' ? 
+            clearBtn.classList.add('header-search-input-clear-btn-visible') : false
         })
         searchInput.addEventListener('input', () => {
             searchInput.value != '' ?
