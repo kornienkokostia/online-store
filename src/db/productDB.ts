@@ -13,7 +13,7 @@ const productDB: ProductInterface[] = [
         model: '(MQ2N3)',
         price: '456',
         capacity: '1TB',    
-        img: '../assets/images/image_test_1.png',
+        img: './assets/images/image_test_1.png',
         availabilityCount: 457 
     },
     {
@@ -27,7 +27,7 @@ const productDB: ProductInterface[] = [
         model: '(MPVN3)',
         price: '456',
         capacity: '512GB',    
-        img: '../assets/images/image_test_2.png',
+        img: './assets/images/image_test_2.png',
         availabilityCount: 245 
     },
     {
@@ -41,7 +41,7 @@ const productDB: ProductInterface[] = [
         model: '(MNGL3)',
         price: '456',
         capacity: '512GB',    
-        img: '../assets/images/image_test_3.png',
+        img: './assets/images/image_test_3.png',
         availabilityCount: 134 
     },
     {
@@ -55,7 +55,7 @@ const productDB: ProductInterface[] = [
         model: '(MQ2N3)',
         price: '456',
         capacity: '512GB',    
-        img: '../assets/images/image_test_1.png',
+        img: './assets/images/image_test_1.png',
         availabilityCount: 457 
     },
     {
@@ -69,7 +69,7 @@ const productDB: ProductInterface[] = [
         model: '(MPVN3)',
         price: '456',
         capacity: '512GB',    
-        img: '../assets/images/image_test_2.png',
+        img: './assets/images/image_test_2.png',
         availabilityCount: 245 
     },
     {
@@ -83,7 +83,7 @@ const productDB: ProductInterface[] = [
         model: '(MNGL3)',
         price: '456',
         capacity: '512GB',    
-        img: '../assets/images/image_test_3.png',
+        img: './assets/images/image_test_3.png',
         availabilityCount: 134 
     },    
     {
@@ -97,7 +97,7 @@ const productDB: ProductInterface[] = [
         model: '14 Pro',
         price: '456',
         capacity: '256GB',    
-        img: '../assets/images/Apple iPhone 14 Pro Max black back.jpeg',
+        img: './assets/images/Apple iPhone 14 Pro Max black back.jpeg',
         availabilityCount: 273 
     },
     {
@@ -111,7 +111,7 @@ const productDB: ProductInterface[] = [
         model: '14 Pro',
         price: '456',
         capacity: '256 GB',    
-        img: '../assets/images/Apple iPhone 14 Pro Max black back.jpeg',
+        img: './assets/images/Apple iPhone 14 Pro Max black back.jpeg',
         availabilityCount: 925 
     },
     {
@@ -125,7 +125,7 @@ const productDB: ProductInterface[] = [
         model: '14',
         price: '456',
         capacity: '128 GB',    
-        img: '../assets/images/Apple iPhone 14 Pro Max black back.jpeg',
+        img: './assets/images/Apple iPhone 14 Pro Max black back.jpeg',
         availabilityCount: 422 
     },
     {
@@ -139,7 +139,7 @@ const productDB: ProductInterface[] = [
         model: '14',
         price: '456',
         capacity: '128 GB',    
-        img: '../assets/images/Apple iPhone 14 Pro Max black back.jpeg',
+        img: './assets/images/Apple iPhone 14 Pro Max black back.jpeg',
         availabilityCount: 724 
     },
     {
@@ -153,7 +153,7 @@ const productDB: ProductInterface[] = [
         model: '14',
         price: '456',
         capacity: '128 GB',    
-        img: '../assets/images/Apple iPhone 14 Pro Max black back.jpeg',
+        img: './assets/images/Apple iPhone 14 Pro Max black back.jpeg',
         availabilityCount: 134 
     },
     {
@@ -167,7 +167,7 @@ const productDB: ProductInterface[] = [
         model: '14',
         price: '456',
         capacity: '128 GB',    
-        img: '../assets/images/Apple iPhone 14 Pro Max black back.jpeg',
+        img: './assets/images/Apple iPhone 14 Pro Max black back.jpeg',
         availabilityCount: 5 
     },
     {
@@ -181,7 +181,7 @@ const productDB: ProductInterface[] = [
         model: 'Air 13 M2 16C',
         price: '456',
         capacity: '512 GB',    
-        img: '../assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
+        img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
         availabilityCount: 129 
     },
     {
@@ -195,7 +195,7 @@ const productDB: ProductInterface[] = [
         model: 'Air 13 M2 16C',
         price: '456',
         capacity: '512 GB',    
-        img: '../assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
+        img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
         availabilityCount: 542 
     },
     {
@@ -209,7 +209,7 @@ const productDB: ProductInterface[] = [
         model: 'Air 13 M2 16C',
         price: '456',
         capacity: '512 GB',    
-        img: '../assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
+        img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
         availabilityCount: 231 
     },
     {
@@ -223,7 +223,7 @@ const productDB: ProductInterface[] = [
         model: 'Air 13 M2 16C',
         price: '456',
         capacity: '512 GB',    
-        img: '../assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
+        img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
         availabilityCount: 245 
     },
     {
@@ -237,7 +237,7 @@ const productDB: ProductInterface[] = [
         model: 'Air 13 M2 10C',
         price: '456',
         capacity: '256 GB',    
-        img: '../assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
+        img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
         availabilityCount: 323 
     },
     {
@@ -251,7 +251,7 @@ const productDB: ProductInterface[] = [
         model: 'Air 13 M2 10C',
         price: '456',
         capacity: '256 GB',    
-        img: '../assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
+        img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
         availabilityCount: 873 
     },
     {
@@ -265,7 +265,7 @@ const productDB: ProductInterface[] = [
         model: 'Air 13 M2 10C',
         price: '456',
         capacity: '256 GB',    
-        img: '../assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
+        img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
         availabilityCount: 736 
     },
     {
@@ -279,7 +279,7 @@ const productDB: ProductInterface[] = [
         model: 'Air 13 M2 10C',
         price: '456',
         capacity: '256 GB',    
-        img: '../assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
+        img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
         availabilityCount: 121 
     },
     {
@@ -293,7 +293,7 @@ const productDB: ProductInterface[] = [
         model: 'Air 13 M2 8C',
         price: '456',
         capacity: '128 GB',    
-        img: '../assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
+        img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
         availabilityCount: 555 
     },
     {
@@ -307,7 +307,7 @@ const productDB: ProductInterface[] = [
         model: 'Air 13 M2 8C',
         price: '456',
         capacity: '128 GB',    
-        img: '../assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
+        img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
         availabilityCount: 1541 
     },
     {
@@ -321,7 +321,7 @@ const productDB: ProductInterface[] = [
         model: 'Air 13 M2 8C',
         price: '456',
         capacity: '128 GB',    
-        img: '../assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
+        img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
         availabilityCount: 890 
     },
     {
@@ -335,7 +335,7 @@ const productDB: ProductInterface[] = [
         model: 'Air 13 M2 8C',
         price: '456',
         capacity: '128 GB',    
-        img: '../assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
+        img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
         availabilityCount: 125 
     },
     {
@@ -349,7 +349,7 @@ const productDB: ProductInterface[] = [
         model: 'Pro',
         price: '456',
         capacity: '512 GB',    
-        img: '../assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
+        img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
         availabilityCount: 97 
     },
     {
@@ -363,7 +363,7 @@ const productDB: ProductInterface[] = [
         model: 'Pro',
         price: '456',
         capacity: '512 GB',    
-        img: '../assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
+        img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
         availabilityCount: 515 
     },
     {
@@ -377,7 +377,7 @@ const productDB: ProductInterface[] = [
         model: 'Pro',
         price: '456',
         capacity: '512 GB',    
-        img: '../assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
+        img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
         availabilityCount: 232 
     },
     {
@@ -391,7 +391,7 @@ const productDB: ProductInterface[] = [
         model: '10',
         price: '456',
         capacity: '256 GB',    
-        img: '../assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
+        img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
         availabilityCount: 157 
     },
     {
@@ -405,7 +405,7 @@ const productDB: ProductInterface[] = [
         model: '10',
         price: '456',
         capacity: '256 GB',    
-        img: '../assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
+        img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
         availabilityCount: 4455 
     },
     {
@@ -419,7 +419,7 @@ const productDB: ProductInterface[] = [
         model: '10',
         price: '456',
         capacity: '256 GB',    
-        img: '../assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
+        img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
         availabilityCount: 16516 
     },
     {
@@ -433,7 +433,7 @@ const productDB: ProductInterface[] = [
         model: 'mini',
         price: '456',
         capacity: '64 GB',    
-        img: '../assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
+        img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
         availabilityCount: 5235 
     },
     {
@@ -447,7 +447,7 @@ const productDB: ProductInterface[] = [
         model: 'mini',
         price: '456',
         capacity: '64 GB',    
-        img: '../assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
+        img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
         availabilityCount: 7271 
     },
     {
@@ -461,7 +461,7 @@ const productDB: ProductInterface[] = [
         model: 'Ultra',
         price: '999',
         capacity: '32 GB',    
-        img: '../assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
+        img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
         availabilityCount: 2356 
     },
     {
@@ -475,7 +475,7 @@ const productDB: ProductInterface[] = [
         model: 'Ultra',
         price: '999',
         capacity: '32 GB',    
-        img: '../assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
+        img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
         availabilityCount: 322 
     },
     {
@@ -489,7 +489,7 @@ const productDB: ProductInterface[] = [
         model: 'Ultra',
         price: '999',
         capacity: '32 GB',    
-        img: '../assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
+        img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
         availabilityCount: 322 
     },
     {
@@ -503,7 +503,7 @@ const productDB: ProductInterface[] = [
         model: 'Series 7',
         price: '999',
         capacity: '16 GB',    
-        img: '../assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
+        img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
         availabilityCount: 322 
     },
     {
@@ -517,7 +517,7 @@ const productDB: ProductInterface[] = [
         model: 'Series 7',
         price: '999',
         capacity: '16 GB',    
-        img: '../assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
+        img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
         availabilityCount: 322 
     },
     {
@@ -531,7 +531,7 @@ const productDB: ProductInterface[] = [
         model: 'Series 7',
         price: '999',
         capacity: '16 GB',    
-        img: '../assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
+        img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
         availabilityCount: 322 
     },
     {
@@ -545,7 +545,7 @@ const productDB: ProductInterface[] = [
         model: 'SE',
         price: '999',
         capacity: '8 GB',    
-        img: '../assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
+        img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
         availabilityCount: 322 
     },
     {
@@ -559,7 +559,7 @@ const productDB: ProductInterface[] = [
         model: 'SE',
         price: '999',
         capacity: '8 GB',    
-        img: '../assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
+        img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
         availabilityCount: 322 
     },
     {
@@ -573,7 +573,7 @@ const productDB: ProductInterface[] = [
         model: 'SE',
         price: '999',
         capacity: '8 GB',    
-        img: '../assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
+        img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
         availabilityCount: 322 
     },
     

@@ -13,7 +13,7 @@ class Header extends Component {
         logoLink.href = ''
         logoLink.classList.add('header-logo-link')
         const logoImg = document.createElement('img')
-        logoImg.src = '../../assets/images/icons/logo.svg'
+        logoImg.src = './assets/images/icons/logo.svg'
         logoImg.alt = 'logo'
         logoImg.classList.add('header-logo-img')
         logoLink.append(logoImg)
@@ -24,7 +24,7 @@ class Header extends Component {
         const cartDiv = document.createElement('div')
         cartDiv.classList.add('header-cart')
         const cartImg = document.createElement('img')
-        cartImg.src = '../../assets/images/icons/cart.svg'
+        cartImg.src = './assets/images/icons/cart.svg'
         cartImg.alt = 'cart'
         cartImg.classList.add('header-cart-img')
         const cartItemsCount = document.createElement('div')
@@ -48,7 +48,7 @@ class Header extends Component {
        
 
         const searchImg = document.createElement('img')
-        searchImg.src = '../../assets/images/icons/input-search.svg'
+        searchImg.src = './assets/images/icons/input-search.svg'
         searchImg.alt = 'input-search'
         searchImg.classList.add('header-search-input-img')
 
@@ -73,7 +73,7 @@ class Header extends Component {
         })
 
         const clearImg = document.createElement('img')
-        clearImg.src = '../../assets/images/icons/input-clear.svg'
+        clearImg.src = './assets/images/icons/input-clear.svg'
         clearImg.alt = 'input-clear'
         clearImg.classList.add('header-search-input-clear-img')
 
