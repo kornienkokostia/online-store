@@ -1,9 +1,183 @@
-@import 'normalize.css';
-.header-container div {
+@import 'normalize.css'; /* apple fonts */
+@font-face {
+  font-family: SF-Pro-Display-Bold;
+  src: url(./assets/fonts/SF-Pro-Display-Bold.ttf);
+}
+@font-face {
+  font-family: SF-Pro-Display-Regular;
+  src: url(./assets/fonts/SF-Pro-Display-Regular.ttf);
+}
+@font-face {
+  font-family: SF-Pro-Display-Medium-Italic;
+  src: url(./assets/fonts/SF-Pro-Display-Medium-Italic.ttf);
+}
+@font-face {
+  font-family: SF-Pro-Display-Semibold;
+  src: url(./assets/fonts/SF-Pro-Display-Semibold.ttf);
+}
+@font-face {
+  font-family: SF-Pro-Display-Thin;
+  src: url(./assets/fonts/SF-Pro-Display-Thin.ttf);
+}
+@font-face {
+  font-family: SF-Pro-Display-Light;
+  src: url(./assets/fonts/SF-Pro-Display-Light.ttf);
+}
+@font-face {
+  font-family: SF-Pro-Display-Medium;
+  src: url(./assets/fonts/SF-Pro-Display-Medium.ttf);
+}
+body {
+  font-family: SF-Pro-Display-Regular;
+}
+
+.header {
+  width: 100%;
+  height: 54px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: black;
+}
+.header-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: calc(100% - 40px);
+  height: 100%;
+}
+.header-logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.header-logo-link, .header-logo-img {
+  height: 18px;
+}
+.header-logo:hover {
+  cursor: pointer;
+}
+.header-cart {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.header-cart-img {
+  width: 19px;
+  margin-top: -1px;
+}
+.header-cart:hover {
+  cursor: pointer;
+}
+.header-cart-items-count {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 15px;
+  height: 15px;
+  color: #ffffff;
+  background-color: #d60017;
+  border-radius: 4px;
+  right: 12px;
+  top: 10px;
+}
+.header-cart-items-count-value {
+  font-size: 12px;
+  font-family: SF-Pro-Display-Light;
+  margin-top: 1px;
+}
+.header-search {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  left: 0;
+  right: 0;
+  top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 350px;
+}
+.header-search-input {
+  width: 100%;
+  height: 32px;
+  outline: none;
+  border: none;
+  font-family: SF-Pro-Display-Regular;
+  padding-left: 29px;
+  background-color: #252528;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 15px;
+}
+.header-search-input::-webkit-input-placeholder {
+  color: #a6a6a6;
+}
+.header-search-input::-moz-placeholder {
+  color: #a6a6a6;
+}
+.header-search-input:-ms-input-placeholder {
+  color: #a6a6a6;
+}
+.header-search-input::-ms-input-placeholder {
+  color: #a6a6a6;
+}
+.header-search-input::placeholder {
+  color: #a6a6a6;
+}
+.header-search-input-img {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  top: 10px;
+  left: 8px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.header-search-input-clear-btn {
+  position: absolute;
+  background: none;
+  border: none;
+  right: 8px;
+  top: 9px;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  cursor: pointer;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+.header-search-input-clear-btn-visible {
+  visibility: visible;
+  opacity: 1;
+}
+.header-search-input-clear-img {
+  width: 100%;
+  height: 100%;
 }
