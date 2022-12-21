@@ -1,2 +1,15 @@
+body {
+    background: #F5F5F7;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    
+    box-sizing: border-box;
+}
+
 @import './normalize';
 @import './main';
+@import './header';
+@import './goods';

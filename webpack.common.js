@@ -29,6 +29,21 @@ module.exports = {
           'sass-loader',
         ],
       },
+      {
+        test: /\.(woff|woff2|ttf|otf|eot)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: './assets/fonts/[name][ext]'
+        } 
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg|ico)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/images/[name][ext]'
+        } 
+      },     
+      
     ],
   },
   plugins: [
@@ -36,8 +51,8 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'src', 'assets'),
-          to: path.resolve(__dirname, 'dist', 'assets'),
+          from: path.resolve(__dirname, 'src', 'assets', 'images'),
+          to: path.resolve(__dirname, 'dist', 'assets', 'images'),
           noErrorOnMissing: true,
         },
       ],
@@ -53,7 +68,7 @@ module.exports = {
       },
     }),
     new MiniCssExtractPlugin({
-      filename: 'style.css',
+      filename: '[name].css',
     }),
   ],
 };
