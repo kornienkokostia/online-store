@@ -3,100 +3,91 @@ import productDB from '../../../db/productDB';
 import ProductInterface from '../../../models/products';
 
 export const typeSafe = (parent: ParentNode, selector: string): HTMLElement => {
-    
-    const node = parent.querySelector(selector);
-    
-    if (!(node instanceof HTMLElement)) {
-        throw new Error('Must be an HTMLElement!');
-    } 
-    return node;
+  const node = parent.querySelector(selector);
+
+  if (!(node instanceof HTMLElement)) {
+    throw new Error('Must be an HTMLElement!');
+  }
+  return node;
 };
 
-
 class Goods extends Component {
+  constructor(tagName: string, className: string) {
+    super(tagName, className);
+  }
 
-    constructor(tagName: string, className: string) {
-        super(tagName, className);
-    }
+  renderMainBlock(list: HTMLUListElement) {
+    const mainBlock = document.createElement('div');
+    mainBlock.classList.add('main-wrapper');
+    mainBlock.append(list);
+  }
+  renderItems(arr: ProductInterface[]) {
+    const items = arr.map(item => {
+      const listItem = this.elFactory('li', {
+        class: 'goods-item',
+        id: item.id,
+      });
 
-    renderMainBlock(list: HTMLUListElement) {
-        const mainBlock = document.createElement('div');  
-        mainBlock.classList.add('main__wrapper');  
-        mainBlock.append(list);
-    }
+      const imgDiv = this.elFactory('div', { class: 'goods-item-img' });
 
-    renderItems(arr: ProductInterface[]): HTMLUListElement {
-        const items = arr.map((item) => { 
+      const imgItem = this.elFactory('img', { class: 'img', src: item.img });
 
-            const listItem = this.createElem({tagName: 'li',
-                className: 'goods__item',});
-                
-            const imgDiv =  this.createElem({tagName: 'div',
-            className: 'goods__item_img' });
+      const nameModel = this.elFactory('div', {
+        class: 'goods-item-description',
+      });
 
-            const imgItem = this.createElem({tagName: 'img',
-                className: 'img', src: item.img });
+      const nameItem = this.elFactory('div', {
+        class: 'goods-item-description-name',
+      });
 
-            const nameModel = this.createElem({tagName: 'div',
-            className: 'goods__item_description',});
+      const modelItem = this.elFactory('div', {
+        class: 'goods-item-description-model',
+      });
 
-            const nameItem = this.createElem({tagName: 'div',
-            className: 'goods__item_description-name',});
+      const priceAndBuy = this.elFactory('div', {
+        class: 'goods-item-wrapper',
+      });
 
-            const modelItem = this.createElem({tagName: 'div',
-            className: 'goods__item_description-model',});
+      const price = this.elFactory('div', {
+        class: 'goods-item-wrapper-price',
+      });
 
-            const priceAndBuy = this.createElem({tagName: 'div',
-            className: 'goods__item_wrapper',});
+      const buyButton = this.elFactory('button', {
+        class: 'goods-item-wrapper-buyButton',
+      });
 
-            const price = this.createElem({tagName: 'div',
-            className: 'goods__item_wrapper-price',});
+      nameItem.textContent = `${item.name} ${item.capacity}`;
+      modelItem.textContent = `${item.color} ${item.model}`;
+      price.textContent = item.price + '$';
+      buyButton.textContent = 'Buy';
 
-            const buyButton = this.createElem({tagName: 'button',
-            className: 'goods__item_wrapper-buyButton',});  
-            
+      imgDiv.append(imgItem);
+      listItem.append(imgDiv);
+      nameModel.append(nameItem);
+      nameModel.append(modelItem);
+      listItem.append(nameModel);
+      priceAndBuy.append(price);
+      priceAndBuy.append(buyButton);
+      listItem.append(priceAndBuy);
 
-            listItem.id = item.id;
-            
-            
-            nameItem.textContent = `${item.name} ${item.capacity}`;
-            modelItem.textContent = `${item.color} ${item.model}`;
-            price.textContent = item.price + '$';
-            buyButton.textContent = 'Buy';
+      return listItem;
+    });
 
-            
-            
-            imgDiv.append(imgItem);
-            listItem.append(imgDiv);
-            nameModel.append(nameItem);
-            nameModel.append(modelItem);            
-            listItem.append(nameModel);
-            priceAndBuy.append(price);
-            priceAndBuy.append(buyButton);
-            listItem.append(priceAndBuy);
+    const unOrderedListItem = this.elFactory('ul', { class: 'goods' });
+    unOrderedListItem.append(...items);
 
-            return listItem;
-        });
-        
-        
-        const unOrderedListItem: HTMLUListElement = document.createElement('ul');
-        unOrderedListItem.classList.add('goods');
-        unOrderedListItem.append(...items);
-        return unOrderedListItem;
-    }
-   
+    return unOrderedListItem;
+  }
 
-    render() {        
-        
-        const items = this.renderItems(productDB);
-        
-        this.renderMainBlock(items);
-        
-        this.container.append(items); 
+  render() {
+    const items = this.renderItems(productDB);
 
-        return this.container;       
-        
-    }
+    this.renderMainBlock(items);
+
+    this.container.append(items);
+
+    return this.container;
+  }
 }
 
 export default Goods;

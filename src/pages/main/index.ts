@@ -15,8 +15,6 @@ class MainPage extends Page {
     }  
 
     render() {
-        const title = this.createHeaderTitle(MainPage.textObject.MainTitle);
-        this.container.append(title);
         this.container.append(this.goods.render());          
 
         return this.container;

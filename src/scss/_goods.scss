@@ -13,35 +13,34 @@
     justify-content: space-between;
     margin-top: 40px;
     font-weight: 700;
-    &__item {        
+    &-item {
         width: 323px;
         height: 488px;
         padding: 20px 20px;
         display: grid;
-        grid-template-rows: 340px 45px auto;
+        grid-template-rows: 340px 60px auto;
         font-size: 20px;
         background: #FFFFFF;
         border-radius: 15px;
         margin-bottom: 30px;
-        box-sizing: border-box;   
-        align-content: space-between;     
-        &_img {
+        box-sizing: border-box;
+        align-content: space-between;
+        &-img {
             display: flex;
             max-width: auto;
             max-height: 325px;
-            justify-self: center;  
+            justify-self: center;
             img {
                 width: 100%;
                 height: auto; 
-                object-fit: contain;               
-            }          
+                object-fit: contain;
+            }
         }
-        &_wrapper {
+        &-wrapper {
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            
             &-price {
                 font-size: 22px;
             }

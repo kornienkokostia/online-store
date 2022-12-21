@@ -1,4 +1,4 @@
-interface ProductInterface {
+export default interface ProductInterface {
     id: string,
     name: string,
     category: string,
@@ -11,6 +11,4 @@ interface ProductInterface {
     capacity: string,    
     img: string,
     availabilityCount: number    
-  }
-  
-export default ProductInterface;  
+}

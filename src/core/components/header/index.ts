@@ -1,106 +1,112 @@
 import Component from '../../templates/components';
 
 class Header extends Component {
+  constructor(tagName: string, className: string) {
+    super(tagName, className);
+  }
 
-    constructor(tagName: string, className: string) {
-        super(tagName, className);
-    }
+  createHeaderLogo() {
+    const logoDiv = this.elFactory(
+      'div',
+      { class: 'header-logo' },
+      this.elFactory(
+        'a',
+        { class: 'header-logo-link', href: '' },
+        this.elFactory('img', {
+          class: 'header-logo-img',
+          src: './assets/images/icons/logo.svg',
+          alt: 'logo',
+        }),
+      ),
+    );
+    return logoDiv;
+  }
+  createCart() {
+    const itemsCountSpan = this.elFactory('span', {
+      class: 'header-cart-items-count-value',
+    });
+    itemsCountSpan.textContent = '0';
 
-    createHeaderLogo() {
-        const logoDiv = document.createElement('div')
-        logoDiv.classList.add('header-logo')
-        const logoLink = document.createElement('a')
-        logoLink.href = ''
-        logoLink.classList.add('header-logo-link')
-        const logoImg = document.createElement('img')
-        logoImg.src = './assets/images/icons/logo.svg'
-        logoImg.alt = 'logo'
-        logoImg.classList.add('header-logo-img')
-        logoLink.append(logoImg)
-        logoDiv.append(logoLink)
-        return logoDiv
-    }
-    createCart() {
-        const cartDiv = document.createElement('div')
-        cartDiv.classList.add('header-cart')
-        const cartImg = document.createElement('img')
-        cartImg.src = './assets/images/icons/cart.svg'
-        cartImg.alt = 'cart'
-        cartImg.classList.add('header-cart-img')
-        const cartItemsCount = document.createElement('div')
-        cartItemsCount.classList.add('header-cart-items-count')
-        const cartItemsCountSpan = document.createElement('span')
-        cartItemsCountSpan.classList.add('header-cart-items-count-value')
-        cartItemsCountSpan.innerHTML = '0'
-        cartItemsCount.append(cartItemsCountSpan)
-        cartDiv.append(cartItemsCount)
-        cartDiv.append(cartImg)
-        return cartDiv
-    }
-    createHeaderSearch() {
-        const searchDiv = document.createElement('div')
-        searchDiv.classList.add('header-search')
+    const cartDiv = this.elFactory(
+      'div',
+      { class: 'header-cart' },
+      this.elFactory('img', {
+        class: 'header-cart-img',
+        src: './assets/images/icons/cart.svg',
+        alt: 'cart',
+      }),
+      this.elFactory(
+        'div',
+        { class: 'header-cart-items-count' },
+        itemsCountSpan,
+      ),
+    );
 
-        const searchInput = document.createElement('input')
-        searchInput.type = 'text'
-        searchInput.classList.add('header-search-input')
-        searchInput.placeholder = 'Search'
-       
+    return cartDiv;
+  }
+  createHeaderSearch() {
+    const searchDiv = this.elFactory('div', { class: 'header-search' });
 
-        const searchImg = document.createElement('img')
-        searchImg.src = './assets/images/icons/input-search.svg'
-        searchImg.alt = 'input-search'
-        searchImg.classList.add('header-search-input-img')
+    const searchInput = this.elFactory('input', {
+      class: 'header-search-input',
+      type: 'text',
+      placeholder: 'Search',
+    });
 
-        const clearBtn = document.createElement('button')
-        clearBtn.classList.add('header-search-input-clear-btn') 
-        searchInput.addEventListener('focus', () => {
-            searchInput.value != '' ? 
-            clearBtn.classList.add('header-search-input-clear-btn-visible') : false
-        })
-        searchInput.addEventListener('input', () => {
-            searchInput.value != '' ?
-            clearBtn.classList.add('header-search-input-clear-btn-visible') : 
-            clearBtn.classList.remove('header-search-input-clear-btn-visible')
-        })
-        clearBtn.addEventListener('mousedown', (e) => {
-            searchInput.value = ''
-            clearBtn.classList.remove('header-search-input-clear-btn-visible')
-            e.preventDefault();
-        })
-        searchInput.addEventListener('focusout', () => {
-            clearBtn.classList.remove('header-search-input-clear-btn-visible')
-        })
+    const searchImg = this.elFactory('img', {
+      class: 'header-search-input-img',
+      src: './assets/images/icons/input-search.svg',
+      alt: 'input-search',
+    });
 
-        const clearImg = document.createElement('img')
-        clearImg.src = './assets/images/icons/input-clear.svg'
-        clearImg.alt = 'input-clear'
-        clearImg.classList.add('header-search-input-clear-img')
+    const clearBtn = this.elFactory(
+      'button',
+      { class: 'header-search-input-clear-btn' },
+      this.elFactory('img', {
+        class: 'header-search-input-clear-img',
+        src: './assets/images/icons/input-clear.svg',
+        alt: 'input-clear',
+      }),
+    );
 
-        clearBtn.append(clearImg)
-        searchDiv.append(searchImg)
-        searchDiv.append(searchInput)
-        searchDiv.append(clearBtn)
-        return searchDiv
-    }
+    searchInput.addEventListener('focus', () => {
+      searchInput.value != '' ? clearBtn.classList.add('visible') : false;
+    });
+    searchInput.addEventListener('input', () => {
+      searchInput.value != ''
+        ? clearBtn.classList.add('visible')
+        : clearBtn.classList.remove('visible');
+    });
+    clearBtn.addEventListener('mousedown', e => {
+      searchInput.value = '';
+      clearBtn.classList.remove('visible');
+      e.preventDefault();
+    });
+    searchInput.addEventListener('focusout', () => {
+      clearBtn.classList.remove('visible');
+    });
 
-    renderHeaderWrapper() {
-        const headerWrapper = document.createElement('div');
-        headerWrapper.classList.add('header-wrapper')
-        const logo = this.createHeaderLogo()
-        const cart = this.createCart()
-        const searchBar = this.createHeaderSearch()
-        headerWrapper.append(logo)
-        headerWrapper.append(searchBar)
-        headerWrapper.append(cart)
-        this.container.append(headerWrapper);
-    }
+    searchDiv.append(searchImg);
+    searchDiv.append(searchInput);
+    searchDiv.append(clearBtn);
+    return searchDiv;
+  }
 
-    render () {
-        this.renderHeaderWrapper()
-        return this.container;
-    }
+  renderHeaderWrapper() {
+    const headerWrapper = this.elFactory('div', { class: 'header-wrapper' });
+    const logo = this.createHeaderLogo();
+    const cart = this.createCart();
+    const searchBar = this.createHeaderSearch();
+    headerWrapper.append(logo);
+    headerWrapper.append(searchBar);
+    headerWrapper.append(cart);
+    this.container.append(headerWrapper);
+  }
 
+  render() {
+    this.renderHeaderWrapper();
+    return this.container;
+  }
 }
 
 export default Header;
