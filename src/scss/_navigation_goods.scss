@@ -1,0 +1,20 @@
+.navigation-wrapper {
+    margin-top: 20px;
+    &-goods {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        list-style-type: none;
+        margin: 0 auto;
+        width: 50%;
+        font-weight: 700;
+        &-item {            
+            cursor: pointer;
+            &:hover,
+            &:active {  
+                color: crimson;  
+            }
+
+        }
+    }
+}
