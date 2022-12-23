@@ -14,7 +14,9 @@
             &:active {  
                 color: crimson;  
             }
-
+            &.active{
+                color: crimson; 
+            }
         }
     }
 }
