@@ -41,7 +41,7 @@
             width: 15px;
             height: 15px;
             color: #ffffff;
-            background-color: #d60017;
+            background-color: var(--main-red);
             border-radius: 4px;
             right: 12px;
             top: 10px;
@@ -68,12 +68,12 @@
             border: none;
             font-family: SF-Pro-Display-Regular;
             padding-left: 29px;
-            background-color: #252528;
+            background-color: var(--additional-dark-grey);
             border-radius: 10px;
             color: #ffffff;
             font-size: 15px;
             &::placeholder{
-                color: #a6a6a6;
+                color: var(--additioanl-input-placeholder);
             }
             &-img{
                 position: absolute;

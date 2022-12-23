@@ -11,7 +11,7 @@ class MainPage extends Page {
 
     public filters: Filters = new Filters('div', 'filters-wrapper')
     public topPanel: TopPanel = new TopPanel('div', 'top-panel-wrapper')
-    public goods: Goods = new Goods('div', 'goods-wrapper');
+    public goods: Goods = new Goods('div', 'goods-wrapper', 12, 1);
     
 
     constructor(id: string) {
