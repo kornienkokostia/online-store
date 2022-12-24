@@ -44,23 +44,30 @@ class App {
         }
     }
 
+    private hashChangeHandle() {
+        const hash = window.location.hash.slice(1);   
+        hash ? App.renderNewPage(hash) : App.renderNewPage('main-page');  
+    }
+
     private enableRouteChange() {
-        window.addEventListener('hashchange', () => {
-            const hash = window.location.hash.slice(1);
-            console.log(hash);            
-            App.renderNewPage(hash); 
-        })
+        window.addEventListener('hashchange', this.hashChangeHandle)
+    }
+
+    private enableRouteChangeReload() {
+        window.addEventListener('DOMContentLoaded', this.hashChangeHandle)
     }
 
     constructor() {        
         this.initialPage = new MainPage('main-page');
-        this.header = new Header('header', 'header');
+        this.header = new Header('header', 'header-wrapper');
     }
 
     run() {
+
         App.container.append(this.header.render());
         App.renderNewPage('main-page');         
         this.enableRouteChange();    
+        this.enableRouteChangeReload();
     }
 }
 

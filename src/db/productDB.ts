@@ -14,7 +14,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '1TB',    
         img: './assets/images/image_test_1.png',
-        availabilityCount: 457 
+        availabilityCount: 457,
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '2',
@@ -28,7 +34,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '512GB',    
         img: './assets/images/image_test_2.png',
-        availabilityCount: 245 
+        availabilityCount: 245,
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass' 
     },
     {
         id: '3',
@@ -42,7 +54,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '512GB',    
         img: './assets/images/image_test_3.png',
-        availabilityCount: 134 
+        availabilityCount: 134,
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '4',
@@ -56,7 +74,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '512GB',    
         img: './assets/images/image_test_1.png',
-        availabilityCount: 457 
+        availabilityCount: 457,
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass' 
     },
     {
         id: '5',
@@ -70,7 +94,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '512GB',    
         img: './assets/images/image_test_2.png',
-        availabilityCount: 245 
+        availabilityCount: 245,
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass' 
     },
     {
         id: '6',
@@ -84,7 +114,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '512GB',    
         img: './assets/images/image_test_3.png',
-        availabilityCount: 134 
+        availabilityCount: 134 ,
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },    
     {
         id: '7',
@@ -98,7 +134,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '256GB',    
         img: './assets/images/Apple iPhone 14 Pro Max black back.jpeg',
-        availabilityCount: 273 
+        availabilityCount: 273 ,
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '8',
@@ -112,7 +154,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '256 GB',    
         img: './assets/images/Apple iPhone 14 Pro Max black back.jpeg',
-        availabilityCount: 925 
+        availabilityCount: 925 ,
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '9',
@@ -126,7 +174,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '128 GB',    
         img: './assets/images/Apple iPhone 14 Pro Max black back.jpeg',
-        availabilityCount: 422 
+        availabilityCount: 422 ,
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '10',
@@ -140,7 +194,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '128 GB',    
         img: './assets/images/Apple iPhone 14 Pro Max black back.jpeg',
-        availabilityCount: 724 
+        availabilityCount: 724 ,
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '11',
@@ -154,7 +214,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '128 GB',    
         img: './assets/images/Apple iPhone 14 Pro Max black back.jpeg',
-        availabilityCount: 134 
+        availabilityCount: 134 ,
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '12',
@@ -168,7 +234,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '128 GB',    
         img: './assets/images/Apple iPhone 14 Pro Max black back.jpeg',
-        availabilityCount: 5 
+        availabilityCount: 5 ,
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '13',
@@ -182,7 +254,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '512 GB',    
         img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
-        availabilityCount: 129 
+        availabilityCount: 129 ,
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '14',
@@ -196,7 +274,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '512 GB',    
         img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
-        availabilityCount: 542 
+        availabilityCount: 542 ,
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '15',
@@ -210,7 +294,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '512 GB',    
         img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
-        availabilityCount: 231 
+        availabilityCount: 231 ,
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '16',
@@ -224,7 +314,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '512 GB',    
         img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
-        availabilityCount: 245 
+        availabilityCount: 245, 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '17',
@@ -238,7 +334,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '256 GB',    
         img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
-        availabilityCount: 323 
+        availabilityCount: 323 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '18',
@@ -252,7 +354,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '256 GB',    
         img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
-        availabilityCount: 873 
+        availabilityCount: 873 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '19',
@@ -266,7 +374,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '256 GB',    
         img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
-        availabilityCount: 736 
+        availabilityCount: 736 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '20',
@@ -280,7 +394,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '256 GB',    
         img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
-        availabilityCount: 121 
+        availabilityCount: 121 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '21',
@@ -294,7 +414,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '128 GB',    
         img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
-        availabilityCount: 555 
+        availabilityCount: 555 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '22',
@@ -308,7 +434,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '128 GB',    
         img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
-        availabilityCount: 1541 
+        availabilityCount: 1541 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '23',
@@ -322,7 +454,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '128 GB',    
         img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
-        availabilityCount: 890 
+        availabilityCount: 890 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '24',
@@ -336,7 +474,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '128 GB',    
         img: './assets/images/Apple MacBook Air 13 M2 16C CPU8C GPU 2022 8 GB 512 GB SSD bottom.jpg',
-        availabilityCount: 125 
+        availabilityCount: 125 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '25',
@@ -350,7 +494,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '512 GB',    
         img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
-        availabilityCount: 97 
+        availabilityCount: 97 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '26',
@@ -364,7 +514,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '512 GB',    
         img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
-        availabilityCount: 515 
+        availabilityCount: 515 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '27',
@@ -378,7 +534,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '512 GB',    
         img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
-        availabilityCount: 232 
+        availabilityCount: 232 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '28',
@@ -392,7 +554,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '256 GB',    
         img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
-        availabilityCount: 157 
+        availabilityCount: 157 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '29',
@@ -406,7 +574,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '256 GB',    
         img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
-        availabilityCount: 4455 
+        availabilityCount: 4455 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '30',
@@ -420,7 +594,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '256 GB',    
         img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
-        availabilityCount: 16516 
+        availabilityCount: 16516 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '31',
@@ -434,7 +614,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '64 GB',    
         img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
-        availabilityCount: 5235 
+        availabilityCount: 5235 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '32',
@@ -448,7 +634,13 @@ const productDB: ProductInterface[] = [
         price: '456',
         capacity: '64 GB',    
         img: './assets/images/Apple iPad Pro 2021 13 Wi-Fi 256 space front.jpg',
-        availabilityCount: 7271 
+        availabilityCount: 7271 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '33',
@@ -462,7 +654,13 @@ const productDB: ProductInterface[] = [
         price: '999',
         capacity: '32 GB',    
         img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
-        availabilityCount: 2356 
+        availabilityCount: 2356 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '34',
@@ -476,7 +674,13 @@ const productDB: ProductInterface[] = [
         price: '999',
         capacity: '32 GB',    
         img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
-        availabilityCount: 322 
+        availabilityCount: 322 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '35',
@@ -490,7 +694,13 @@ const productDB: ProductInterface[] = [
         price: '999',
         capacity: '32 GB',    
         img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
-        availabilityCount: 322 
+        availabilityCount: 322 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '36',
@@ -504,7 +714,13 @@ const productDB: ProductInterface[] = [
         price: '999',
         capacity: '16 GB',    
         img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
-        availabilityCount: 322 
+        availabilityCount: 322 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '37',
@@ -518,7 +734,13 @@ const productDB: ProductInterface[] = [
         price: '999',
         capacity: '16 GB',    
         img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
-        availabilityCount: 322 
+        availabilityCount: 322 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '38',
@@ -532,7 +754,13 @@ const productDB: ProductInterface[] = [
         price: '999',
         capacity: '16 GB',    
         img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
-        availabilityCount: 322 
+        availabilityCount: 322 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '39',
@@ -546,7 +774,13 @@ const productDB: ProductInterface[] = [
         price: '999',
         capacity: '8 GB',    
         img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
-        availabilityCount: 322 
+        availabilityCount: 322 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '40',
@@ -560,7 +794,13 @@ const productDB: ProductInterface[] = [
         price: '999',
         capacity: '8 GB',    
         img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
-        availabilityCount: 322 
+        availabilityCount: 322 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     {
         id: '41',
@@ -574,7 +814,13 @@ const productDB: ProductInterface[] = [
         price: '999',
         capacity: '8 GB',    
         img: './assets/images/Apple Watch Ultra GPS + Cellular 49 beige front.jpg',
-        availabilityCount: 322 
+        availabilityCount: 322 , 
+        diagonal: '6.1"',
+        camera: '12 Mp + 12 Mp',
+        cpu: 'A 15 Bionic',
+        protection: 'IP68',
+        nfc: 'Available',
+        material: 'Aluminium, Glass'
     },
     
 ]

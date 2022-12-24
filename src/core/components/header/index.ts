@@ -1,6 +1,6 @@
 import Component from '../../templates/components';
 
-class Header extends Component {
+export default class Header extends Component {
   constructor(tagName: string, className: string) {
     super(tagName, className);
   }
@@ -93,7 +93,7 @@ class Header extends Component {
   }
 
   renderHeaderWrapper() {
-    const headerWrapper = this.elFactory('div', { class: 'header-wrapper' });
+    const headerWrapper = this.elFactory('div', { class: 'header' });
     const logo = this.createHeaderLogo();
     const cart = this.createCart();
     const searchBar = this.createHeaderSearch();
@@ -108,5 +108,3 @@ class Header extends Component {
     return this.container;
   }
 }
-
-export default Header;

@@ -1,19 +1,20 @@
 .header{
-    width: 100%;
-    height: 54px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: black;
+    justify-content: space-between;
+    width: calc(100% - 20px);
+    height: 100%;
     &-wrapper{
+        width: 100%;
+        height: 54px;
         display: flex;
-        justify-content: space-between;
-        width: calc(100% - 40px);
-        height: 100%;
-    }
+        align-items: center;
+        justify-content: center;
+        background-color: black;
+    }    
     &-logo{
         display: flex;
         align-items: center;
+        padding: 0 10px;
         &-link, &-img{
             height: 18px;
         }
@@ -24,6 +25,7 @@
     &-cart {
         display: flex;
         align-items: center;
+        padding: 0 10px;
         &-img{
             width: 19px;
             margin-top: -1px;
@@ -39,7 +41,7 @@
             width: 15px;
             height: 15px;
             color: #ffffff;
-            background-color: #d60017;
+            background-color: var(--main-red);
             border-radius: 4px;
             right: 12px;
             top: 10px;
@@ -61,23 +63,23 @@
         width: 350px;
         &-input{
             width: 100%;
-            height: 32px;
+            height: 33px;
             outline: none;
             border: none;
             font-family: SF-Pro-Display-Regular;
             padding-left: 29px;
-            background-color: #252528;
+            background-color: var(--additional-dark-grey);
             border-radius: 10px;
             color: #ffffff;
             font-size: 15px;
             &::placeholder{
-                color: #a6a6a6;
+                color: var(--additioanl-input-placeholder);
             }
             &-img{
                 position: absolute;
                 width: 14px;
                 height: 14px;
-                top: 10px;
+                top: 9px;
                 left: 8px;
                 user-select: none;
             }
@@ -86,7 +88,7 @@
                 background: none;
                 border: none;
                 right: 8px;
-                top: 9px;
+                top: 8.5px;
                 width: 16px;
                 height: 16px;
                 padding: 0;

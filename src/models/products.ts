@@ -10,5 +10,11 @@ export default interface ProductInterface {
     price: string,
     capacity: string,    
     img: string,
-    availabilityCount: number    
+    availabilityCount: number,
+    diagonal: string,
+    camera: string,
+    cpu: string,
+    protection: string,
+    nfc: string,
+    material: string   
 }
