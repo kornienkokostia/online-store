@@ -132,6 +132,7 @@ export default class TopPanel extends Component {
           [...selectBoxOptionsDiv.children].length !== SortingOptions.length
         ) {
           addAllItemsToOptions();
+          selectBoxCurrentItem.setAttribute('current-selected-item', '');
         }
       });
       if ([...selectBoxOptionsDiv.children].length === 0) {
