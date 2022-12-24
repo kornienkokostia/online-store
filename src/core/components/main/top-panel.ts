@@ -190,7 +190,7 @@ export default class TopPanel extends Component {
       );
 
       if (activeBtn) {
-        Pagination.paginationBtn(6, activeBtn, "horizontal");
+        Pagination.paginationBtn(12, activeBtn, "horizontal");
       }
     });
 
