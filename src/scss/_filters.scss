@@ -75,6 +75,7 @@
         display: flex;
         justify-content: space-between;
         position: relative;
+        user-select: none;
         &-title{
             color: #000000;
             font-size: 17px;
