@@ -1,30 +1,32 @@
-import Component from '../../../core/templates/components';
-import Goods from '../../../core/components/main/goods';
+import Component from "../../../core/templates/components";
+import Goods from "../../../core/components/main/goods";
 
-class Pagination extends Component {
-  constructor(tagName: string, className: string) {
-    super(tagName, className);
-  }
+class Pagination {
+  static currentPage: number = 1;
+  static goodsPerPage: number = 12;
 
   static displayList() {}
 
-  static paginationBtn(num: number) {
-    const btns = document.querySelector('.main');
-    const ids = document.querySelector('.goods-wrapper');
+  static paginationBtn(goodsPerPage: number, num: number, orient: string) {
+    this.currentPage = num;
+    this.goodsPerPage = goodsPerPage;
+
+    const btns = document.querySelector(".main");
+    const ids = document.querySelector(".goods-wrapper");
 
     ids?.remove();
 
-    const goods = new Goods('div', 'goods-wrapper', 12, num).render(num);
+    const goods = new Goods(
+      "div",
+      "goods-wrapper",
+      this.goodsPerPage,
+      this.currentPage,
+      orient
+    ).render();
+
     btns?.append(goods);
-    window.scrollTo(0, 0)
 
-    // return goods
-  }
-
-  render() {
-    const goods = new Goods('div', 'goods-wrapper', 12, 1);
-
-    return this.container;
+    window.scrollTo(0, 0);
   }
 }
 

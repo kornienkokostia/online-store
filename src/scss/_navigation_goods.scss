@@ -14,9 +14,11 @@
             &:active {  
                 color: crimson;  
             }
-            &.active{
-                color: crimson; 
-            }
+
         }
     }
+}
+
+.active-btn {
+    color: crimson;  
 }

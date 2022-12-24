@@ -1,4 +1,5 @@
 import Component from '../../templates/components';
+import Pagination from "../pagination/pagination";
 
 const SortingOptions = [
   { value: 'new', displayValue: 'New' },
@@ -169,13 +170,28 @@ export default class TopPanel extends Component {
       this.elFactory('div', { class: 'square-grid' }),
     );
 
-    changeGridToLines.addEventListener('click', () => {
-      changeGridToSquares.classList.remove('active');
-      changeGridToLines.classList.add('active');
+    changeGridToSquares.addEventListener("click", () => {
+      changeGridToSquares.classList.add("active");
+      changeGridToLines.classList.remove("active");
+      const activeBtn = Number(
+        document.querySelector(".active-btn")?.textContent
+      );
+
+      if (activeBtn) {
+        Pagination.paginationBtn(12, activeBtn, "vertical");
+      }
     });
-    changeGridToSquares.addEventListener('click', () => {
-      changeGridToSquares.classList.add('active');
-      changeGridToLines.classList.remove('active');
+
+    changeGridToLines.addEventListener("click", () => {
+      changeGridToSquares.classList.remove("active");
+      changeGridToLines.classList.add("active");
+      const activeBtn = Number(
+        document.querySelector(".active-btn")?.textContent
+      );
+
+      if (activeBtn) {
+        Pagination.paginationBtn(6, activeBtn, "horizontal");
+      }
     });
 
     changeGridDiv.append(changeGridToSquares);
