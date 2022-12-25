@@ -134,9 +134,12 @@ export default class Filters extends Component {
     filterBrand.append(filterBrandOptions);
 
     // price
-    const minPrice = Math.min(...productDB.map(el => +el.price));
-    const maxPrice = Math.max(...productDB.map(el => +el.price));
+    const convertNumToSplitString = (str: string) => str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+    const convertStringWithCommasToDefult = (str: string) => str.replace(/,/g,'')
 
+    const minPrice = Math.min(...productDB.map(el => +convertStringWithCommasToDefult(el.price)));
+    const maxPrice = Math.max(...productDB.map(el => +convertStringWithCommasToDefult(el.price)));
+    
     const filterPrice = this.elFactory('div', {
       class: 'filters-item filters-item-price active',
     });
@@ -207,9 +210,10 @@ export default class Filters extends Component {
     const filterPriceMinValue = this.elFactory('span', {
       class: 'filters-item-values-price-min-value',
     });
-    filterPriceMinValue.textContent = `${filterPriceSliderInputMin.value}`;
+    filterPriceMinValue.textContent = convertNumToSplitString(`${filterPriceSliderInputMin.value}`)
+    filterPriceMin.append(addCurrency()); 
     filterPriceMin.append(filterPriceMinValue);
-    filterPriceMin.append(addCurrency());
+    
 
     const filterPriceMax = this.elFactory('div', {
       class: 'filters-item-values-price-max',
@@ -217,10 +221,10 @@ export default class Filters extends Component {
     const filterPriceMaxValue = this.elFactory('span', {
       class: 'filters-item-values-price-max-value',
     });
-    filterPriceMaxValue.textContent = `${filterPriceSliderInputMax.value}`;
-    filterPriceMax.append(filterPriceMaxValue);
+    filterPriceMaxValue.textContent = convertNumToSplitString(`${filterPriceSliderInputMax.value}`)
     filterPriceMax.append(addCurrency());
-
+    filterPriceMax.append(filterPriceMaxValue);
+    
     filterPriceValues.append(filterPriceMin);
     filterPriceValues.append(filterPriceMax);
 
@@ -238,8 +242,8 @@ export default class Filters extends Component {
             filterPriceSliderInputMax.value = `${minVal + gap}`;
           }
         } else {
-          filterPriceMinValue.textContent = filterPriceSliderInputMin.value;
-          filterPriceMaxValue.textContent = filterPriceSliderInputMax.value;
+          filterPriceMinValue.textContent = convertNumToSplitString(filterPriceSliderInputMin.value);
+          filterPriceMaxValue.textContent = convertNumToSplitString(filterPriceSliderInputMax.value);
           console.log(filterPriceSliderProgress.style.left);
           filterPriceSliderProgress.style.left =
             ((minVal - +filterPriceSliderInputMin.min) /

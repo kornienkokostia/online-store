@@ -95,7 +95,7 @@
                 cursor: pointer;
                 visibility: hidden;
                 opacity: 0;
-                transition: 0.2s;
+                transition: opacity, visibility .2s, .2s;
             }
             &-clear-btn.visible{
                 visibility: visible;

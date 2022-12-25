@@ -68,7 +68,7 @@
     visibility: hidden;
     transform: translateY(-20px);
     opacity: 0;
-    transition: 0.3s;
+    transition: opacity, transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
     &.active {
       transform: translateY(0px);
       opacity: 1;
