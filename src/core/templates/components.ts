@@ -32,6 +32,10 @@ abstract class Component {
 
         return element;
     }
+
+    protected capitilizeFirstLetter(str: string){
+        return str.charAt(0).toUpperCase() + str.slice(1)
+    }
     
     render() {
         return this.container;

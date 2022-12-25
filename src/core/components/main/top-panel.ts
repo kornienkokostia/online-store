@@ -2,10 +2,12 @@ import Component from '../../templates/components';
 import Pagination from "../pagination/pagination";
 
 const SortingOptions = [
-  { value: 'new', displayValue: 'New' },
   { value: 'name', displayValue: 'Name' },
+  { value: 'new', displayValue: 'New' },
   { value: 'price-ascending', displayValue: 'Price (ascending)' },
   { value: 'price-descending', displayValue: 'Price (descending)' },
+  { value: 'rating-ascending', displayValue: 'Rating (ascending)' },
+  { value: 'rating-descending', displayValue: 'Rating (descending)' }
 ];
 
 export default class TopPanel extends Component {

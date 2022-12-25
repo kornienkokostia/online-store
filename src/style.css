@@ -3,6 +3,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1.1fr 3fr;
+  grid-template-rows: 38px auto;
   -webkit-column-gap: 20px;
      -moz-column-gap: 20px;
           column-gap: 20px;
@@ -188,14 +189,16 @@
 }
 .goods-wrapper {
   width: 100%;
+  grid-row-start: 2;
+  grid-row-end: 3;
 }
 .goods-item {
   width: 100%;
-  height: 488px;
+  height: 420px;
   padding: 20px 20px;
   display: grid;
   grid-template-rows: auto;
-  font-size: 18px;
+  font-size: 17px;
   background: #ffffff;
   border-radius: 15px;
   -ms-flex-line-pack: justify;
@@ -204,22 +207,53 @@
 .goods-item-horizontal {
   grid-template-columns: 30% 70%;
   height: auto;
-  gap: 10px;
-  font-size: 22px;
+  row-gap: 7.5px;
+  font-size: 17px;
+}
+.goods-item-horizontal > .goods-item-wrapper-stock {
+  grid-column-start: 1;
+  grid-row-start: 3;
+  height: 50%;
+}
+.goods-item-horizontal > .goods-item-wrapper-rating {
+  grid-column-start: 1;
+  grid-row-start: 3;
+  height: 50%;
+  align-self: flex-end;
+}
+.goods-item-horizontal > .goods-item-img {
+  margin-right: 15px;
+}
+.goods-item-description {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
 }
 .goods-item-description-horizontal {
-  font-size: 22px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  font-size: 17px;
+  -ms-flex-item-align: center;
+      align-self: center;
+  row-gap: 3px;
 }
 .goods-item-description-horizontal span {
-  color: gray;
+  color: var(--main-text-color-light);
 }
 .goods-item-img {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 325px;
+  height: 200px;
   max-width: auto;
-  max-height: 325px;
+  max-height: 200px;
   justify-self: center;
 }
 .goods-item-img img {
@@ -230,33 +264,72 @@
 }
 .goods-item-wrapper {
   width: 100%;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: repeat(2, 1fr);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 .goods-item-wrapper-horizontal {
-  grid-column: 1/3;
+  grid-row-start: 3;
+  height: 50px;
 }
-.goods-item-wrapper-price {
-  font-family: "SF-Pro-Display-Semibold";
+.goods-item-wrapper-horizontal > .goods-item-wrapper-buyButton {
+  -ms-flex-item-align: center;
+      align-self: center;
 }
-.goods-item-wrapper-availability {
-  grid-column: 1;
-  grid-row: 2;
-}
-.goods-item-wrapper-buyButton {
-  width: 68px;
-  height: 38px;
-  grid-row: 1/3;
-  background: #0071e3;
-  border-radius: 30px;
+.goods-item-wrapper-rating {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  align-self: center;
+}
+.goods-item-wrapper-rating-stars {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-column-gap: 2px;
+     -moz-column-gap: 2px;
+          column-gap: 2px;
+}
+.goods-item-wrapper-rating-star {
+  width: 12px;
+  height: 12px;
+}
+.goods-item-wrapper-price {
+  font-size: 19px;
+  font-family: "SF-Pro-Display-Semibold";
+}
+.goods-item-wrapper-stock {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-column-gap: 4px;
+     -moz-column-gap: 4px;
+          column-gap: 4px;
+}
+.goods-item-wrapper-buyButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 8px 16px;
+  background: var(--main-blue);
+  border-radius: 30px;
+  letter-spacing: 0.5px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
   text-align: center;
   color: #ffffff;
   border: none;
@@ -329,19 +402,19 @@
   color: var(--main-text-color);
 }
 .select-box-current-item::-webkit-input-placeholder {
-  color: var(--main-input-placeholder);
+  color: var(--main-text-color-light);
 }
 .select-box-current-item::-moz-placeholder {
-  color: var(--main-input-placeholder);
+  color: var(--main-text-color-light);
 }
 .select-box-current-item:-ms-input-placeholder {
-  color: var(--main-input-placeholder);
+  color: var(--main-text-color-light);
 }
 .select-box-current-item::-ms-input-placeholder {
-  color: var(--main-input-placeholder);
+  color: var(--main-text-color-light);
 }
 .select-box-current-item::placeholder {
-  color: var(--main-input-placeholder);
+  color: var(--main-text-color-light);
 }
 .select-box-open-btn {
   height: 31px;
@@ -436,8 +509,8 @@
 }
 .change-grid-item.active > .square-grid {
   background-color: var(--main-dark-grey);
-  -webkit-transition: background-color 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
-  transition: background-color 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+  -webkit-transition: background-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: background-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 .change-grid-to-lines {
   width: 45.5px;
@@ -448,8 +521,8 @@
 .square-grid {
   border-radius: 3px;
   background-color: var(--main-light-grey);
-  -webkit-transition: background-color 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
-  transition: background-color 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+  -webkit-transition: background-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: background-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .filters {
@@ -596,6 +669,9 @@
   grid-template-columns: repeat(2, 1fr);
   padding: 0 15px 15px;
   row-gap: 7px;
+  -webkit-column-gap: 15px;
+     -moz-column-gap: 15px;
+          column-gap: 15px;
   visibility: hidden;
   opacity: 0;
   -webkit-transition: 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -806,7 +882,7 @@ body {
   --main-light-grey: #e2e2e5;
   --main-dark-grey: #c2c2c7;
   --main-text-color: #4d4d4d;
-  --main-input-placeholder: #8c8c94;
+  --main-text-color-light: #8c8c94;
   --main-red: #d60017;
   --main-blue: #007aff;
   --additional-dark-grey: #252528;

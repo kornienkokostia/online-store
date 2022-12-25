@@ -107,6 +107,7 @@
         grid-template-columns: repeat(2, 1fr);
         padding: 0 15px 15px;
         row-gap: 7px;
+        column-gap: 15px;
         visibility: hidden;
         opacity: 0;
         transition: .4s cubic-bezier(0.645, 0.045, 0.355, 1);

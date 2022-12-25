@@ -52,7 +52,7 @@ export default class Goods extends Component {
 
       const imgDiv = this.elFactory("div", { class: "goods-item-img" });
 
-      const imgItem = this.elFactory("img", { class: "img", src: item.img });
+      const imgItem = this.elFactory("img", { class: "img", src: item.imgs[0] });
 
       const description = this.elFactory("div", {
         class: `${
@@ -66,20 +66,20 @@ export default class Goods extends Component {
         class: "goods-item-description-name",
       });
 
-      const diagonalItem = this.elFactory("div", {
-        class: "goods-item-description-diagonal",
+      const screenSizeItem = this.elFactory("div", {
+        class: "goods-item-description-screen-size",
       });
 
       const cameraItem = this.elFactory("div", {
         class: "goods-item-description-camera",
       });
 
-      const capacityItem = this.elFactory("div", {
-        class: "goods-item-description-capacity",
+      const memoryItem = this.elFactory("div", {
+        class: "goods-item-description-memory",
       });
 
-      const cpuItem = this.elFactory("div", {
-        class: "goods-item-description-cpu",
+      const chipsetItem = this.elFactory("div", {
+        class: "goods-item-description-chipset",
       });
 
       const protectionItem = this.elFactory("div", {
@@ -106,11 +106,15 @@ export default class Goods extends Component {
         class: "goods-item-wrapper-price",
       });
 
-      const availability = this.elFactory("div", {
-        class: "goods-item-wrapper-availability",
+      const stock = this.elFactory("div", {
+        class: "goods-item-wrapper-stock",
+      });
+
+      const rating = this.elFactory("div", {
+        class: "goods-item-wrapper-rating",
       });
       
-      const spanavailability = document.createElement('span');
+      const spanStock = document.createElement('span');
 
       const buyButton = this.elFactory("button", {
         class: "goods-item-wrapper-buyButton",
@@ -124,69 +128,87 @@ export default class Goods extends Component {
         }
       });
 
-      nameItem.textContent = `${item.name} ${item.capacity} ${item.color} ${item.model}`;
+      nameItem.textContent = `${this.capitilizeFirstLetter(item.brand)} 
+        ${item.name} ${item.memory} ${item.color} ${item.model}`;
 
       price.textContent = item.price + "$";
       buyButton.textContent = "Buy";
-      availability.textContent = `${item.availabilityCount}`;
-      spanavailability.textContent = "In stock: "
-      availability.prepend(spanavailability);
+      stock.textContent = `${item.stock}`;
+      spanStock.textContent = "In stock: "
+      stock.prepend(spanStock);
 
       imgDiv.append(imgItem);
       listItem.append(imgDiv);
       description.append(nameItem);
+      
+      // rating
+      const ratingStars = this.elFactory('div', {class: 'goods-item-wrapper-rating-stars'})
+      for (let i = 0; i < 5; i++) {
+        if (i < item.rating) {
+          const ratingImg = this.elFactory('img', {class: 'goods-item-wrapper-rating-star', 
+          src: './assets/images/icons/rating-full.svg'})
+          ratingStars.append(ratingImg)
+        } else {
+          const ratingImg = this.elFactory('img', {class: 'goods-item-wrapper-rating-star', 
+          src: './assets/images/icons/rating-empty.svg'})
+          ratingStars.append(ratingImg)
+        }
+      }
+      rating.append(ratingStars)
 
       if (this.orient === "horizontal") {
         const spanName = document.createElement("span");
         spanName.textContent = "Name: ";
         nameItem.prepend(spanName);
+        nameItem.append(';')
 
-        const spanDiagonal = document.createElement("span");
-        spanDiagonal.textContent = "Diagonal: ";
-        diagonalItem.textContent = `${item.diagonal};`;
-        diagonalItem.prepend(spanDiagonal);
-        description.append(diagonalItem);
+        const spanScreenSize = document.createElement("span");
+        spanScreenSize.textContent = "Screen size: ";
+        screenSizeItem.textContent = `${item.displaySize};`;
+        screenSizeItem.prepend(spanScreenSize);
+        description.append(screenSizeItem);
 
         const spanCamera = document.createElement("span");
-        spanCamera.textContent = "Camera: ";
-        cameraItem.textContent = `${item.camera}`;
+        spanCamera.textContent = "Cameras: ";
+        cameraItem.textContent = `${item.cameras};`;
         cameraItem.prepend(spanCamera);
         description.append(cameraItem);
 
-        const spanCapacity = document.createElement("span");
-        spanCapacity.textContent = "Capacity: ";
-        capacityItem.textContent = `${item.capacity}`;
-        capacityItem.prepend(spanCapacity);
-        description.append(capacityItem);
+        const spanMemory = document.createElement("span");
+        spanMemory.textContent = "Memory: ";
+        memoryItem.textContent = `${item.memory};`;
+        memoryItem.prepend(spanMemory);
+        description.append(memoryItem);
 
-        const spanCPU = document.createElement("span");
-        spanCPU.textContent = "CPU: ";
-        cpuItem.textContent = `${item.cpu}`;
-        cpuItem.prepend(spanCPU);
-        description.append(cpuItem);
+        const spanChipset = document.createElement("span");
+        spanChipset.textContent = "Chipset: ";
+        chipsetItem.textContent = `${item.chipset};`;
+        chipsetItem.prepend(spanChipset);
+        description.append(chipsetItem);
 
         const spanProtection = document.createElement("span");
-        spanProtection.textContent = "Protection Standard: ";
-        protectionItem.textContent = `${item.protection}`;
+        spanProtection.textContent = "Protection: ";
+        protectionItem.textContent = `${item.protection};`;
         protectionItem.prepend(spanProtection);
         description.append(protectionItem);
 
         const spanNFC = document.createElement("span");
         spanNFC.textContent = "NFC: ";
-        nfcItem.textContent = `${item.nfc}`;
+        nfcItem.textContent = `${this.capitilizeFirstLetter(item.nfc)};`;
         nfcItem.prepend(spanNFC);
         description.append(nfcItem);
 
         const spanMaterial = document.createElement("span");
         spanMaterial.textContent = "Material: ";
-        materialItem.textContent = `${item.material}`;
+        materialItem.textContent = `${this.capitilizeFirstLetter(item.material)}`;
         materialItem.prepend(spanMaterial);
         description.append(materialItem);
       }
 
       listItem.append(description);
       priceAndBuy.append(price);
-      priceAndBuy.append(availability)
+      listItem.append(stock)
+      listItem.append(rating)
       priceAndBuy.append(buyButton);
       listItem.append(priceAndBuy);
 
