@@ -104,8 +104,8 @@ export default class Goods extends Component {
       // name
       nameItem.textContent = `${this.capitilizeFirstLetter(item.brand)} 
         ${item.name} 
-        ${item.storage ? item.storage : ''} 
-        ${item.category !== 'smartphones' ? item.color : ''} 
+        ${item.storage && item.category !== 'watches' ? item.storage : ''} 
+        ${item.category !== 'headphones' && item.category !== 'watches' ? item.color : ''} 
         ${item.model}`;
 
       price.textContent = "$" + item.price;
@@ -143,11 +143,6 @@ export default class Goods extends Component {
       }
 
       if (this.orient === "horizontal") {
-        const spanName = document.createElement("span");
-        spanName.textContent = "Name: ";
-        nameItem.prepend(spanName);
-        nameItem.append(';')
-
         if (item.displaySize) {
           addItemOnHorizontalOrient('screen-size', 'Screen size: ', item.displaySize)
         }
@@ -190,7 +185,16 @@ export default class Goods extends Component {
         if (item.ram) {
           addItemOnHorizontalOrient('ram', 'RAM: ', item.ram)
         }    
+        if (item.storageType) {
+          addItemOnHorizontalOrient('storage-type', 'Storage type: ', item.storageType)
+        }  
       }
+
+      if (this.orient !== "vertical") {
+        let lastDescriptionEl = [...description.children][[...description.children].length - 1]
+        lastDescriptionEl.innerHTML = lastDescriptionEl.innerHTML.slice(0, -1)
+      }
+      
 
       listItem.append(description);
       priceAndBuy.append(price);
