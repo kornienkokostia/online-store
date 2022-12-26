@@ -50,9 +50,10 @@ export default interface ProductInterface {
     wifiStandart?: string,
     ports?: string,
     webCamera?: string,
-    chipsetTurboFrequency?: string,
     training?: string,
     bodyShape?: string,
     control?: string,
     sensors?: string,   
+    bandColor?: string,
+    caseSize?: string
 }

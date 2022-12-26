@@ -104,6 +104,7 @@ export default class Goods extends Component {
       // name
       nameItem.textContent = `${this.capitilizeFirstLetter(item.brand)} 
         ${item.name} 
+        ${item.category === 'laptops' ? item.displaySize : ''} 
         ${item.storage && item.category !== 'watches' ? item.storage : ''} 
         ${item.category !== 'headphones' && item.category !== 'watches' ? item.color : ''} 
         ${item.model}`;
@@ -162,6 +163,10 @@ export default class Goods extends Component {
         if (item.protection) {
           addItemOnHorizontalOrient('release-year', 'Release year: ', item.release)
         }
+
+        if (item.bandColor) {
+          addItemOnHorizontalOrient('band-color', 'Band color: ', item.bandColor)
+        } 
 
         if (item.nfc) {
           addItemOnHorizontalOrient('nfc', 'NFC: ', item.nfc)

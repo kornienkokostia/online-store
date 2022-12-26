@@ -1,3 +1,4 @@
+import productDB from '../../../db/productDB';
 import Component from '../../templates/components';
 import Pagination from "../pagination/pagination";
 
@@ -62,7 +63,7 @@ export default class TopPanel extends Component {
     const sortingFoundValue = this.elFactory('span', {
       class: 'sorting-found-value',
     });
-    sortingFoundValue.textContent = '0';
+    sortingFoundValue.textContent = productDB.length.toString();
 
     sortingFoundDiv.append(sortingFoundValue);
 

@@ -3,16 +3,19 @@
     &-goods {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
         list-style-type: none;
-        margin: 0 auto;
-        width: 50%;
-        font-weight: 700;
-        &-item {            
+        font-family: 'SF-Pro-Display-Semibold';
+        width: 100%;
+        column-gap: 10px;
+        color: var(--main-dark-grey);
+        &-item { 
+            transition: .3s;           
             cursor: pointer;
+            padding: 10px;
             &:hover,
             &:active {  
-                color: crimson;  
+                color: #7C7B80;  
             }
 
         }
@@ -20,5 +23,5 @@
 }
 
 .active-btn {
-    color: crimson;  
+    color: #7C7B80;  
 }
