@@ -238,6 +238,7 @@ export default class Goods extends Component {
       this.orient
     );
     const goodsNav = new GoodsNav(
+      productDB,
       "div",
       "navigation-wrapper",
       this.currentPage,

@@ -33,6 +33,7 @@ class GoodsNav extends Component {
   ) {
     this.goodsPerPage = goodsPerPage;
     this.currentPage = currentPage;
+    this.arrData = arrData
 
     this.pagesCount = Math.ceil(arrData.length / this.goodsPerPage);
 
