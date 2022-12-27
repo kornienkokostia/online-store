@@ -8,8 +8,10 @@ class GoodsNav extends Component {
   protected goodsPerPage: number;
   protected pagesCount: number = 4;
   protected orient: string = "vertical";
+  protected arrData: ProductInterface[];
 
   constructor(
+    arrData: ProductInterface[],
     tagName: string,
     className: string,
     currentPage: number,
@@ -17,9 +19,11 @@ class GoodsNav extends Component {
     orient: string
   ) {
     super(tagName, className);
+    this.arrData = arrData;
     this.currentPage = currentPage;
     this.goodsPerPage = goodsPerPage;
     this.orient = orient;
+
   }
 
   displayNavBtn(
@@ -52,7 +56,8 @@ class GoodsNav extends Component {
         Pagination.paginationBtn(
           this.goodsPerPage,
           this.currentPage,
-          this.orient
+          this.orient,
+          productDB
         );
       });
 
