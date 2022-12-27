@@ -1,11 +1,14 @@
+import productDB from '../../../db/productDB';
 import Component from '../../templates/components';
 import Pagination from "../pagination/pagination";
 
 const SortingOptions = [
-  { value: 'new', displayValue: 'New' },
   { value: 'name', displayValue: 'Name' },
+  { value: 'new', displayValue: 'New' },
   { value: 'price-ascending', displayValue: 'Price (ascending)' },
   { value: 'price-descending', displayValue: 'Price (descending)' },
+  { value: 'rating-ascending', displayValue: 'Rating (ascending)' },
+  { value: 'rating-descending', displayValue: 'Rating (descending)' }
 ];
 
 export default class TopPanel extends Component {
@@ -60,7 +63,7 @@ export default class TopPanel extends Component {
     const sortingFoundValue = this.elFactory('span', {
       class: 'sorting-found-value',
     });
-    sortingFoundValue.textContent = '0';
+    sortingFoundValue.textContent = productDB.length.toString();
 
     sortingFoundDiv.append(sortingFoundValue);
 
@@ -178,7 +181,7 @@ export default class TopPanel extends Component {
       );
 
       if (activeBtn) {
-        Pagination.paginationBtn(12, activeBtn, "vertical");
+        Pagination.paginationBtn(12, activeBtn, "vertical", productDB);
       }
     });
 
@@ -190,7 +193,7 @@ export default class TopPanel extends Component {
       );
 
       if (activeBtn) {
-        Pagination.paginationBtn(12, activeBtn, "horizontal");
+        Pagination.paginationBtn(12, activeBtn, "horizontal", productDB);
       }
     });
 

@@ -7,26 +7,30 @@ export default class Goods extends Component {
   protected goodsPerPage: number = 12;
   protected currentPage: number = 1;
   protected orient: string = "vertical";
+  protected product: ProductInterface[] = productDB;
 
   constructor(
     tagName: string,
     className: string,
     goodsPerPage: number,
     currentPage: number,
-    orient: string
+    orient: string,
+    product: ProductInterface[]
   ) {
     super(tagName, className);
     this.goodsPerPage = goodsPerPage;
     this.currentPage = currentPage;
     this.orient = orient;
+    this.product = product;
   }
 
   renderItems(
     arrData: ProductInterface[],
     goodsPerPage: number,
     currentPage: number,
-    orient: string
+    orient: string    
   ) {
+    this.product = arrData;
     this.goodsPerPage = goodsPerPage;
     this.currentPage = currentPage;
     this.orient = orient;
@@ -52,7 +56,8 @@ export default class Goods extends Component {
 
       const imgDiv = this.elFactory("div", { class: "goods-item-img" });
 
-      const imgItem = this.elFactory("img", { class: "img", src: item.img });
+      const imgItem = this.elFactory("img", { class: "img", src: item.imgs[0] });
+      imgItem.ondragstart = () => false
 
       const description = this.elFactory("div", {
         class: `${
@@ -64,34 +69,6 @@ export default class Goods extends Component {
 
       const nameItem = this.elFactory("div", {
         class: "goods-item-description-name",
-      });
-
-      const diagonalItem = this.elFactory("div", {
-        class: "goods-item-description-diagonal",
-      });
-
-      const cameraItem = this.elFactory("div", {
-        class: "goods-item-description-camera",
-      });
-
-      const capacityItem = this.elFactory("div", {
-        class: "goods-item-description-capacity",
-      });
-
-      const cpuItem = this.elFactory("div", {
-        class: "goods-item-description-cpu",
-      });
-
-      const protectionItem = this.elFactory("div", {
-        class: "goods-item-description-protection",
-      });
-
-      const nfcItem = this.elFactory("div", {
-        class: "goods-item-description-nfc",
-      });
-
-      const materialItem = this.elFactory("div", {
-        class: "goods-item-description-material",
       });
 
       const priceAndBuy = this.elFactory("div", {
@@ -106,11 +83,15 @@ export default class Goods extends Component {
         class: "goods-item-wrapper-price",
       });
 
-      const availability = this.elFactory("div", {
-        class: "goods-item-wrapper-availability",
+      const stock = this.elFactory("div", {
+        class: "goods-item-wrapper-stock",
+      });
+
+      const rating = this.elFactory("div", {
+        class: "goods-item-wrapper-rating",
       });
       
-      const spanavailability = document.createElement('span');
+      const spanStock = document.createElement('span');
 
       const buyButton = this.elFactory("button", {
         class: "goods-item-wrapper-buyButton",
@@ -124,69 +105,112 @@ export default class Goods extends Component {
         }
       });
 
-      nameItem.textContent = `${item.name} ${item.capacity} ${item.color} ${item.model}`;
+      // name
+      nameItem.textContent = `${this.capitilizeFirstLetter(item.brand)} 
+        ${item.name} 
+        ${item.category === 'laptops' ? item.displaySize : ''} 
+        ${item.storage && item.category !== 'watches' && item.brand !== 'samsung' ? item.storage : ''} 
+        ${(item.category !== 'headphones' && item.category !== 'watches') || item.brand !== 'apple' 
+          ? item.color : '' 
+        } 
+        ${item.model}`;
 
-      price.textContent = item.price + "$";
+      price.textContent = "$" + item.price;
       buyButton.textContent = "Buy";
-      availability.textContent = `${item.availabilityCount}`;
-      spanavailability.textContent = "In stock: "
-      availability.prepend(spanavailability);
+      stock.textContent = `${item.stock}`;
+      spanStock.textContent = "In stock: "
+      stock.prepend(spanStock);
 
       imgDiv.append(imgItem);
       listItem.append(imgDiv);
       description.append(nameItem);
+      
+      // rating
+      const ratingStars = this.elFactory('div', {class: 'goods-item-wrapper-rating-stars'})
+      for (let i = 0; i < 5; i++) {
+        if (i < item.rating) {
+          const ratingImg = this.elFactory('img', {class: 'goods-item-wrapper-rating-star', 
+          src: './assets/images/icons/rating-full.svg'})
+          ratingStars.append(ratingImg)
+        } else {
+          const ratingImg = this.elFactory('img', {class: 'goods-item-wrapper-rating-star', 
+          src: './assets/images/icons/rating-empty.svg'})
+          ratingStars.append(ratingImg)
+        }
+      }
+      rating.append(ratingStars)
+
+      const addItemOnHorizontalOrient = (name: string, title: string, value: string) => {
+        const itemDiv = this.elFactory('div', {class: `goods-item-description-${name}`})
+        const spanEl = this.elFactory('span', {})
+          spanEl.textContent = title;
+          itemDiv.textContent = `${this.capitilizeFirstLetter(value)};`;
+          itemDiv.prepend(spanEl);
+          description.append(itemDiv);
+      }
 
       if (this.orient === "horizontal") {
-        const spanName = document.createElement("span");
-        spanName.textContent = "Name: ";
-        nameItem.prepend(spanName);
+        if (item.displaySize) {
+          addItemOnHorizontalOrient('screen-size', 'Screen size: ', item.displaySize)
+        }
+        
+        if (item.cameras) {
+          addItemOnHorizontalOrient('cameras', 'Cameras: ', item.cameras)
+        }
 
-        const spanDiagonal = document.createElement("span");
-        spanDiagonal.textContent = "Diagonal: ";
-        diagonalItem.textContent = `${item.diagonal};`;
-        diagonalItem.prepend(spanDiagonal);
-        description.append(diagonalItem);
+        if (item.storage) {
+          addItemOnHorizontalOrient('storage', 'Storage: ', item.storage)
+        }
 
-        const spanCamera = document.createElement("span");
-        spanCamera.textContent = "Camera: ";
-        cameraItem.textContent = `${item.camera}`;
-        cameraItem.prepend(spanCamera);
-        description.append(cameraItem);
+        if (item.chipset) {
+          addItemOnHorizontalOrient('chipset', 'Chipset: ', item.chipset)
+        }
 
-        const spanCapacity = document.createElement("span");
-        spanCapacity.textContent = "Capacity: ";
-        capacityItem.textContent = `${item.capacity}`;
-        capacityItem.prepend(spanCapacity);
-        description.append(capacityItem);
+        if (item.protection) {
+          addItemOnHorizontalOrient('release-year', 'Release year: ', item.release)
+        }
 
-        const spanCPU = document.createElement("span");
-        spanCPU.textContent = "CPU: ";
-        cpuItem.textContent = `${item.cpu}`;
-        cpuItem.prepend(spanCPU);
-        description.append(cpuItem);
+        if (item.bandColor) {
+          addItemOnHorizontalOrient('band-color', 'Band color: ', item.bandColor)
+        } 
 
-        const spanProtection = document.createElement("span");
-        spanProtection.textContent = "Protection Standard: ";
-        protectionItem.textContent = `${item.protection}`;
-        protectionItem.prepend(spanProtection);
-        description.append(protectionItem);
+        if (item.nfc) {
+          addItemOnHorizontalOrient('nfc', 'NFC: ', item.nfc)
+        }
 
-        const spanNFC = document.createElement("span");
-        spanNFC.textContent = "NFC: ";
-        nfcItem.textContent = `${item.nfc}`;
-        nfcItem.prepend(spanNFC);
-        description.append(nfcItem);
+        if (item.material) {
+          addItemOnHorizontalOrient('matherial', 'Material: ', item.material)
+        }  
 
-        const spanMaterial = document.createElement("span");
-        spanMaterial.textContent = "Material: ";
-        materialItem.textContent = `${item.material}`;
-        materialItem.prepend(spanMaterial);
-        description.append(materialItem);
+        if (item.earpieceDesign) {
+          addItemOnHorizontalOrient('earpiece-design', 'Earpiece design: ', item.earpieceDesign)
+        } 
+
+        if (item.construction) {
+          addItemOnHorizontalOrient('construction', 'Construction: ', item.construction)
+        }       
+
+        if (item.connection) {
+          addItemOnHorizontalOrient('connection', 'Connection: ', item.connection)
+        } 
+        if (item.ram && item.brand !== 'samsung') {
+          addItemOnHorizontalOrient('ram', 'RAM: ', item.ram)
+        }    
+        if (item.storageType) {
+          addItemOnHorizontalOrient('storage-type', 'Storage type: ', item.storageType)
+        }  
       }
+
+      if (this.orient !== "vertical") {
+        let lastDescriptionEl = [...description.children][[...description.children].length - 1]
+        lastDescriptionEl.innerHTML = lastDescriptionEl.innerHTML.slice(0, -1)
+      }
+      
 
       listItem.append(description);
       priceAndBuy.append(price);
-      priceAndBuy.append(availability)
+      listItem.append(stock)
+      listItem.append(rating)
       priceAndBuy.append(buyButton);
       listItem.append(priceAndBuy);
 
@@ -208,12 +232,13 @@ export default class Goods extends Component {
 
   render() {
     const items = this.renderItems(
-      productDB,
+      this.product,
       this.goodsPerPage,
       this.currentPage,
       this.orient
     );
     const goodsNav = new GoodsNav(
+      productDB,
       "div",
       "navigation-wrapper",
       this.currentPage,
