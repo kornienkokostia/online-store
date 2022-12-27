@@ -255,6 +255,7 @@
 .goods-item-description-horizontal > .goods-item-description-name {
   margin-bottom: 15px;
   font-size: 17px;
+  -webkit-line-clamp: 1;
 }
 .goods-item-description-name {
   display: -webkit-box;
@@ -575,7 +576,7 @@
 }
 .filters-items {
   width: 100%;
-  height: 1000px;
+  height: 580px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

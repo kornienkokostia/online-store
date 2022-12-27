@@ -181,7 +181,7 @@ export default class TopPanel extends Component {
       );
 
       if (activeBtn) {
-        Pagination.paginationBtn(12, activeBtn, "vertical");
+        Pagination.paginationBtn(12, activeBtn, "vertical", productDB);
       }
     });
 
@@ -193,7 +193,7 @@ export default class TopPanel extends Component {
       );
 
       if (activeBtn) {
-        Pagination.paginationBtn(12, activeBtn, "horizontal");
+        Pagination.paginationBtn(12, activeBtn, "horizontal", productDB);
       }
     });
 

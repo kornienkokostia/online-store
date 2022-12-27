@@ -1,5 +1,6 @@
 import productDB from '../../../db/productDB';
 import Component from '../../templates/components';
+import Filtration from '../filtration/filtration';
 
 const FiltersOptionsCategory = [
   'smartphones',
@@ -55,15 +56,34 @@ export default class Filters extends Component {
     });
     filterOptionName.textContent = this.capitilizeFirstLetter(item);
 
-    filterOption.addEventListener('click', () => {
+    filterOption.addEventListener('click', (e) => {
       filterOptionCheckbox.classList.toggle('active');
       filterOptionCheckbox.getAttribute('checked') === ''
         ? filterOptionCheckbox.setAttribute('checked', 'false')
         : filterOptionCheckbox.setAttribute('checked', '');
+
+      const target = e.currentTarget;
+        if (target instanceof HTMLElement) {
+
+        let checkedCategory = filterOptionCheckbox.getAttribute('category');
+        let checkedValue;
+
+        if (filterOptionCheckbox.getAttribute('checked') === ''){
+          checkedValue = true
+        } else {
+          checkedValue = false
+        }
+
+        if (checkedCategory ) {
+          Filtration.filtrationList(checkedCategory, checkedValue);
+        }
+      }
+
     });
 
     filterOption.append(filterOptionCheckbox);
     filterOption.append(filterOptionName);
+    
 
     return filterOption;
   }
@@ -135,10 +155,10 @@ export default class Filters extends Component {
 
     // price
     const convertNumToSplitString = (str: string) => str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
-    const convertStringWithCommasToDefult = (str: string) => str.replace(/,/g,'')
+    const convertStringWithCommasToDefault = (str: string) => str.replace(/,/g,'')
 
-    const minPrice = Math.min(...productDB.map(el => +convertStringWithCommasToDefult(el.price)));
-    const maxPrice = Math.max(...productDB.map(el => +convertStringWithCommasToDefult(el.price)));
+    const minPrice = Math.min(...productDB.map(el => +convertStringWithCommasToDefault(el.price)));
+    const maxPrice = Math.max(...productDB.map(el => +convertStringWithCommasToDefault(el.price)));
     
     const filterPrice = this.elFactory('div', {
       class: 'filters-item filters-item-price active',
@@ -244,7 +264,14 @@ export default class Filters extends Component {
         } else {
           filterPriceMinValue.textContent = convertNumToSplitString(filterPriceSliderInputMin.value);
           filterPriceMaxValue.textContent = convertNumToSplitString(filterPriceSliderInputMax.value);
-          console.log(filterPriceSliderProgress.style.left);
+          
+          let leftPrice = document.querySelector('.filters-item-values-price-min-value')?.textContent;
+          let rightPrice = document.querySelector('.filters-item-values-price-max-value')?.textContent;
+
+          if (leftPrice && rightPrice) {
+            Filtration.priceFunc(convertStringWithCommasToDefault(leftPrice), convertStringWithCommasToDefault(rightPrice))
+          }
+
           filterPriceSliderProgress.style.left =
             ((minVal - +filterPriceSliderInputMin.min) /
               (+filterPriceSliderInputMin.max -
@@ -365,7 +392,14 @@ export default class Filters extends Component {
         } else {
           filterStockMinValue.textContent = filterStockSliderInputMin.value;
           filterStockMaxValue.textContent = filterStockSliderInputMax.value;
-          console.log(filterStockSliderProgress.style.left);
+
+          let leftStock = document.querySelector('.filters-item-values-stock-min-value')?.textContent;
+          let rightStock = document.querySelector('.filters-item-values-stock-max-value')?.textContent;
+         
+          if (leftStock && rightStock) {
+            Filtration.stockFunc(leftStock, rightStock)
+          }    
+
           filterStockSliderProgress.style.left =
             ((minVal - +filterStockSliderInputMin.min) /
               (+filterStockSliderInputMin.max -

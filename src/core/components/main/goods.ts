@@ -7,26 +7,30 @@ export default class Goods extends Component {
   protected goodsPerPage: number = 12;
   protected currentPage: number = 1;
   protected orient: string = "vertical";
+  protected product: ProductInterface[] = productDB;
 
   constructor(
     tagName: string,
     className: string,
     goodsPerPage: number,
     currentPage: number,
-    orient: string
+    orient: string,
+    product: ProductInterface[]
   ) {
     super(tagName, className);
     this.goodsPerPage = goodsPerPage;
     this.currentPage = currentPage;
     this.orient = orient;
+    this.product = product;
   }
 
   renderItems(
     arrData: ProductInterface[],
     goodsPerPage: number,
     currentPage: number,
-    orient: string
+    orient: string    
   ) {
+    this.product = arrData;
     this.goodsPerPage = goodsPerPage;
     this.currentPage = currentPage;
     this.orient = orient;
@@ -105,8 +109,10 @@ export default class Goods extends Component {
       nameItem.textContent = `${this.capitilizeFirstLetter(item.brand)} 
         ${item.name} 
         ${item.category === 'laptops' ? item.displaySize : ''} 
-        ${item.storage && item.category !== 'watches' ? item.storage : ''} 
-        ${item.category !== 'headphones' && item.category !== 'watches' ? item.color : ''} 
+        ${item.storage && item.category !== 'watches' && item.brand !== 'samsung' ? item.storage : ''} 
+        ${(item.category !== 'headphones' && item.category !== 'watches') || item.brand !== 'apple' 
+          ? item.color : '' 
+        } 
         ${item.model}`;
 
       price.textContent = "$" + item.price;
@@ -187,7 +193,7 @@ export default class Goods extends Component {
         if (item.connection) {
           addItemOnHorizontalOrient('connection', 'Connection: ', item.connection)
         } 
-        if (item.ram) {
+        if (item.ram && item.brand !== 'samsung') {
           addItemOnHorizontalOrient('ram', 'RAM: ', item.ram)
         }    
         if (item.storageType) {
@@ -226,7 +232,7 @@ export default class Goods extends Component {
 
   render() {
     const items = this.renderItems(
-      productDB,
+      this.product,
       this.goodsPerPage,
       this.currentPage,
       this.orient
