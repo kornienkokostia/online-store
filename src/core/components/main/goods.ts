@@ -238,7 +238,7 @@ export default class Goods extends Component {
       this.orient
     );
     const goodsNav = new GoodsNav(
-      productDB,
+      this.product,
       "div",
       "navigation-wrapper",
       this.currentPage,
@@ -248,6 +248,8 @@ export default class Goods extends Component {
 
     this.container.append(items);
     this.container.append(goodsNav);
+
+    
 
     return this.container;
   }

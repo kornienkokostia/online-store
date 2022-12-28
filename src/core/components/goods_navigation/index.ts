@@ -35,7 +35,7 @@ class GoodsNav extends Component {
     this.currentPage = currentPage;
     this.arrData = arrData
 
-    this.pagesCount = Math.ceil(arrData.length / this.goodsPerPage);
+    this.pagesCount = Math.ceil(this.arrData.length / this.goodsPerPage);
 
     const unOrderedListItem = this.elFactory("ul", {
       class: "navigation-wrapper-goods",
@@ -58,7 +58,7 @@ class GoodsNav extends Component {
           this.goodsPerPage,
           this.currentPage,
           this.orient,
-          productDB
+          this.arrData
         );
       });
 
@@ -70,7 +70,7 @@ class GoodsNav extends Component {
 
   render() {
     const items = this.displayNavBtn(
-      productDB,
+      this.arrData,
       this.goodsPerPage,
       this.currentPage
     );
