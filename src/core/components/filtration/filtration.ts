@@ -3,6 +3,7 @@ import ProductInterface from "../../../models/products";
 import { FiltersOptionsBrand, FiltersOptionsCategory } from '../../../db/filtersDB';
 import Pagination from "../pagination/pagination";
 import Sort from "../sort/sort";
+import AppState from "../save-goods-state/index";
 
 class Filtration {
   static smartphones: boolean;
@@ -35,9 +36,9 @@ class Filtration {
   static stockLeft: string = this.getMinStockVal(productDB);
   static stockRight: string = this.getMaxStockVal(productDB);
 
-  static sort: string = 'name';
+  static sort: string = 'new';
 
-  static orient: string = 'vertical';
+  static orient: string = AppState.getGoodsOrientation();
   
   static changePriceInputs = () => {
     if (this.product.length !== 0) {
@@ -260,7 +261,7 @@ class Filtration {
     const sortedArray = new Sort(this.sort, this.product).render();
 
 
-    Pagination.paginationBtn(12, 1, this.orient, sortedArray, false);
+    Pagination.paginationBtn(12, 1, sortedArray, false);
   }
 
   static resetAll() {
@@ -280,8 +281,8 @@ class Filtration {
     Filtration.xiaomi = false; 
     Filtration.asus = false; 
  
-    Filtration.brandArray = FiltersOptionsBrand;
-    Filtration.categoryArray = FiltersOptionsCategory;
+    Filtration.brandArray = [...FiltersOptionsBrand];
+    Filtration.categoryArray = [...FiltersOptionsCategory];
  
    Filtration.priceLeft = this.getMinPriceVal(productDB);
    Filtration.priceRight = this.getMaxPriceVal(productDB);

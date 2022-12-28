@@ -2,11 +2,12 @@ import Component from "../../templates/components";
 import productDB from "../../../db/productDB";
 import ProductInterface from "../../../models/products";
 import GoodsNav from "../goods_navigation/index";
+import AppState from "../save-goods-state/index";
 
 export default class Goods extends Component {
   protected goodsPerPage: number = 12;
   protected currentPage: number = 1;
-  protected orient: string = "vertical";
+  protected orient: string = AppState.getGoodsOrientation();
   protected product: ProductInterface[] = productDB;
 
   constructor(
@@ -14,28 +15,22 @@ export default class Goods extends Component {
     className: string,
     goodsPerPage: number,
     currentPage: number,
-    orient: string,
     product: ProductInterface[]
   ) {
     super(tagName, className);
     this.goodsPerPage = goodsPerPage;
     this.currentPage = currentPage;
-    this.orient = orient;
     this.product = product;
   }
-
-  
 
   renderItems(
     arrData: ProductInterface[],
     goodsPerPage: number,
     currentPage: number,
-    orient: string    
   ) {
     this.product = arrData;
     this.goodsPerPage = goodsPerPage;
     this.currentPage = currentPage;
-    this.orient = orient;
 
     if (this.product.length === 0) {
       this.container?.classList.add('not-found')
@@ -241,15 +236,13 @@ export default class Goods extends Component {
       this.product,
       this.goodsPerPage,
       this.currentPage,
-      this.orient
     );
     const goodsNav = new GoodsNav(
       this.product,
       "div",
       "navigation-wrapper",
       this.currentPage,
-      this.goodsPerPage,
-      this.orient
+      this.goodsPerPage
     ).render();
 
     this.container.append(items);

@@ -1193,4 +1193,6 @@ const productDB: ProductInterface[] = [
 
 ]
 
-export default productDB;
+export default productDB.sort((x, y) =>
+    +x.release < +y.release ? 1 : +x.release > +y.release ? -1 : 0
+);

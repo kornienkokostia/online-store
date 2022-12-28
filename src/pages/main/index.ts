@@ -18,7 +18,7 @@ class MainPage extends Page {
 
   render() {
     const mainDiv = document.createElement("main");
-    const goods = new Goods("div", "goods-wrapper", 12, 1, "vertical", productDB).render();
+    const goods = new Goods("div", "goods-wrapper", 12, 1, productDB).render();
     mainDiv.classList.add("main");
     mainDiv.append(this.filters.render());
     mainDiv.append(this.topPanel.render());
