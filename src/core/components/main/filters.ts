@@ -1,15 +1,7 @@
+import { FiltersOptionsBrand, FiltersOptionsCategory } from '../../../db/filtersDB';
 import productDB from '../../../db/productDB';
 import Component from '../../templates/components';
 import Filtration from '../filtration/filtration';
-
-const FiltersOptionsCategory = [
-  'smartphones',
-  'watches',
-  'headphones',
-  'tablets',
-  'laptops',
-];
-const FiltersOptionsBrand = ['apple', 'xiaomi', 'samsung', 'asus'];
 
 export default class Filters extends Component {
   constructor(tagName: string, className: string) {
@@ -25,6 +17,9 @@ export default class Filters extends Component {
       class: 'filters-btn reset-filters-btn',
     });
     resetFiltersButton.textContent = 'Reset filters';
+    resetFiltersButton.addEventListener('click', () => {
+      Filtration.resetAll(); 
+    })
 
     const copyLinkButton = this.elFactory('button', {
       class: 'filters-btn copy-link-btn',
@@ -73,6 +68,9 @@ export default class Filters extends Component {
         } else {
           checkedValue = false
         }
+
+        //добавлять значения в хеш без перезагрузки = сомнительно
+        // history.pushState(null, "null", `${checkedCategory}`);
 
         if (checkedCategory ) {
           Filtration.filtrationList(checkedCategory, checkedValue);
@@ -153,9 +151,11 @@ export default class Filters extends Component {
     filterBrand.append(filterBrandHeader);
     filterBrand.append(filterBrandOptions);
 
-    // price
+    // convert functions
     const convertNumToSplitString = (str: string) => str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
     const convertStringWithCommasToDefault = (str: string) => str.replace(/,/g,'')
+
+    // price
 
     const minPrice = Math.min(...productDB.map(el => +convertStringWithCommasToDefault(el.price)));
     const maxPrice = Math.max(...productDB.map(el => +convertStringWithCommasToDefault(el.price)));
@@ -269,7 +269,9 @@ export default class Filters extends Component {
           let rightPrice = document.querySelector('.filters-item-values-price-max-value')?.textContent;
 
           if (leftPrice && rightPrice) {
+            
             Filtration.priceFunc(convertStringWithCommasToDefault(leftPrice), convertStringWithCommasToDefault(rightPrice))
+            
           }
 
           filterPriceSliderProgress.style.left =

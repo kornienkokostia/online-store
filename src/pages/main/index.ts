@@ -24,7 +24,6 @@ class MainPage extends Page {
     mainDiv.append(this.topPanel.render());
     mainDiv.append(goods);
     this.container.append(mainDiv);
-
     return this.container;
   }
 }

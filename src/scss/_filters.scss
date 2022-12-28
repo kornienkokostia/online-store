@@ -192,6 +192,7 @@
             position: absolute;
             width: 100%;
             -webkit-appearance: none;
+            appearance: none;
             background: none;
             pointer-events: none;
             &::-webkit-slider-thumb{

@@ -1,4 +1,5 @@
 import ProductInterface from '../models/products';
+import { FiltersOptionsCategory } from './filtersDB';
 
 const productDB: ProductInterface[] = [
     {
