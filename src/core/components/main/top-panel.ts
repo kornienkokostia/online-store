@@ -1,6 +1,7 @@
 import productDB from '../../../db/productDB';
 import Component from '../../templates/components';
 import Pagination from "../pagination/pagination";
+import Filtration from '../filtration/filtration';
 
 const SortingOptions = [
   { value: 'name', displayValue: 'Name' },
@@ -80,6 +81,10 @@ export default class TopPanel extends Component {
       selectBoxOptionsItem.textContent = displayValue;
       selectBoxOptionsItem.addEventListener('click', () => {
         changeCurrentOption(displayValue, value);
+        const seletSortItem = selectBoxCurrentItem.getAttribute('current-selected-item');
+        if (seletSortItem) {
+          Filtration.sorted(seletSortItem)
+        }      
       });
       selectBoxOptionsDiv.append(selectBoxOptionsItem);
     };
@@ -184,7 +189,7 @@ export default class TopPanel extends Component {
       );
 
       if (activeBtn) {
-        Pagination.paginationBtn(12, activeBtn, "vertical", productDB);
+        Pagination.paginationBtn(12, activeBtn, "vertical", productDB, false);
       }
     });
 
@@ -196,7 +201,7 @@ export default class TopPanel extends Component {
       );
 
       if (activeBtn) {
-        Pagination.paginationBtn(12, activeBtn, "horizontal", productDB);
+        Pagination.paginationBtn(12, activeBtn, "horizontal", productDB, false);
       }
     });
 

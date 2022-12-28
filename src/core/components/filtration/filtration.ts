@@ -2,6 +2,7 @@ import productDB from "../../../db/productDB";
 import ProductInterface from "../../../models/products";
 import { FiltersOptionsBrand, FiltersOptionsCategory } from '../../../db/filtersDB';
 import Pagination from "../pagination/pagination";
+import Sort from "../sort/sort";
 
 class Filtration {
   static smartphones: boolean;
@@ -33,6 +34,8 @@ class Filtration {
 
   static stockLeft: string = this.getMinStockVal(productDB);
   static stockRight: string = this.getMaxStockVal(productDB);
+
+  static sort: string = 'name';
 
   static orient: string = 'vertical';
   
@@ -101,7 +104,6 @@ class Filtration {
           100 +
         '%';
     }
-    
   }
 
   static filtrationList(item: string, values: boolean) {
@@ -230,9 +232,7 @@ class Filtration {
     } else {
       this.product = arr;
     }
-    
-    console.log(this.product)
-    
+        
     this.product = this.product.filter(
       (item) =>
         +this.convertStringWithCommasToDefault(item.price) >= Number(this.priceLeft) &&
@@ -244,8 +244,11 @@ class Filtration {
         +item.stock >= Number(this.stockLeft) &&
         +item.stock <= Number(this.stockRight)
     );
-    
-    
+  }
+
+  static sorted(value: string) {
+    this.sort = value;
+    this.render();
   }
 
   static render() {
@@ -254,7 +257,10 @@ class Filtration {
     const foundItemsSpan = document.querySelector('.sorting-found-value') as HTMLElement
     foundItemsSpan.textContent = this.product.length.toString()
 
-    Pagination.paginationBtn(12, 1, this.orient, this.product);
+    const sortedArray = new Sort(this.sort, this.product).render();
+
+
+    Pagination.paginationBtn(12, 1, this.orient, sortedArray, false);
   }
 
   static resetAll() {

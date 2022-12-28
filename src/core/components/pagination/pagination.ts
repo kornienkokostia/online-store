@@ -8,7 +8,8 @@ class Pagination {
 
   static displayList() {}
 
-  static paginationBtn(goodsPerPage: number, num: number, orient: string, product: ProductInterface[] ) {
+  static paginationBtn(goodsPerPage: number, num: number, orient: string, product: ProductInterface[], 
+      needScrollTop: boolean ) {
     this.currentPage = num;
     this.goodsPerPage = goodsPerPage;
     this.orientation = orient;    
@@ -16,21 +17,46 @@ class Pagination {
     const btns = document.querySelector(".main");
     const ids = document.querySelector(".goods-wrapper");
 
+    const onWindowScroll = () => {
+      if (window.scrollY === 0) {
+          console.log(window.scrollY === 0)
+              ids?.remove();
 
-    ids?.remove();
+          const goods = new Goods(
+            "div",
+            "goods-wrapper",
+            this.goodsPerPage,
+            this.currentPage,
+            this.orientation,
+            product
+          ).render();
 
-    const goods = new Goods(
-      "div",
-      "goods-wrapper",
-      this.goodsPerPage,
-      this.currentPage,
-      this.orientation,
-      product
-    ).render();
+          btns?.append(goods);
+        }
+    }    
+    
+    if (needScrollTop) {
+      window.addEventListener('scroll', onWindowScroll)
+      window.scrollTo(0, 0)
+      setTimeout(() => {
+        window.removeEventListener('scroll', onWindowScroll)
+      }, 1000)
+      
+    } else {
+      ids?.remove();
 
-    btns?.append(goods);
+      const goods = new Goods(
+        "div",
+        "goods-wrapper",
+        this.goodsPerPage,
+        this.currentPage,
+        this.orientation,
+        product
+      ).render();
 
-    // window.scrollTo(0, 0);
+      btns?.append(goods);
+    }
+    
   }
 }
 

@@ -24,6 +24,8 @@ export default class Goods extends Component {
     this.product = product;
   }
 
+  
+
   renderItems(
     arrData: ProductInterface[],
     goodsPerPage: number,
@@ -34,6 +36,10 @@ export default class Goods extends Component {
     this.goodsPerPage = goodsPerPage;
     this.currentPage = currentPage;
     this.orient = orient;
+
+    if (this.product.length === 0) {
+      this.container?.classList.add('not-found')
+    }
 
     const pagesCount = Math.ceil(arrData.length / this.goodsPerPage);
     if (pagesCount < this.currentPage) {

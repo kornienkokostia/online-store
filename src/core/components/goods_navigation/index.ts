@@ -58,7 +58,8 @@ class GoodsNav extends Component {
           this.goodsPerPage,
           this.currentPage,
           this.orient,
-          this.arrData
+          this.arrData,
+          true
         );
       });
 

@@ -19,6 +19,14 @@
     width: 100%;
     grid-row-start: 2;
     grid-row-end: 3;
+    &.not-found::before{
+      content: 'No results were found';
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      font-size: 18px;
+      color: #7C7B80;
+    }
   }
   &-item {
     width: 100%;
