@@ -138,10 +138,13 @@ export default class TopPanel extends Component {
           addAllItemsToOptions();
           selectBoxCurrentItem.setAttribute('current-selected-item', '');
         }
+        
       });
       if ([...selectBoxOptionsDiv.children].length === 0) {
         addNotFoundItemToOptions();
       }
+
+      
     });
 
     sortingPickerSelectBox.append(selectBoxOptionsDiv);

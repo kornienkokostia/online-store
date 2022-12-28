@@ -19,89 +19,92 @@ class Filtration {
   static brandArray: string[] = [...FiltersOptionsBrand];
   static categoryArray: string[] = [...FiltersOptionsCategory];
 
-  static getMinPriceVal = () => Math.min(...this.product.map(el => +this.convertStringWithCommasToDefault(el.price)));
-  static getMaxPriceVal = () => Math.max(...this.product.map(el => +this.convertStringWithCommasToDefault(el.price)));
+  static getMinPriceVal = (arr: ProductInterface[]) => Math.min(...arr.map(el => +this.convertStringWithCommasToDefault(el.price))).toString();
+  static getMaxPriceVal = (arr: ProductInterface[]) => Math.max(...arr.map(el => +this.convertStringWithCommasToDefault(el.price))).toString();
 
-  static getMinStockVal = () => Math.min(...this.product.map(el => +this.convertStringWithCommasToDefault(`${el.stock}`)));
-  static getMaxStockVal = () => Math.max(...this.product.map(el => +this.convertStringWithCommasToDefault(`${el.stock}`)));
+  static getMinStockVal = (arr: ProductInterface[]) => Math.min(...arr.map(el => +this.convertStringWithCommasToDefault(`${el.stock}`))).toString();
+  static getMaxStockVal = (arr: ProductInterface[]) => Math.max(...arr.map(el => +this.convertStringWithCommasToDefault(`${el.stock}`))).toString();
 
-  static priceLeft: string = "124";
-  static priceRight: string = "2499";
-
-  static stockLeft: string = "10";
-  static stockRight: string = "282";
-
-  static orient: string = 'vertical';
-  
   static convertStringWithCommasToDefault = (str: string) => str.replace(/,/g,'')
   static convertNumToSplitString = (str: string) => str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
 
-  static changePriceInputs = () => {
-    const currentMinPrice = this.getMinPriceVal().toString()
-    const currentMaxPrice = this.getMaxPriceVal().toString()
+  static priceLeft: string = this.getMinPriceVal(productDB)
+  static priceRight: string = this.getMaxPriceVal(productDB);
 
-    const minPriceVal: HTMLElement = document.querySelector('.filters-item-values-price-min-value') as HTMLElement
-    const maxPriceVal: HTMLElement = document.querySelector('.filters-item-values-price-max-value') as HTMLElement
-    const minPriceEl: HTMLInputElement = document.querySelector('.filters-item-input-price-min') as HTMLInputElement
-    const maxPriceEl: HTMLInputElement = document.querySelector('.filters-item-input-price-max') as HTMLInputElement
-    const priceSliderProgress: HTMLElement = document.querySelector('.filters-item-slider-price-progress') as HTMLElement
+  static stockLeft: string = this.getMinStockVal(productDB);
+  static stockRight: string = this.getMaxStockVal(productDB);
 
-    minPriceVal.textContent = this.convertNumToSplitString(currentMinPrice)
- 
-    minPriceEl.value = currentMinPrice
-
-    maxPriceVal.textContent = this.convertNumToSplitString(currentMaxPrice)
+  static orient: string = 'vertical';
   
-    maxPriceEl.value = currentMaxPrice
+  static changePriceInputs = () => {
+    if (this.product.length !== 0) {
+      const currentMinPrice = this.getMinPriceVal(this.product)
+      const currentMaxPrice = this.getMaxPriceVal(this.product)
 
-    priceSliderProgress.style.left =
-      ((+minPriceEl.value - +minPriceEl.min) /
-        (+minPriceEl.max - +minPriceEl.min)) *
-        100 +
-      '%';
-    priceSliderProgress.style.right =
-      100 -
-      ((+maxPriceEl.value - +maxPriceEl.min) /
-        (+maxPriceEl.max - +maxPriceEl.min)) *
-        100 +
-      '%';
+      const minPriceVal: HTMLElement = document.querySelector('.filters-item-values-price-min-value') as HTMLElement
+      const maxPriceVal: HTMLElement = document.querySelector('.filters-item-values-price-max-value') as HTMLElement
+      const minPriceEl: HTMLInputElement = document.querySelector('.filters-item-input-price-min') as HTMLInputElement
+      const maxPriceEl: HTMLInputElement = document.querySelector('.filters-item-input-price-max') as HTMLInputElement
+      const priceSliderProgress: HTMLElement = document.querySelector('.filters-item-slider-price-progress') as HTMLElement
+
+      minPriceVal.textContent = this.convertNumToSplitString(currentMinPrice)
+  
+      minPriceEl.value = currentMinPrice
+
+      maxPriceVal.textContent = this.convertNumToSplitString(currentMaxPrice)
+    
+      maxPriceEl.value = currentMaxPrice
+
+      priceSliderProgress.style.left =
+        ((+minPriceEl.value - +minPriceEl.min) /
+          (+minPriceEl.max - +minPriceEl.min)) *
+          100 +
+        '%';
+      priceSliderProgress.style.right =
+        100 -
+        ((+maxPriceEl.value - +maxPriceEl.min) /
+          (+maxPriceEl.max - +maxPriceEl.min)) *
+          100 +
+        '%';
+    }
+    
   }
 
   static changeStockInputs = () => {
-    const currentMinStock = this.getMinStockVal().toString()
-    const currentMaxStock = this.getMaxStockVal().toString()
+    if (this.product.length !== 0) {
+      const currentMinStock = this.getMinStockVal(this.product)
+      const currentMaxStock = this.getMaxStockVal(this.product)
 
-    const minStockVal: HTMLElement = document.querySelector('.filters-item-values-stock-min-value') as HTMLElement
-    const maxStockVal: HTMLElement = document.querySelector('.filters-item-values-stock-max-value') as HTMLElement
-    const minStockEl: HTMLInputElement = document.querySelector('.filters-item-input-stock-min') as HTMLInputElement
-    const maxStockEl: HTMLInputElement = document.querySelector('.filters-item-input-stock-max') as HTMLInputElement
-    const stockSliderProgress: HTMLElement = document.querySelector('.filters-item-slider-stock-progress') as HTMLElement
+      const minStockVal: HTMLElement = document.querySelector('.filters-item-values-stock-min-value') as HTMLElement
+      const maxStockVal: HTMLElement = document.querySelector('.filters-item-values-stock-max-value') as HTMLElement
+      const minStockEl: HTMLInputElement = document.querySelector('.filters-item-input-stock-min') as HTMLInputElement
+      const maxStockEl: HTMLInputElement = document.querySelector('.filters-item-input-stock-max') as HTMLInputElement
+      const stockSliderProgress: HTMLElement = document.querySelector('.filters-item-slider-stock-progress') as HTMLElement
 
-    minStockVal.textContent = this.convertNumToSplitString(currentMinStock)
- 
-    minStockEl.value = currentMinStock
-
-    maxStockVal.textContent = this.convertNumToSplitString(currentMaxStock)
+      minStockVal.textContent = this.convertNumToSplitString(currentMinStock)
   
-    maxStockEl.value = currentMaxStock
+      minStockEl.value = currentMinStock
 
-    stockSliderProgress.style.left =
-      ((+minStockEl.value - +minStockEl.min) /
-        (+minStockEl.max - +minStockEl.min)) *
-        100 +
-      '%';
-    stockSliderProgress.style.right =
-      100 -
-      ((+maxStockEl.value - +maxStockEl.min) /
-        (+maxStockEl.max - +maxStockEl.min)) *
-        100 +
-      '%';
+      maxStockVal.textContent = this.convertNumToSplitString(currentMaxStock)
+    
+      maxStockEl.value = currentMaxStock
+
+      stockSliderProgress.style.left =
+        ((+minStockEl.value - +minStockEl.min) /
+          (+minStockEl.max - +minStockEl.min)) *
+          100 +
+        '%';
+      stockSliderProgress.style.right =
+        100 -
+        ((+maxStockEl.value - +maxStockEl.min) /
+          (+maxStockEl.max - +maxStockEl.min)) *
+          100 +
+        '%';
+    }
+    
   }
 
-  
-
   static filtrationList(item: string, values: boolean) {
-        
     if (
       item === "smartphones" ||
       item === "headphones" ||
@@ -222,8 +225,13 @@ class Filtration {
         )
       );
     }
-    this.product = arr;
+    if (categoryLength === FiltersOptionsCategory.length && brandLength === FiltersOptionsBrand.length) {
+      this.product = productDB
+    } else {
+      this.product = arr;
+    }
     
+    console.log(this.product)
     
     this.product = this.product.filter(
       (item) =>
@@ -250,7 +258,6 @@ class Filtration {
   }
 
   static resetAll() {
-
     const checkbox = document.querySelectorAll('.filters-item-option-checkbox');
     checkbox.forEach(item => {
      item.classList.remove('active');
@@ -267,27 +274,20 @@ class Filtration {
     Filtration.xiaomi = false; 
     Filtration.asus = false; 
  
-    Filtration.brandArray = ["apple", "samsung", "xiaomi", "asus"];
-    Filtration.categoryArray = [
-     "smartphones",
-     "headphones",
-     "laptops",
-     "watches",
-     "tablets",
-   ];
+    Filtration.brandArray = FiltersOptionsBrand;
+    Filtration.categoryArray = FiltersOptionsCategory;
  
-   Filtration.priceLeft = "124";
-   Filtration.priceRight = "2499";
+   Filtration.priceLeft = this.getMinPriceVal(productDB);
+   Filtration.priceRight = this.getMaxPriceVal(productDB);
    
-   Filtration.stockLeft = "10";
-   Filtration.stockRight = "282";
+   Filtration.stockLeft = this.getMinStockVal(productDB);
+   Filtration.stockRight = this.getMaxStockVal(productDB);
  
    this.orient = Pagination.orientation;
  
    Filtration.render();
    this.changePriceInputs()
    this.changeStockInputs()
-   console.log(this.getMinPriceVal().toString())
    }
 }
 
