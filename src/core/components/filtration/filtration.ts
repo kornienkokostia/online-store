@@ -278,7 +278,7 @@ class Filtration {
  
    Filtration.priceLeft = "124";
    Filtration.priceRight = "2499";
- 
+   
    Filtration.stockLeft = "10";
    Filtration.stockRight = "282";
  
@@ -287,6 +287,7 @@ class Filtration {
    Filtration.render();
    this.changePriceInputs()
    this.changeStockInputs()
+   console.log(this.getMinPriceVal().toString())
    }
 }
 
