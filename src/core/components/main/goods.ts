@@ -95,26 +95,37 @@ export default class Goods extends Component {
       
       const spanStock = document.createElement('span');
 
-      const buyButton = this.elFactory("button", {
-        class: "goods-item-wrapper-buyButton",
+      const addToBagBtn = this.elFactory("button", {
+        class: "goods-item-wrapper-add-to-bag-btn goods-item-wrapper-btn",
       });
+      addToBagBtn.textContent = "Buy";
+      const goodInBag = this.elFactory("div", {
+        class: "goods-item-wrapper-good-in-bag goods-item-wrapper-btn hidden",
+      }, this.elFactory('img', {
+        class: 'goods-item-wrapper-good-in-bag-img',
+        src: './assets/images/icons/selected-item.svg',
+      }));
 
-      buyButton.addEventListener("click", (e) => {
-        const target = e.target;
+      if (Bag.bagItems.filter(el => +el.id === +item.id).length > 0) {
+        addToBagBtn.classList.add('hidden')
+        goodInBag.classList.remove('hidden')
+      }
+      
+      addToBagBtn.addEventListener("click", () => {
+        Bag.bagItems.push({id: +item.id, count: 1})
+        Bag.updateBagCount()
+        addToBagBtn.classList.add('hidden')
+        goodInBag.classList.remove('hidden')
 
-        if (target instanceof Element) {
-          target.classList.toggle("goods-item-wrapper-buyButton-select");
-        }
+        AppState.setGoodsInBag(Bag.bagItems)
 
-        Bag.bagItems.push(item)
-        
+        console.log(AppState.getGoodsInBag())
       });
 
       // name
       nameItem.textContent = this.setGoodsItemName(item);
 
       price.textContent = "$" + item.price;
-      buyButton.textContent = "Buy";
       stock.textContent = `${item.stock}`;
       spanStock.textContent = "In stock: "
       stock.prepend(spanStock);
@@ -209,7 +220,8 @@ export default class Goods extends Component {
       priceAndBuy.append(price);
       listItem.append(stock)
       listItem.append(rating)
-      priceAndBuy.append(buyButton);
+      priceAndBuy.append(addToBagBtn);
+      priceAndBuy.append(goodInBag)
       listItem.append(priceAndBuy);
 
       return listItem;
@@ -245,7 +257,7 @@ export default class Goods extends Component {
     this.container.append(items);
     this.container.append(goodsNav);
 
-    
+    Bag.updateBagCount()
 
     return this.container;
   }

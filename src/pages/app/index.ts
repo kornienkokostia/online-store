@@ -4,6 +4,7 @@ import MainPage from '../main/index';
 import BagPage from '../bag/index';
 import Header from '../../core/components/header/index';
 import ErrorPage, {ErrorTypes} from '../../pages/error/index';
+import AppState from '../../core/components/save-goods-state/index';
 
 export const enum PageIDs {
     MainPage = 'main',
@@ -63,7 +64,7 @@ class App {
 
     run() {
         App.container.append(this.header.render());
-        App.renderNewPage('main');         
+        App.renderNewPage('main');        
         this.enableRouteChange();    
         this.enableRouteChangeReload();
     }

@@ -1,10 +1,13 @@
+import BagItem from 'models/bagItem';
 import Component from '../../templates/components';
-import ProductInterface from 'models/products';
+import productDB from '../../../db/productDB';
+import AppState from '../save-goods-state/index';
+;
 
 export default class Bag extends Component {
   private totalPrice = '0'
 
-  static bagItems: ProductInterface[] = []
+  static bagItems: BagItem[] = AppState.getGoodsInBag()
 
   constructor(tagName: string, className: string) {
     super(tagName, className);
@@ -14,7 +17,28 @@ export default class Bag extends Component {
 
   convertNumToSplitString = (str: string) => str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
 
-  updateBagHeaderTitle(){
+  static updateBagCount(){
+    document.querySelector('.header-bag-items-count')?.classList.remove('two-num')
+    document.querySelector('.header-bag-items-count')?.classList.remove('two-num-plus')
+    document.querySelector('.header-bag-img')?.classList.remove('two-num')
+    document.querySelector('.header-bag-img')?.classList.remove('two-num-plus')
+
+    const totalCount = Bag.bagItems.reduce((partialSum, a) => partialSum + +a.count, 0)
+    document.querySelector('.header-bag-items-count')?.classList.add('active')
+
+    const bagCount = document.querySelector('.header-bag-items-count-value') as HTMLElement
+    bagCount.textContent = `${totalCount}`
+
+    if (totalCount > 9) {
+      document.querySelector('.header-bag-items-count')?.classList.add('two-num')
+      document.querySelector('.header-bag-img')?.classList.add('two-num')
+    }
+    if (totalCount > 99) {
+      document.querySelector('.header-bag-items-count')?.classList.add('two-num-plus')
+      document.querySelector('.header-bag-img')?.classList.add('two-num-plus')
+      bagCount.textContent = `99`
+    }
+
     
   }
 
@@ -29,6 +53,7 @@ export default class Bag extends Component {
     continueShoppingBtn.textContent = 'Continue Shopping'
     continueShoppingBtn.addEventListener('click', () => {
       window.location.hash='';
+      document.querySelector('.header-search')?.classList.remove('hidden')
     })
 
     bagHeaderDiv.append(bagHeaderTitle)
@@ -69,31 +94,38 @@ export default class Bag extends Component {
     return bagTotalDiv
   }
 
-  createBagItem(item: ProductInterface){
-    const bagItemDiv = this.elFactory('div', {class: 'bag-item', 'good-id': item.id})
+  createBagItem(itemId: number, count: number){
+    const currentDBItem = productDB.filter(el => +el.id === itemId )[0]
+  
+    const bagItemDiv = this.elFactory('div', {class: 'bag-item', 'good-id': currentDBItem.id})
     const bagItemImgDiv = this.elFactory('div', {class: 'bag-item-img'})
-    const bagItemImg = this.elFactory('img', {class: 'img', src: item.imgs[0], alt: 'bag-item-img'})
+    const bagItemImg = this.elFactory('img', {class: 'img', src: currentDBItem.imgs[0], alt: 'bag-item-img'})
     bagItemImg.ondragstart = () => false
     bagItemImgDiv.append(bagItemImg)
 
     const bagItemName = this.elFactory('div', {class: 'bag-item-name'})
-    bagItemName.textContent = this.setGoodsItemName(item)
+    bagItemName.textContent = this.setGoodsItemName(currentDBItem)
     const bagItemQuantity = this.elFactory('div', {class: 'bag-item-quantity'})
-    
-    const bagItemQuantityMinus = this.elFactory('button', {class: 'bag-item-quantity-btn bag-item-quantity-minus'},
-      this.elFactory('img', {class: 'bag-item-quantity-btn-img', 
-        src: './assets/images/icons/bag-item-quantity-minus.svg', alt: 'bag-item-quantity-minus-img'})) 
 
+    const bagItemQuantityMinusImg = this.elFactory('img', {class: 'bag-item-quantity-btn-img', 
+      src: './assets/images/icons/bag-item-quantity-minus.svg', alt: 'bag-item-quantity-minus-img'})
+    bagItemQuantityMinusImg.ondragstart = () => false
+    const bagItemQuantityMinus = this.elFactory('button', {class: 'bag-item-quantity-btn bag-item-quantity-minus'},
+      bagItemQuantityMinusImg)
+    
+    const bagItemQuantityPlusImg =  this.elFactory('img', {class: 'bag-item-quantity-btn-img', 
+        src: './assets/images/icons/bag-item-quantity-plus.svg', alt: 'bag-item-quantity-plus-img'})
+    bagItemQuantityPlusImg.ondragstart = () => false
     const bagItemQuantityPlus = this.elFactory('button', {class: 'bag-item-quantity-btn bag-item-quantity-plus'},
-      this.elFactory('img', {class: 'bag-item-quantity-btn-img', 
-        src: './assets/images/icons/bag-item-quantity-plus.svg', alt: 'bag-item-quantity-plus-img'}))
+      bagItemQuantityPlusImg)
 
     const bagItemQuantityInput = this.elFactory('input', {class: 'bag-item-quantity-input', 
       type: 'number', min: '1', oninput: `validity.valid||(value='')`}) 
-    bagItemQuantityInput.value = '1'  
+    bagItemQuantityInput.value = `${Bag.bagItems.filter(el => +el.id === itemId)[0].count}`
+    
     
     const updateItemPrice = () => {
-      const curPrice = +this.convertStringWithCommasToDefault(item.price) * +bagItemQuantityInput.value
+      const curPrice = +this.convertStringWithCommasToDefault(currentDBItem.price) * +bagItemQuantityInput.value
       bagItemPriceValue.textContent = this.convertNumToSplitString(`${curPrice}`)
     }
 
@@ -114,45 +146,60 @@ export default class Bag extends Component {
       } else {
         bagTitle.textContent = `Your bag is empty.`
       }
-      
     }
-    
-    bagItemQuantityMinus.addEventListener('click', () => {
-      if (+bagItemQuantityInput.value > 1) {
-        bagItemQuantityInput.value = `${+bagItemQuantityInput.value - 1}`
-        bagItemQuantity.classList.remove('max-stock')
-        updateItemPrice()
+
+    const updateAllInfo = () => {
+      updateItemPrice()
         updateTotalPrice()
         updateBagTitle()
+        Bag.updateBagCount()
+        AppState.setGoodsInBag(Bag.bagItems)
+    }
+    
+    bagItemQuantityMinus.addEventListener('mousedown', () => {
+      if (+bagItemQuantityInput.value > 1) {
+        const valMinus = +bagItemQuantityInput.value - 1
+        bagItemQuantityInput.value = `${valMinus}`
+        Bag.bagItems.map(x => x.id === itemId ? x.count = valMinus : false);
+        bagItemQuantity.classList.remove('max-stock')
+        updateAllInfo()
       }
     })  
 
-    bagItemQuantityPlus.addEventListener('click', () => {
-      if (+bagItemQuantityInput.value < +item.stock) {
-        bagItemQuantityInput.value = `${+bagItemQuantityInput.value + 1}`
-        updateItemPrice()
-        updateTotalPrice()
-        updateBagTitle()        
+    bagItemQuantityPlus.addEventListener('mousedown', () => {
+      if (+bagItemQuantityInput.value < +currentDBItem.stock) {
+        const valPlus = +bagItemQuantityInput.value + 1
+        bagItemQuantityInput.value = `${valPlus}`
+        Bag.bagItems.map(x => x.id === itemId ? x.count = valPlus : false);
+        updateAllInfo()
       } else {
         bagItemQuantity.classList.add('max-stock')
       }
     })  
 
     bagItemQuantityInput.addEventListener('input', () => {
-      if (+bagItemQuantityInput.value > 3) bagItemQuantityInput.value = bagItemQuantityInput.value.slice(0, 3)
-      if (+bagItemQuantityInput.value > +item.stock) {
-        bagItemQuantityInput.value = `${item.stock}`
+      if (+bagItemQuantityInput.value > 3) {
+        bagItemQuantityInput.value = bagItemQuantityInput.value.slice(0, 3)
+      }
+      let inputVal = bagItemQuantityInput.value
+      if (+bagItemQuantityInput.value > +currentDBItem.stock) {
+        inputVal = `${currentDBItem.stock}`
+        bagItemQuantityInput.value = inputVal
         bagItemQuantity.classList.add('max-stock')
-        updateItemPrice()
-        updateTotalPrice()
-        updateBagTitle()
-      } else {
-        if (+bagItemQuantityInput.value > 0) {
-          updateItemPrice()
-          updateTotalPrice()
-          updateBagTitle()
-        }
+      }
+      if (+bagItemQuantityInput.value < +currentDBItem.stock) {
         bagItemQuantity.classList.remove('max-stock')
+      }
+      if (+inputVal >= 0 && inputVal !== '') {
+        Bag.bagItems.map(x => x.id === itemId ? x.count = +inputVal : false);
+        updateAllInfo()
+      }
+    })
+    bagItemQuantityInput.addEventListener('blur', () => {
+      if (bagItemQuantityInput.value === '') {
+        bagItemQuantityInput.value = '1'
+        Bag.bagItems.map(x => x.id === itemId ? x.count = +bagItemQuantityInput.value : false);
+        updateAllInfo()
       }
     })
     
@@ -163,7 +210,7 @@ export default class Bag extends Component {
     const bagItemPriceDetails = this.elFactory('div', {class: 'bag-item-price-details'})
 
     const bagItemPriceValue = this.elFactory('span', {class: 'bag-item-price-value'})
-    bagItemPriceValue.textContent = this.convertNumToSplitString(`${+this.convertStringWithCommasToDefault(item.price) * 
+    bagItemPriceValue.textContent = this.convertNumToSplitString(`${+this.convertStringWithCommasToDefault(currentDBItem.price) * 
       +bagItemQuantityInput.value}`) 
 
     const bagItemPriceCurrancy = this.elFactory('span', {class: 'bag-item-price-value-currancy'})
@@ -179,9 +226,10 @@ export default class Bag extends Component {
       const closestItem = bagItemRemoveBtn.closest('.bag-item') as HTMLElement
       document.querySelector('.bag-goods')?.removeChild(closestItem)
       const itemId = closestItem.getAttribute('good-id')
-      Bag.bagItems.map(el => el.id === itemId ? Bag.bagItems.splice(Bag.bagItems.indexOf(el), 1) : false)
+      Bag.bagItems.map(el => el.id === +itemId! ? Bag.bagItems.splice(Bag.bagItems.indexOf(el), 1) : false)
       updateTotalPrice()
       updateBagTitle()
+      Bag.updateBagCount()
       if (Bag.bagItems.length === 0) {
         document.querySelector('.bag-total')!.classList.remove('active')
       }
@@ -210,7 +258,7 @@ export default class Bag extends Component {
     const bagGoods =  this.elFactory('div', {class: 'bag-goods'})
     this.container.append(bagGoods)
     
-    Bag.bagItems.map(el => bagGoods.append(this.createBagItem(el)))
+    Bag.bagItems.map(el => bagGoods.append(this.createBagItem(el.id, el.count)))
 
     this.container.append(this.createBadTotal());
 
@@ -218,6 +266,8 @@ export default class Bag extends Component {
       [...bagHeader.children][0].textContent = `Your bag total is $ 
         ${this.convertNumToSplitString(this.totalPrice)}.`
     }
+
+    document.querySelector('.header-search')?.classList.add('hidden')
    
     return this.container;
   }

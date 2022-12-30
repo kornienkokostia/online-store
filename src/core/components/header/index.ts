@@ -25,7 +25,7 @@ export default class Header extends Component {
     const itemsCountSpan = this.elFactory('span', {
       class: 'header-bag-items-count-value',
     });
-    itemsCountSpan.textContent = '0';
+    itemsCountSpan.textContent = '';
 
     const bagDiv = this.elFactory(
       'div',
@@ -108,6 +108,7 @@ export default class Header extends Component {
 
   render() {
     this.renderHeaderWrapper();
+
     return this.container;
   }
 }

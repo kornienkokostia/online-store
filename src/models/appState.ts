@@ -1,3 +1,6 @@
+import BagItem from "./bagItem";
+
 export default interface AppStateInterface {
-    goodsOrientation: string
+    goodsOrientation: string;
+    goodsInBag: BagItem[];
 }

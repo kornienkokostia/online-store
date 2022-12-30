@@ -37,6 +37,7 @@
         border: none;
         outline: none;
         font-size: 17px;
+        user-select: none;
         cursor: pointer;
         &-continue-shopping{
             margin: 30px 0 0;
@@ -92,6 +93,7 @@
                 cursor: pointer;
                 transition: transform .1s;
                 user-select: none;
+                
                 &-img{
                     width: 14px;
                 }
