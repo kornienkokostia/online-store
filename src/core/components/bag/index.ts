@@ -43,7 +43,6 @@ export default class Bag extends Component {
 
     if (Bag.bagItems.length !== 0) {
       bagTotalDiv.classList.add('active')
-      
     }
 
     const bagTotalSummary = this.elFactory('div', {class: 'bag-total-summary'})
@@ -109,8 +108,13 @@ export default class Bag extends Component {
 
     const updateBagTitle = () => {
       const bagTitle = document.querySelector('.bag-header-title') as HTMLElement
-      bagTitle.textContent = `Your bag total is $ 
+      if (Bag.bagItems.length !== 0) {
+        bagTitle.textContent = `Your bag total is $ 
         ${this.convertNumToSplitString(this.totalPrice)}.`
+      } else {
+        bagTitle.textContent = `Your bag is empty.`
+      }
+      
     }
     
     bagItemQuantityMinus.addEventListener('click', () => {
@@ -141,10 +145,12 @@ export default class Bag extends Component {
         bagItemQuantity.classList.add('max-stock')
         updateItemPrice()
         updateTotalPrice()
+        updateBagTitle()
       } else {
         if (+bagItemQuantityInput.value > 0) {
           updateItemPrice()
           updateTotalPrice()
+          updateBagTitle()
         }
         bagItemQuantity.classList.remove('max-stock')
       }
@@ -172,7 +178,14 @@ export default class Bag extends Component {
     bagItemRemoveBtn.addEventListener('click', () => {
       const closestItem = bagItemRemoveBtn.closest('.bag-item') as HTMLElement
       document.querySelector('.bag-goods')?.removeChild(closestItem)
+      const itemId = closestItem.getAttribute('good-id')
+      Bag.bagItems.map(el => el.id === itemId ? Bag.bagItems.splice(Bag.bagItems.indexOf(el), 1) : false)
+      console.log(Bag.bagItems)
       updateTotalPrice()
+      updateBagTitle()
+      if (Bag.bagItems.length === 0) {
+        document.querySelector('.bag-total')!.classList.remove('active')
+      }
     })
 
     bagItemPriceDetails.append(bagItemPriceValueWrapper)
