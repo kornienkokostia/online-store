@@ -183,9 +183,6 @@ export default class TopPanel extends Component {
       this.elFactory('div', { class: 'square-grid' }),
     );
 
-    console.log(AppState.getGoodsOrientation())
-    console.log(changeGridToSquares.classList)
-
     AppState.getGoodsOrientation() === 'vertical' ? changeGridToSquares.classList.add('active') : changeGridToLines.classList.add('active')
 
     changeGridToSquares.addEventListener("click", () => {

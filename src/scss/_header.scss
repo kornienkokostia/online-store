@@ -22,12 +22,12 @@
             cursor: pointer;
         }
     }
-    &-cart {
+    &-bag {
         display: flex;
         align-items: center;
         padding: 0 10px;
         &-img{
-            width: 19px;
+            width: 18px;
             margin-top: -1px;
         }
         &:hover{
@@ -38,16 +38,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 15px;
-            height: 15px;
-            color: #ffffff;
-            background-color: var(--main-red);
-            border-radius: 4px;
-            right: 12px;
-            top: 10px;
+            width: 16px;
+            height: 16px;
+            color: #000000;
+            background-color: #ffffff;
+            border-radius: 50%;
+            right: 15px;
+            top: 26px;
             &-value{
                 font-size: 12px;
-                font-family: SF-Pro-Display-Light;
+                font-family: SF-Pro-Display-Medium;
                 margin-top: 1px;
             }
         }

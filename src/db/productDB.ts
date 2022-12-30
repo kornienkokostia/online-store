@@ -1099,7 +1099,7 @@ const productDB: ProductInterface[] = [
         rating: 4,
         stock: 16,
         bluetooth: '5.3',
-        chipset: 'Apple H2',
+        chipset: 'BES2500ZP',
         protection: 'IPX7',
         earpieceDesign: 'In-ear',
         construction: 'TWS',

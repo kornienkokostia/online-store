@@ -1,0 +1,168 @@
+.bag{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 85%;
+    &-wrapper{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        min-height: 100vh;
+        background-color: #ffffff;
+        padding: 20px;
+    }
+    &-header{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 40px 0 60px 0;
+        border-bottom: 1px solid var(--main-dark-grey);
+        &-title{
+            font-family: 'SF-Pro-Display-Semibold';
+            font-size: 40px;
+            font-weight: 500;
+            color: #1d1d1f;
+        }
+        &-subtitle{
+           font-size: 17px;
+           padding: 13px 0 0;
+        }
+    }
+    &-btn{
+        border-radius: 12px;
+        height: 56px;
+        width: 360px;
+        border: none;
+        outline: none;
+        font-size: 17px;
+        cursor: pointer;
+        &-continue-shopping{
+            margin: 30px 0 0;
+            background-color: rga(0,0,0,.08);
+            color: var(--main-black);   
+        }
+        &-check-out{
+            margin: 15px 0 0;
+            background-color: var(--main-blue);
+            color: #ffffff;   
+        }
+    }
+    &-goods{
+        width: 100%;
+    }
+    &-item{
+        display: flex;
+        width: 100%;
+        border-bottom: 1px solid var(--main-dark-grey);
+        padding: 60px 0;
+        column-gap: 20px;
+        &-img{
+            width: 245px;
+            min-width: 245px;
+            height: 203px;
+            & img{
+                width: 100%;
+                height: auto;
+                max-height: 203px;
+                object-fit: contain;
+            }
+        }
+        &-name{
+            font-size: 24px;
+            font-family: 'SF-Pro-Display-Semibold';
+            width: calc(85% - 331px);
+            padding-right: 5.5%;
+        }
+        &-quantity{
+            display: flex;
+            width: 96px;
+            height: 26px;
+            column-gap: 7px;
+            &-btn{
+                width: 26px;
+                height: 26px;
+                border: 1.5px solid var(--main-dark-grey);
+                background-color: #ffffff;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                transition: transform .2s;
+                user-select: none;
+                &-img{
+                    width: 14px;
+                }
+                &:active{
+                    transform: scale(0.75);
+                }
+            }
+            &-input{
+                width: 30px;
+                outline: none;
+                border: none;
+                text-align: center;
+                &::-webkit-outer-spin-button, &::-webkit-inner-spin-button{
+                    -webkit-appearance: none;
+                    appearance: none;
+                }
+            }
+            &.max-stock{
+                &::before{
+                    position: absolute;
+                    text-align: center;
+                    width: 96px;
+                    margin-top: 40px;
+                    content: "Maximum stock";
+                    color: var(--main-text-color-light);
+                    font-size: 17px;
+                }
+            }
+        }
+        &-price-details{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            width: 15%;
+        }
+        &-price-value-wrapper{
+            font-size: 24px;
+            font-family: 'SF-Pro-Display-Semibold';
+        }
+        &-remove-btn{
+            outline: none;
+            background-color: transparent;
+            border: none;
+            font-size: 17px;
+            margin-top: 15px;
+            letter-spacing: 0.022em;
+            color: var(--main-text-color-light);
+            cursor: pointer;
+            user-select: none;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &-total{
+        display: none;
+        flex-direction: column;
+        align-items: flex-end;
+        width: 100%;
+        margin-bottom: 60px;
+        &-summary{
+            display: flex;
+            justify-content: space-between;
+            width: calc(100% - 265px);
+            font-size: 24px;
+            font-family: 'SF-Pro-Display-Semibold';
+            padding: 20px 0 20px 0;
+        }
+        &.active{
+            display: flex;
+        }
+    }
+}

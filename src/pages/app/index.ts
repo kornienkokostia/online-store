@@ -1,18 +1,17 @@
 import StatisticsPage from '../../pages/statistics/index'
 import Page from '../../core/templates/page';
 import MainPage from '../main/index';
-import SettingsPage from '../settings/index';
+import BagPage from '../bag/index';
 import Header from '../../core/components/header/index';
 import ErrorPage, {ErrorTypes} from '../../pages/error/index';
 
 export const enum PageIDs {
-    MainPage = 'main-page',
-    SettingsPage = 'settings-page',
+    MainPage = 'main',
+    BagPage = 'bag',
     StatisticsPage = 'statistics-page',
 }
 
 class App {
-
     private static container: HTMLElement = document.body;
     private static defaultPageID = 'current-page'
     private initialPage: MainPage;
@@ -29,8 +28,8 @@ class App {
 
         if (idPage == PageIDs.MainPage) {
             page = new MainPage(idPage);
-        } else if (idPage == PageIDs.SettingsPage) {
-            page = new SettingsPage(idPage);
+        } else if (idPage == PageIDs.BagPage) {
+            page = new BagPage(idPage);
         } else if (idPage == PageIDs.StatisticsPage) {
             page = new StatisticsPage(idPage)
         } else {
@@ -46,7 +45,7 @@ class App {
 
     private hashChangeHandle() {
         const hash = window.location.hash.slice(1);   
-        hash ? App.renderNewPage(hash) : App.renderNewPage('main-page');  
+        hash ? App.renderNewPage(hash) : App.renderNewPage('main');  
     }
 
     private enableRouteChange() {
@@ -58,14 +57,13 @@ class App {
     }
 
     constructor() {        
-        this.initialPage = new MainPage('main-page');
+        this.initialPage = new MainPage('main');
         this.header = new Header('header', 'header-wrapper');
     }
 
     run() {
-
         App.container.append(this.header.render());
-        App.renderNewPage('main-page');         
+        App.renderNewPage('main');         
         this.enableRouteChange();    
         this.enableRouteChangeReload();
     }

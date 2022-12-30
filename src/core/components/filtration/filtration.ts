@@ -106,7 +106,7 @@ class Filtration {
         '%';
     }
   }
-
+  
   static filtrationList(item: string, values: boolean) {
     if (
       item === "smartphones" ||

@@ -1,3 +1,5 @@
+import ProductInterface from "models/products";
+
 interface AttributeCollection {
     [name: string]: string | boolean;
 }
@@ -34,6 +36,14 @@ abstract class Component {
     }
 
     protected capitilizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1)
+
+    protected setGoodsItemName = (item: ProductInterface) => `${this.capitilizeFirstLetter(item.brand)} 
+        ${item.name} 
+        ${item.category === 'laptops' ? item.displaySize : ''} 
+        ${item.storage && item.category !== 'watches' && item.brand !== 'samsung' ? item.storage : ''} 
+        ${(item.category !== 'headphones' && item.category !== 'watches') || item.brand !== 'apple' 
+        ? item.color : ''} 
+        ${item.model}`
     
     render() {
         return this.container;

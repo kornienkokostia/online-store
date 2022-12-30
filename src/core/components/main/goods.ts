@@ -3,6 +3,7 @@ import productDB from "../../../db/productDB";
 import ProductInterface from "../../../models/products";
 import GoodsNav from "../goods_navigation/index";
 import AppState from "../save-goods-state/index";
+import Bag from "../bag/index";
 
 export default class Goods extends Component {
   protected goodsPerPage: number = 12;
@@ -104,17 +105,13 @@ export default class Goods extends Component {
         if (target instanceof Element) {
           target.classList.toggle("goods-item-wrapper-buyButton-select");
         }
+
+        Bag.bagItems.push(item)
+        
       });
 
       // name
-      nameItem.textContent = `${this.capitilizeFirstLetter(item.brand)} 
-        ${item.name} 
-        ${item.category === 'laptops' ? item.displaySize : ''} 
-        ${item.storage && item.category !== 'watches' && item.brand !== 'samsung' ? item.storage : ''} 
-        ${(item.category !== 'headphones' && item.category !== 'watches') || item.brand !== 'apple' 
-          ? item.color : '' 
-        } 
-        ${item.model}`;
+      nameItem.textContent = this.setGoodsItemName(item);
 
       price.textContent = "$" + item.price;
       buyButton.textContent = "Buy";

@@ -21,28 +21,31 @@ export default class Header extends Component {
     );
     return logoDiv;
   }
-  createCart() {
+  createBag() {
     const itemsCountSpan = this.elFactory('span', {
-      class: 'header-cart-items-count-value',
+      class: 'header-bag-items-count-value',
     });
     itemsCountSpan.textContent = '0';
 
-    const cartDiv = this.elFactory(
+    const bagDiv = this.elFactory(
       'div',
-      { class: 'header-cart' },
+      { class: 'header-bag' },
       this.elFactory('img', {
-        class: 'header-cart-img',
-        src: './assets/images/icons/cart.svg',
-        alt: 'cart',
+        class: 'header-bag-img',
+        src: './assets/images/icons/bag.svg',
+        alt: 'bag',
       }),
       this.elFactory(
         'div',
-        { class: 'header-cart-items-count' },
+        { class: 'header-bag-items-count' },
         itemsCountSpan,
       ),
     );
+    bagDiv.addEventListener('click', () => {
+      window.location.hash='bag';
+    })
 
-    return cartDiv;
+    return bagDiv;
   }
   createHeaderSearch() {
     const searchDiv = this.elFactory('div', { class: 'header-search' });
@@ -95,11 +98,11 @@ export default class Header extends Component {
   renderHeaderWrapper() {
     const headerWrapper = this.elFactory('div', { class: 'header' });
     const logo = this.createHeaderLogo();
-    const cart = this.createCart();
+    const bag = this.createBag();
     const searchBar = this.createHeaderSearch();
     headerWrapper.append(logo);
     headerWrapper.append(searchBar);
-    headerWrapper.append(cart);
+    headerWrapper.append(bag);
     this.container.append(headerWrapper);
   }
 
