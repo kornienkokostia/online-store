@@ -24,8 +24,11 @@ export default class Bag extends Component {
     document.querySelector('.header-bag-img')?.classList.remove('two-num-plus')
 
     const totalCount = Bag.bagItems.reduce((partialSum, a) => partialSum + +a.count, 0)
-    document.querySelector('.header-bag-items-count')?.classList.add('active')
-
+    if (Bag.bagItems.length !== 0) {
+      document.querySelector('.header-bag-items-count')?.classList.add('active')
+      document.querySelector('.header-bag-img')?.classList.add('active')
+    }
+    
     const bagCount = document.querySelector('.header-bag-items-count-value') as HTMLElement
     bagCount.textContent = `${totalCount}`
 
@@ -37,9 +40,7 @@ export default class Bag extends Component {
       document.querySelector('.header-bag-items-count')?.classList.add('two-num-plus')
       document.querySelector('.header-bag-img')?.classList.add('two-num-plus')
       bagCount.textContent = `99`
-    }
-
-    
+    }   
   }
 
   createBagHeader(){
@@ -95,7 +96,7 @@ export default class Bag extends Component {
   }
 
   createBagItem(itemId: number, count: number){
-    const currentDBItem = productDB.filter(el => +el.id === itemId )[0]
+    const currentDBItem = productDB.filter(el => +el.id === itemId)[0]
   
     const bagItemDiv = this.elFactory('div', {class: 'bag-item', 'good-id': currentDBItem.id})
     const bagItemImgDiv = this.elFactory('div', {class: 'bag-item-img'})
@@ -227,11 +228,11 @@ export default class Bag extends Component {
       document.querySelector('.bag-goods')?.removeChild(closestItem)
       const itemId = closestItem.getAttribute('good-id')
       Bag.bagItems.map(el => el.id === +itemId! ? Bag.bagItems.splice(Bag.bagItems.indexOf(el), 1) : false)
-      updateTotalPrice()
-      updateBagTitle()
-      Bag.updateBagCount()
+      updateAllInfo()
       if (Bag.bagItems.length === 0) {
         document.querySelector('.bag-total')!.classList.remove('active')
+        document.querySelector('.header-bag-items-count')?.classList.remove('active')
+        document.querySelector('.header-bag-img')?.classList.remove('active')
       }
     })
 
