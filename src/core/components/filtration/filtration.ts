@@ -3,6 +3,7 @@ import ProductInterface from "../../../models/products";
 import { FiltersOptionsBrand, FiltersOptionsCategory } from '../../../db/filtersDB';
 import Pagination from "../pagination/pagination";
 import Sort from "../sort/sort";
+import Search from "../search/search";
 import AppState from "../save-goods-state/index";
 
 class Filtration {
@@ -39,6 +40,7 @@ class Filtration {
   static sort: string = 'new';
 
   static orient: string = AppState.getGoodsOrientation();
+  static search: string = '';
   
   static changePriceInputs = () => {
     if (this.product.length !== 0) {
@@ -252,6 +254,11 @@ class Filtration {
     this.render();
   }
 
+  static searched(value: string) {    
+    this.search = value;
+    this.render();
+  }
+
   static render() {
     this.filtration();
    
@@ -260,12 +267,14 @@ class Filtration {
 
     const sortedArray = new Sort(this.sort, this.product).render();
 
+    const searchedArray = new Search(this.search, sortedArray).render();
 
-    Pagination.paginationBtn(12, 1, sortedArray, false);
+    Pagination.paginationBtn(12, 1, searchedArray, false);
   }
 
   static resetAll() {
     const checkbox = document.querySelectorAll('.filters-item-option-checkbox');
+    const searchField = document.querySelector('.header-search-input');
     checkbox.forEach(item => {
      item.classList.remove('active');
      item.setAttribute('checked', 'false')
@@ -289,9 +298,16 @@ class Filtration {
    
    Filtration.stockLeft = this.getMinStockVal(productDB);
    Filtration.stockRight = this.getMaxStockVal(productDB);
- 
+
    this.orient = Pagination.orientation;
- 
+
+
+   if (searchField instanceof HTMLInputElement) {
+    searchField.value = '';
+    searchField.textContent = '';
+   }
+
+   this.search = '';
    Filtration.render();
    this.changePriceInputs()
    this.changeStockInputs()

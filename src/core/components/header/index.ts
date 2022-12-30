@@ -1,4 +1,5 @@
 import Component from '../../templates/components';
+import Filtration from '../filtration/filtration';
 
 export default class Header extends Component {
   constructor(tagName: string, className: string) {
@@ -76,6 +77,7 @@ export default class Header extends Component {
       searchInput.value != '' ? clearBtn.classList.add('visible') : false;
     });
     searchInput.addEventListener('input', () => {
+      Filtration.searched(searchInput.value)  
       searchInput.value != ''
         ? clearBtn.classList.add('visible')
         : clearBtn.classList.remove('visible');

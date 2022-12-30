@@ -1,6 +1,5 @@
 import productDB from "../../../db/productDB";
 import ProductInterface from "../../../models/products";
-import Pagination from "../pagination/pagination";
 
 class Sort {
   protected array: ProductInterface[] = productDB;
