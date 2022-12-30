@@ -180,7 +180,6 @@ export default class Bag extends Component {
       document.querySelector('.bag-goods')?.removeChild(closestItem)
       const itemId = closestItem.getAttribute('good-id')
       Bag.bagItems.map(el => el.id === itemId ? Bag.bagItems.splice(Bag.bagItems.indexOf(el), 1) : false)
-      console.log(Bag.bagItems)
       updateTotalPrice()
       updateBagTitle()
       if (Bag.bagItems.length === 0) {
