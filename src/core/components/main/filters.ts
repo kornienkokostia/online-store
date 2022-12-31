@@ -37,13 +37,16 @@ export default class Filters extends Component {
       class: 'filters-item-option',
     });
 
+    const filterOptionCheckboxImg = this.elFactory('img', {
+      class: 'filters-item-option-checkbox-img',
+      src: './assets/images/icons/selected-item.svg',
+      alt: 'checkbox-img'
+    })
+    filterOptionCheckboxImg.ondragstart = () => false
     const filterOptionCheckbox = this.elFactory(
       'div',
       { class: 'filters-item-option-checkbox', category: item, checked: false },
-      this.elFactory('img', {
-        class: 'filters-item-option-checkbox-img',
-        src: './assets/images/icons/selected-item.svg',
-      }),
+      filterOptionCheckboxImg
     );
 
     const filterOptionName = this.elFactory('span', {

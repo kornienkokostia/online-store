@@ -257,17 +257,21 @@ class Filtration {
   static searched(value: string) {    
     this.search = value;
     this.render();
+    this.changePriceInputs()
+    this.changeStockInputs()
   }
 
   static render() {
     this.filtration();
-   
-    const foundItemsSpan = document.querySelector('.sorting-found-value') as HTMLElement
-    foundItemsSpan.textContent = this.product.length.toString()
 
     const sortedArray = new Sort(this.sort, this.product).render();
 
     const searchedArray = new Search(this.search, sortedArray).render();
+
+    this.product = searchedArray
+    
+    const foundItemsSpan = document.querySelector('.sorting-found-value') as HTMLElement
+    foundItemsSpan.textContent = this.product.length.toString()
 
     Pagination.paginationBtn(12, 1, searchedArray, false);
   }
@@ -300,7 +304,6 @@ class Filtration {
    Filtration.stockRight = this.getMaxStockVal(productDB);
 
    this.orient = Pagination.orientation;
-
 
    if (searchField instanceof HTMLInputElement) {
     searchField.value = '';

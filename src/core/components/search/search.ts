@@ -13,6 +13,13 @@ class Search {
     this.value = value;
   }
 
+  protected getGoodsItemName = (item: ProductInterface) => `${item.brand} ${item.name}
+    ${item.category === 'laptops' ? item.displaySize : ''} 
+    ${item.storage && item.category !== 'watches' && item.brand !== 'samsung' ? item.storage : ''} 
+    ${(item.category !== 'headphones' && item.category !== 'watches') || item.brand !== 'apple' 
+    ? item.color : ''} 
+    ${item.model}`
+
   static convertStringWithCommasToDefault = (str: string) =>
     str.replace(/,/g, "");
   static convertNumToSplitString = (str: string) =>
@@ -33,13 +40,12 @@ class Search {
     this.array = this.array.filter((item) => {
       const xToNormPrice = Search.convertStringWithCommasToDefault(item.price);
 
-      let field = value.toString().toLowerCase();
+      let field = value.toString().toLowerCase().replace(/\s/g, '');
+
+      const itemName = this.getGoodsItemName(item).toLowerCase().replace(/\s/g, '').replace(/”/g, `''`)
 
       return (
-        item.brand.toLowerCase().includes(field) ||
-        item.name.toLowerCase().includes(field) ||
-        item.color?.toLowerCase().includes(field) ||
-        item.model.toLowerCase().includes(field) ||
+        itemName.includes(field) ||
         item.displaySize?.toLowerCase().includes(field) ||
         item.cameras?.toLowerCase().includes(field) ||
         item.storage?.toLowerCase().includes(field) ||

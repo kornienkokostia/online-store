@@ -140,10 +140,12 @@ export default class Goods extends Component {
         if (i < item.rating) {
           const ratingImg = this.elFactory('img', {class: 'goods-item-wrapper-rating-star', 
           src: './assets/images/icons/rating-full.svg'})
+          ratingImg.ondragstart = () => false
           ratingStars.append(ratingImg)
         } else {
           const ratingImg = this.elFactory('img', {class: 'goods-item-wrapper-rating-star', 
           src: './assets/images/icons/rating-empty.svg'})
+          ratingImg.ondragstart = () => false
           ratingStars.append(ratingImg)
         }
       }
