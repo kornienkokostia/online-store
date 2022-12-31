@@ -118,8 +118,6 @@ export default class Goods extends Component {
         goodInBag.classList.remove('hidden')
 
         AppState.setGoodsInBag(Bag.bagItems)
-
-        console.log(AppState.getGoodsInBag())
       });
 
       // name

@@ -251,15 +251,13 @@ export default class Bag extends Component {
     return bagItemDiv
   }
 
-  
-
   render() {
     const bagHeader = this.createBagHeader()
     this.container.append(bagHeader)
     const bagGoods =  this.elFactory('div', {class: 'bag-goods'})
     this.container.append(bagGoods)
     
-    Bag.bagItems.map(el => bagGoods.append(this.createBagItem(el.id, el.count)))
+    Bag.bagItems.map(el => bagGoods.prepend(this.createBagItem(el.id, el.count)))
 
     this.container.append(this.createBadTotal());
 
