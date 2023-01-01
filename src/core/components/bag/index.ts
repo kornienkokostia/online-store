@@ -50,11 +50,13 @@ export default class Bag extends Component {
     
     const bagHeaderSubTitle = this.elFactory('p', {class: 'bag-header-subtitle'})
     bagHeaderSubTitle.textContent = 'Free delivery and free returns.'
-    const continueShoppingBtn = this.elFactory('button', {class: 'bag-btn bag-btn-continue-shopping'})
-    continueShoppingBtn.textContent = 'Continue Shopping'
+    const continueShoppingLink = this.elFactory('a', {class: 'bag-btn-continue-shopping-link', 
+      href: './#main'})
+    continueShoppingLink.textContent = 'Continue Shopping'
+    const continueShoppingBtn = this.elFactory('button', {class: 'bag-btn bag-btn-continue-shopping'},
+      continueShoppingLink)
     continueShoppingBtn.addEventListener('click', () => {
-      window.location.hash='';
-      document.querySelector('.header-search')?.classList.remove('hidden')
+      window.location.hash='main';
     })
 
     bagHeaderDiv.append(bagHeaderTitle)
@@ -95,7 +97,7 @@ export default class Bag extends Component {
     return bagTotalDiv
   }
 
-  createBagItem(itemId: number, count: number){
+  createBagItem(itemId: number){
     const currentDBItem = productDB.filter(el => +el.id === itemId)[0]
   
     const bagItemDiv = this.elFactory('div', {class: 'bag-item', 'good-id': currentDBItem.id})
@@ -104,8 +106,11 @@ export default class Bag extends Component {
     bagItemImg.ondragstart = () => false
     bagItemImgDiv.append(bagItemImg)
 
-    const bagItemName = this.elFactory('div', {class: 'bag-item-name'})
+    
+    const bagItemName = this.elFactory('a', {class: 'bag-item-name', href: `./#product&id=${currentDBItem.id}`})
     bagItemName.textContent = this.setGoodsItemName(currentDBItem)
+    const bagItemNameWrapper = this.elFactory('div', {class: 'bag-item-name-wrapper'}, bagItemName)
+    
     const bagItemQuantity = this.elFactory('div', {class: 'bag-item-quantity'})
 
     const bagItemQuantityMinusImg = this.elFactory('img', {class: 'bag-item-quantity-btn-img', 
@@ -157,7 +162,7 @@ export default class Bag extends Component {
         AppState.setGoodsInBag(Bag.bagItems)
     }
     
-    bagItemQuantityMinus.addEventListener('mousedown', () => {
+    bagItemQuantityMinus.addEventListener('mouseup', () => {
       if (+bagItemQuantityInput.value > 1) {
         const valMinus = +bagItemQuantityInput.value - 1
         bagItemQuantityInput.value = `${valMinus}`
@@ -167,7 +172,7 @@ export default class Bag extends Component {
       }
     })  
 
-    bagItemQuantityPlus.addEventListener('mousedown', () => {
+    bagItemQuantityPlus.addEventListener('mouseup', () => {
       if (+bagItemQuantityInput.value < +currentDBItem.stock) {
         const valPlus = +bagItemQuantityInput.value + 1
         bagItemQuantityInput.value = `${valPlus}`
@@ -225,12 +230,36 @@ export default class Bag extends Component {
 
     bagItemRemoveBtn.addEventListener('click', () => {
       const closestItem = bagItemRemoveBtn.closest('.bag-item') as HTMLElement
-      document.querySelector('.bag-goods')?.removeChild(closestItem)
+      closestItem.classList.add('hidden');
+     
+      setTimeout(() => {
+        
+        
+        [...document.querySelectorAll('.bag-item')].map(el => el.classList.add('move'))
+        document.querySelector('.bag-total')!.classList.add('move')
+      }, 500);
+      setTimeout(() => {
+        document.querySelector('.bag-goods')?.removeChild(closestItem);
+        [...document.querySelectorAll('.bag-item')].map(el => el.classList.remove('move'))
+        document.querySelector('.bag-total')!.classList.remove('move')
+        
+      }, 1000);
+      
+      
       const itemId = closestItem.getAttribute('good-id')
       Bag.bagItems.map(el => el.id === +itemId! ? Bag.bagItems.splice(Bag.bagItems.indexOf(el), 1) : false)
       updateAllInfo()
       if (Bag.bagItems.length === 0) {
-        document.querySelector('.bag-total')!.classList.remove('active')
+        setTimeout(() => {
+          document.querySelector('.bag-total')!.classList.add('hide')
+          
+        }, 500)
+        
+        setTimeout(() => {
+          document.querySelector('.bag-total')!.classList.remove('active')
+          document.querySelector('.bag-total')!.classList.remove('hide')
+        }, 1000)
+        
         document.querySelector('.header-bag-items-count')?.classList.remove('active')
         document.querySelector('.header-bag-img')?.classList.remove('active')
       }
@@ -240,7 +269,7 @@ export default class Bag extends Component {
     bagItemPriceDetails.append(bagItemRemoveBtn)
 
     bagItemDiv.append(bagItemImgDiv)
-    bagItemDiv.append(bagItemName)
+    bagItemDiv.append(bagItemNameWrapper)
     bagItemDiv.append(bagItemQuantity)
     bagItemDiv.append(bagItemPriceDetails)
 
@@ -257,7 +286,7 @@ export default class Bag extends Component {
     const bagGoods =  this.elFactory('div', {class: 'bag-goods'})
     this.container.append(bagGoods)
     
-    Bag.bagItems.map(el => bagGoods.prepend(this.createBagItem(el.id, el.count)))
+    Bag.bagItems.map(el => bagGoods.prepend(this.createBagItem(el.id)))
 
     this.container.append(this.createBadTotal());
 

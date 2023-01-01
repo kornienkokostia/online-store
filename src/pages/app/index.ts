@@ -1,15 +1,14 @@
-import StatisticsPage from '../../pages/statistics/index'
 import Page from '../../core/templates/page';
 import MainPage from '../main/index';
 import BagPage from '../bag/index';
 import Header from '../../core/components/header/index';
 import ErrorPage, {ErrorTypes} from '../../pages/error/index';
-import AppState from '../../core/components/save-goods-state/index';
+import ProductPage from '../product/index';
 
 export const enum PageIDs {
     MainPage = 'main',
     BagPage = 'bag',
-    StatisticsPage = 'statistics-page',
+    ProductPage = 'product',
 }
 
 class App {
@@ -17,8 +16,13 @@ class App {
     private static defaultPageID = 'current-page'
     private initialPage: MainPage;
     private header: Header;
+    static stringURL: string = '';
+    static currentURL: string = '#main'
 
     static renderNewPage(idPage: string) { 
+        const idURL = idPage.split('&')[0]
+        this.currentURL = idPage
+
         const currentPageHTML = document.querySelector(`#${App.defaultPageID}`);
         
         if (currentPageHTML) {
@@ -27,14 +31,14 @@ class App {
 
         let page: Page | null = null;
 
-        if (idPage == PageIDs.MainPage) {
-            page = new MainPage(idPage);
-        } else if (idPage == PageIDs.BagPage) {
-            page = new BagPage(idPage);
-        } else if (idPage == PageIDs.StatisticsPage) {
-            page = new StatisticsPage(idPage)
+        if (idURL == PageIDs.MainPage) {
+            page = new MainPage(idURL);
+        } else if (idURL == PageIDs.BagPage) {
+            page = new BagPage(idURL);
+        } else if (idURL == PageIDs.ProductPage && idPage.split('id=')[1].length !== 0) {
+            page = new ProductPage(idURL)
         } else {
-            page = new ErrorPage(idPage, ErrorTypes.Error_404);
+            page = new ErrorPage(idURL, ErrorTypes.Error_404);
         }
 
         if (page) {
@@ -46,7 +50,12 @@ class App {
 
     private hashChangeHandle() {
         const hash = window.location.hash.slice(1);   
-        hash ? App.renderNewPage(hash) : App.renderNewPage('main');  
+        if (hash) {
+            App.renderNewPage(hash)
+        } else {
+           App.renderNewPage('main');   
+           window.location.hash = 'main'
+        }
     }
 
     private enableRouteChange() {

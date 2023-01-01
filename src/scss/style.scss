@@ -6,6 +6,7 @@
 @import './filters';
 @import './navigation_goods';
 @import './bag';
+@import './product';
 
 /* apple fonts */
 @font-face {
@@ -62,8 +63,10 @@ h1{
   --main-light-grey: #e2e2e5;
   --main-dark-grey: #c2c2c7;
   --main-text-color: #4d4d4d;
-  --main-text-color-light: #8c8c94;
-  --main-blue: #007aff;
+  --main-text-color-light: #86868b;
+  --main-blue: #0071e3;
+  --main-blue-hover: #0077ed;
+  --main-blue-text: #0066cc;
   --main-green: #00e075;
   --additional-dark-grey: #252528;
   --additioanl-input-placeholder: #a6a6a6;
@@ -71,5 +74,5 @@ h1{
 
 #current-page{
   width: 100%;
-  min-height: 100vh;
+  height: 100%;
 }

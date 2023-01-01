@@ -57,9 +57,12 @@ export default class Goods extends Component {
       });
 
       const imgDiv = this.elFactory("div", { class: "goods-item-img" });
-
+      
       const imgItem = this.elFactory("img", { class: "img", src: item.imgs[0] });
       imgItem.ondragstart = () => false
+      
+      imgDiv.append(imgItem)
+      const imgDivWrapper = this.elFactory('a', {class: 'goods-item-img-wrapper', href: `./#product&id=${item.id}`}, imgDiv)
 
       const description = this.elFactory("div", {
         class: `${
@@ -67,10 +70,10 @@ export default class Goods extends Component {
             ? "goods-item-description"
             : "goods-item-description goods-item-description-horizontal"
         }`,
-      });
+      });     
 
-      const nameItem = this.elFactory("div", {
-        class: "goods-item-description-name",
+      const nameItem = this.elFactory("a", {
+        class: "goods-item-description-name", href: `./#product&id=${item.id}`
       });
 
       const priceAndBuy = this.elFactory("div", {
@@ -128,8 +131,8 @@ export default class Goods extends Component {
       spanStock.textContent = "In stock: "
       stock.prepend(spanStock);
 
-      imgDiv.append(imgItem);
-      listItem.append(imgDiv);
+      
+      listItem.append(imgDivWrapper);
       description.append(nameItem);
       
       // rating
@@ -137,12 +140,12 @@ export default class Goods extends Component {
       for (let i = 0; i < 5; i++) {
         if (i < item.rating) {
           const ratingImg = this.elFactory('img', {class: 'goods-item-wrapper-rating-star', 
-          src: './assets/images/icons/rating-full.svg'})
+          src: './assets/images/icons/rating-full.svg', alt: 'rating-star'})
           ratingImg.ondragstart = () => false
           ratingStars.append(ratingImg)
         } else {
           const ratingImg = this.elFactory('img', {class: 'goods-item-wrapper-rating-star', 
-          src: './assets/images/icons/rating-empty.svg'})
+          src: './assets/images/icons/rating-empty.svg', alt: 'rating-star'})
           ratingImg.ondragstart = () => false
           ratingStars.append(ratingImg)
         }
@@ -256,6 +259,8 @@ export default class Goods extends Component {
 
     this.container.append(items);
     this.container.append(goodsNav);
+
+    document.querySelector('.header-search')?.classList.remove('hidden')
 
     Bag.updateBagCount()
 

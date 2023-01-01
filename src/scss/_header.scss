@@ -14,8 +14,14 @@
     &-logo{
         display: flex;
         align-items: center;
-        padding: 0 10px;
-        &-link, &-img{
+        &-link{
+            display: flex;
+            align-items: center;
+           height: 100%;
+           width: 100%;
+           padding: 0 10px;
+        }
+        &-img{
             height: 18px;
         }
         &:hover{

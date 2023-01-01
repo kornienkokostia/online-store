@@ -29,8 +29,8 @@ export default class Header extends Component {
     itemsCountSpan.textContent = '';
 
     const bagDiv = this.elFactory(
-      'div',
-      { class: 'header-bag' },
+      'a',
+      { class: 'header-bag', href: './#bag'},
       this.elFactory('img', {
         class: 'header-bag-img',
         src: './assets/images/icons/bag.svg',
@@ -42,10 +42,7 @@ export default class Header extends Component {
         itemsCountSpan,
       ),
     );
-    bagDiv.addEventListener('click', () => {
-      window.location.hash='bag';
-    })
-
+    
     return bagDiv;
   }
   createHeaderSearch() {
@@ -84,6 +81,7 @@ export default class Header extends Component {
     });
     clearBtn.addEventListener('mousedown', e => {
       searchInput.value = '';
+      Filtration.searched(searchInput.value)  
       clearBtn.classList.remove('visible');
       e.preventDefault();
     });
