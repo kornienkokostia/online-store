@@ -8,10 +8,10 @@ export default class AppState {
     }
 
     static innit(){
-        // if (!localStorage.getItem('appState')) {
+        if (!localStorage.getItem('appState')) {
             AppState.setGoodsOrientation('vertical')
             AppState.setGoodsInBag([])
-        // }
+        }
     }
 
     static getGoodsOrientation(){

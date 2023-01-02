@@ -12,9 +12,6 @@ class RoutingWithReload {
     static changeURL(value: string) {
     this.urlString = value;
 
-    console.log(this.urlString);
-    
-
     const array = value.split("&");
 
     const parametersArray = [...array.slice(1)];

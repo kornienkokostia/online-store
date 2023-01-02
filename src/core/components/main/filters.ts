@@ -257,6 +257,20 @@ export default class Filters extends Component {
         let maxVal = +filterPriceSliderInputMax.value;
         let gap = 0;
 
+        let leftPrice = document.querySelector(
+          ".filters-item-values-price-min-value"
+        )?.textContent;
+        let rightPrice = document.querySelector(
+          ".filters-item-values-price-max-value"
+        )?.textContent;
+
+        if (leftPrice && rightPrice) {
+          const convertPrice = `${convertStringWithCommasToDefault(
+            leftPrice
+          )}to${convertStringWithCommasToDefault(rightPrice)}`;
+          Filtration.filterByBrand("price", convertPrice);
+        }
+
         if (maxVal - minVal < gap) {
           if (e.target === filterPriceSliderInputMin) {
             filterPriceSliderInputMin.value = `${maxVal - gap}`;
@@ -284,19 +298,7 @@ export default class Filters extends Component {
       });
 
       el.addEventListener("mouseup", () => {
-        let leftPrice = document.querySelector(
-          ".filters-item-values-price-min-value"
-        )?.textContent;
-        let rightPrice = document.querySelector(
-          ".filters-item-values-price-max-value"
-        )?.textContent;
-
-        if (leftPrice && rightPrice) {
-          const convertPrice = `${convertStringWithCommasToDefault(
-            leftPrice
-          )}to${convertStringWithCommasToDefault(rightPrice)}`;
-          Filtration.filterByBrand("price", convertPrice);
-        }
+       
       });
 
     });
@@ -395,6 +397,18 @@ export default class Filters extends Component {
         let maxVal = +filterStockSliderInputMax.value;
         let gap = 0;
 
+        let leftStock = document.querySelector(
+          ".filters-item-values-stock-min-value"
+        )?.textContent;
+        let rightStock = document.querySelector(
+          ".filters-item-values-stock-max-value"
+        )?.textContent;
+
+        if (leftStock && rightStock) {
+          const stock = `${leftStock}to${rightStock}`;
+          Filtration.filterByBrand("stock", stock);
+        }
+
         if (maxVal - minVal < gap) {
           if (e.target === filterStockSliderInputMin) {
             filterStockSliderInputMin.value = `${maxVal - gap}`;
@@ -422,17 +436,7 @@ export default class Filters extends Component {
       });
 
       el.addEventListener("mouseup", () => {
-        let leftStock = document.querySelector(
-          ".filters-item-values-stock-min-value"
-        )?.textContent;
-        let rightStock = document.querySelector(
-          ".filters-item-values-stock-max-value"
-        )?.textContent;
-
-        if (leftStock && rightStock) {
-          const stock = `${leftStock}to${rightStock}`;
-          Filtration.filterByBrand("stock", stock);
-        }
+        
       });
     });
 

@@ -68,22 +68,17 @@ class App {
             App.container.append(PageHTML);
             
             if (App.currentURL === 'main') {
-                
-                console.log('c.l');
                 RoutingWithReload.changeURL(restURL)
-                  
             }
         }
     }
 
     private hashChangeHandle() {
-        const hash = window.location.hash.slice(1);
-        console.log(hash);
+        const hash = window.location.hash.slice(1);        
         
         App.currentURL = hash;
+        
         App.renderNewPage(App.currentURL);
-        
-        
     }
 
     private enableRouteChange() {
@@ -103,11 +98,19 @@ class App {
         AppState.innit()
         App.container.append(this.header.render());
 
-        const hash = window.location.hash.slice(1);
-        App.renderNewPage(hash); 
-        this.enableRouteChange();    
-        //this.enableRouteChangeReload();
+        let hash = window.location.hash.slice(1);
+
+        if (hash.length === 0) {
+            window.location.hash = '#main'             
+            this.enableRouteChange();    
+        } else {
+            App.renderNewPage(hash); 
+            console.log('else');             
+            this.enableRouteChangeReload();
+        }
+        
     }
+    
 }
 
 export default App;
