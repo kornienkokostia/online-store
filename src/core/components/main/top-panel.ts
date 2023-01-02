@@ -83,10 +83,13 @@ export default class TopPanel extends Component {
       selectBoxOptionsItem.textContent = displayValue;
       selectBoxOptionsItem.addEventListener('click', () => {
         changeCurrentOption(displayValue, value);
-        const seletSortItem = selectBoxCurrentItem.getAttribute('current-selected-item');
-        if (seletSortItem) {
-          Filtration.sorted(seletSortItem)
-        }      
+
+        const selectSortItem = selectBoxCurrentItem.getAttribute('current-selected-item');
+        if (selectSortItem) {
+          const sort = `${selectSortItem}`
+          Filtration.filterByBrand('sort', sort)
+        }  
+
       });
       selectBoxOptionsDiv.append(selectBoxOptionsItem);
     };

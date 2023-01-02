@@ -4,21 +4,21 @@ import BagItem from "models/bagItem"
 export default class AppState {
     static appStateData: AppStateInterface = {
         goodsOrientation: '',
-        goodsInBag: []  
+        goodsInBag: []
     }
 
     static innit(){
-        if (!localStorage.getItem('appState')) {
+        // if (!localStorage.getItem('appState')) {
             AppState.setGoodsOrientation('vertical')
             AppState.setGoodsInBag([])
-        }
+        // }
     }
-    
+
     static getGoodsOrientation(){
         if (!localStorage.getItem('appState')) {
             AppState.innit()
         }
-        const obj = JSON.parse(localStorage.getItem('appState') as string)
+        const obj: AppStateInterface = JSON.parse(localStorage.getItem('appState') as string)
         this.appStateData.goodsOrientation = obj.goodsOrientation
         return this.appStateData.goodsOrientation
     }
@@ -29,7 +29,7 @@ export default class AppState {
     }
 
     static getGoodsInBag(){
-        const obj = JSON.parse(localStorage.getItem('appState') as string)
+        const obj: AppStateInterface = JSON.parse(localStorage.getItem('appState') as string)
         this.appStateData.goodsInBag = obj.goodsInBag
         return this.appStateData.goodsInBag
     }

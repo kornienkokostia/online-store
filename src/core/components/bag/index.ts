@@ -24,6 +24,7 @@ export default class Bag extends Component {
     document.querySelector('.header-bag-img')?.classList.remove('two-num-plus')
 
     const totalCount = Bag.bagItems.reduce((partialSum, a) => partialSum + +a.count, 0)
+    
     if (Bag.bagItems.length !== 0) {
       document.querySelector('.header-bag-items-count')?.classList.add('active')
       document.querySelector('.header-bag-img')?.classList.add('active')

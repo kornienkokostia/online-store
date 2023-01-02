@@ -12,7 +12,7 @@ export default class Header extends Component {
       { class: 'header-logo' },
       this.elFactory(
         'a',
-        { class: 'header-logo-link', href: '' },
+        { class: 'header-logo-link', href: '#main' },
         this.elFactory('img', {
           class: 'header-logo-img',
           src: './assets/images/icons/logo.svg',
@@ -74,7 +74,10 @@ export default class Header extends Component {
       searchInput.value != '' ? clearBtn.classList.add('visible') : false;
     });
     searchInput.addEventListener('input', () => {
-      Filtration.searched(searchInput.value)  
+
+      const search = `${searchInput.value}`
+      Filtration.filterByBrand('search', search)
+      
       searchInput.value != ''
         ? clearBtn.classList.add('visible')
         : clearBtn.classList.remove('visible');
