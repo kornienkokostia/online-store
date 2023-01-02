@@ -9,6 +9,7 @@
           column-gap: 20px;
   row-gap: 20px;
   padding: 20px;
+  max-width: 1280px;
 }
 
 .header {
@@ -20,6 +21,7 @@
           justify-content: space-between;
   width: calc(100% - 20px);
   height: 100%;
+  max-width: 1260px;
 }
 .header-wrapper {
   width: 100%;
@@ -61,6 +63,7 @@
   cursor: pointer;
 }
 .header-bag {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -110,7 +113,8 @@
   border-radius: 8px;
   padding: 0px 4px;
   top: 26px;
-  right: 20px;
+  margin-right: 10px;
+  right: 0px;
   -webkit-transition: width 0.3s cubic-bezier(0.25, 0.1, 0.3, 1);
   transition: width 0.3s cubic-bezier(0.25, 0.1, 0.3, 1);
 }
@@ -965,7 +969,8 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 85%;
+  width: 100%;
+  max-width: 1000px;
 }
 .bag-wrapper {
   display: -webkit-box;
@@ -1259,14 +1264,18 @@
       -ms-flex-direction: column;
           flex-direction: column;
   width: 100%;
+  max-width: 1240px;
 }
 .product-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   width: 100%;
   height: 100%;
-  min-height: 100vh;
+  min-height: 150vh;
   background-color: #ffffff;
   padding: 20px;
 }
@@ -1286,7 +1295,8 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  row-gap: 30px;
+  height: calc(100% - 54px);
+  row-gap: 20px;
   min-height: 296px;
   max-height: 405px;
 }
@@ -1329,7 +1339,7 @@
           justify-content: space-between;
   width: 100%;
 }
-.product-main-info-buy {
+.product-main-info-rating-price {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1342,24 +1352,55 @@
           align-items: flex-end;
   row-gap: 20px;
 }
-.product-main-info-buy-rating {
+.product-main-info-rating {
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-column-gap: 3px;
      -moz-column-gap: 3px;
           column-gap: 3px;
 }
-.product-main-info-buy-rating-star {
+.product-main-info-rating-star {
   width: 15px;
   height: 15px;
 }
-.product-main-info-buy-price {
+.product-main-info-all-specs-btn {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-size: 17px;
+  color: var(--main-text-color-light);
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  margin-right: auto;
+  letter-spacing: 0.022em;
+}
+.product-main-info-all-specs-btn:hover {
+  text-decoration: underline;
+}
+.product-main-info-price {
   font-size: 24px;
   font-family: "SF-Pro-Display-Semibold";
 }
+.product-main-info-buy-btns-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  row-gap: 20px;
+  -webkit-column-gap: 20px;
+     -moz-column-gap: 20px;
+          column-gap: 20px;
+  width: 100%;
+}
 .product-main-info-buy-btn {
-  width: 260px;
+  width: 100%;
   height: 44px;
   background-color: var(--main-blue);
   border-radius: 8px;
@@ -1368,6 +1409,17 @@
   color: #ffffff;
   font-size: 17px;
   letter-spacing: 0.022em;
+  cursor: pointer;
+}
+.product-main-info-buy-btn:hover {
+  background-color: var(--main-blue-hover);
+}
+.product-main-info-buy-btn:disabled {
+  color: var(--main-black);
+  background-color: #ebebeb;
+}
+.product-main-info-buy-btn:disabled:hover {
+  background-color: #ebebeb;
 }
 .product-images-slider {
   display: -webkit-box;
@@ -1379,6 +1431,8 @@
   grid-row: 1;
 }
 .product-images-slider-wrapper {
+  position: sticky;
+  bottom: 0;
   display: grid;
   width: 60%;
   height: calc(100% - 54px);
@@ -1508,6 +1562,13 @@
 .product-dot.active {
   background-color: rgba(0, 0, 0, 0.56);
 }
+.product-all-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 300px;
+}
 
 /* apple fonts */
 @font-face {
@@ -1576,4 +1637,10 @@ h1 {
 #current-page {
   width: 100%;
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }

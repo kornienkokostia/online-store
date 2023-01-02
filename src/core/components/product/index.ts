@@ -1,5 +1,7 @@
 import productDB from '../../../db/productDB';
 import Component from '../../templates/components';
+import Bag from '../bag/index';
+import AppState from '../save-goods-state/index';
 
 export default class Product extends Component {
   constructor(tagName: string, className: string) {
@@ -179,28 +181,34 @@ export default class Product extends Component {
         addItemToSpecs('Storage type: ', this.product.storageType)
     }  
     
-    const productMainInfoBuy = this.elFactory('div', {class: 'product-main-info-buy'})
+    const productMainInfoRatingPrice = this.elFactory('div', {class: 'product-main-info-rating-price'})
 
-    const productMainInfoBuyRating = this.elFactory('div', {class: 'product-main-info-buy-rating'})
+    const productMainInfoRating = this.elFactory('div', {class: 'product-main-info-rating'})
+
+    const productSeeAllSpecsBtn = this.elFactory('button', {class: 'product-main-info-all-specs-btn'})
+    productSeeAllSpecsBtn.textContent = 'See all product details'
+
+    productMainInfoRating.append(productSeeAllSpecsBtn)
+
     for (let i = 0; i < 5; i++) {
         if (i < this.product.rating) {
-            const ratingImg = this.elFactory('img', {class: 'product-main-info-buy-rating-star', 
+            const ratingImg = this.elFactory('img', {class: 'product-main-info-rating-star', 
             src: './assets/images/icons/rating-full.svg', alt: 'rating-star'})
             ratingImg.ondragstart = () => false
-            productMainInfoBuyRating.append(ratingImg)
+            productMainInfoRating.append(ratingImg)
         } else {
-            const ratingImg = this.elFactory('img', {class: 'product-main-info-buy-rating-star', 
+            const ratingImg = this.elFactory('img', {class: 'product-main-info-rating-star', 
             src: './assets/images/icons/rating-empty.svg', alt: 'rating-star'})
             ratingImg.ondragstart = () => false
-            productMainInfoBuyRating.append(ratingImg)
+            productMainInfoRating.append(ratingImg)
         }
     }
 
-    const productMainInfoBuyPrice = this.elFactory('div', {class: 'product-main-info-buy-price'})
-    const productMainInfoBuyPriceValue = this.elFactory('span', {class: 'product-main-info-buy-price-value'})
-    productMainInfoBuyPriceValue.textContent = `$${this.convertNumToSplitString(this.product.price)}`
+    const productMainInfoPrice = this.elFactory('div', {class: 'product-main-info-price'})
+    const productMainInfoPriceValue = this.elFactory('span', {class: 'product-main-info-price-value'})
+    productMainInfoPriceValue.textContent = `$${this.convertNumToSplitString(this.product.price)}`
     
-    productMainInfoBuyPrice.append(productMainInfoBuyPriceValue)
+    productMainInfoPrice.append(productMainInfoPriceValue)
 
     const productMainInfoBuyBtns = this.elFactory('div', {class: 'product-main-info-buy-btns-wrapper'})
 
@@ -212,14 +220,27 @@ export default class Product extends Component {
         class: 'product-main-info-buy-now-btn product-main-info-buy-btn'})
     buyNowBtn.textContent = 'Buy Now'
 
+    if (Bag.bagItems.filter(el => +el.id === +this.product.id).length > 0) {
+        buyBtn.setAttribute('disabled', 'true')
+        buyBtn.textContent = 'Already in Bag'
+    }
+      
+    buyBtn.addEventListener("click", () => {
+        Bag.bagItems.push({id: +this.product.id, count: 1})
+        Bag.updateBagCount()
+        buyBtn.setAttribute('disabled', 'true')
+        buyBtn.textContent = 'Added to Bag'
+        AppState.setGoodsInBag(Bag.bagItems)
+    });
+
     productMainInfoBuyBtns.append(buyNowBtn, buyBtn)
 
-    productMainInfoBuy.append(productMainInfoBuyRating)
-    productMainInfoBuy.append(productMainInfoBuyPrice)
-    productMainInfoBuy.append(productMainInfoBuyBtns)
+    productMainInfoRatingPrice.append(productMainInfoRating)
+    productMainInfoRatingPrice.append(productMainInfoPrice)
+    
 
     productMainInfo.append(productMainInfoSpecs)
-    productMainInfo.append(productMainInfoBuy)
+    productMainInfo.append(productMainInfoRatingPrice, productMainInfoBuyBtns)
     
 
     productMainInfoDiv.append(productImagesSliderWrapper)
@@ -228,13 +249,19 @@ export default class Product extends Component {
     return productMainInfoDiv
   }
 
-  
+  createAllSpecs(){
+    const allSpecsDiv = this.elFactory('div', {class: 'product-all-info'})
+
+    return allSpecsDiv
+  }
 
 
   render() {
     this.container.append(this.createProductHeader())
 
     this.container.append(this.createProductMainInfo())
+
+    this.container.append(this.createAllSpecs())
 
     document.querySelector('.header-search')?.classList.add('hidden')
 
