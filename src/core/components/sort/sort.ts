@@ -70,7 +70,6 @@ class Sort {
     }
 
     if (value === "rating-descending") {
-      console.log(value);
       this.array = this.array.sort((x, y) =>
         +x.rating < +y.rating ? 1 : +x.rating > +y.rating ? -1 : 0
       );

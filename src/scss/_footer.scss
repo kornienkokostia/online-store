@@ -1,0 +1,27 @@
+.footer{
+    width: 100%;
+    max-width: 1280px;
+    padding: 0 20px;
+    &-wrapper{
+        display: flex;
+        justify-content: center;
+        height: 130px;
+        width: 100%;
+    }
+    &-breadcrumbs-path{
+        padding: 20px 0;
+        font-size: 15px;
+        font-family: 'SF-Pro-Display-Medium';
+        border-bottom: 1px solid var(--footer-border-color);
+        &-el{
+            &-link{
+                text-decoration: none;
+                color: var(--footer-link-color);
+                &:hover{
+                    text-decoration: underline;
+                }  
+            }
+            
+        }
+    }
+}

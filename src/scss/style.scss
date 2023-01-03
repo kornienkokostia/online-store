@@ -7,6 +7,7 @@
 @import './navigation_goods';
 @import './bag';
 @import './product';
+@import './footer';
 
 /* apple fonts */
 @font-face {
@@ -70,6 +71,8 @@ h1{
   --main-green: #00e075;
   --additional-dark-grey: #252528;
   --additioanl-input-placeholder: #a6a6a6;
+  --footer-link-color: #424245;
+  --footer-border-color:  #d2d2d7;
 }
 
 #current-page{

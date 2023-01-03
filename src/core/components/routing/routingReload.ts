@@ -1,15 +1,11 @@
-import Component from "../../../core/templates/components";
-import productDB from "../../../db/productDB";
-import ProductInterface from "../../../models/products";
-import Pagination from "../pagination/pagination";
-import AppState from "../save-goods-state/index";
 import Filtration from "../filtration/filtration";
-import GoodsNav from "../goods_navigation/index";
+import Bag from "../bag/index";
 
 class RoutingWithReload {
   static urlString: string = "";
 
     static changeURL(value: string) {
+      
     this.urlString = value;
 
     const array = value.split("&");
@@ -249,14 +245,49 @@ class RoutingWithReload {
         }
       }
 
-      //   if (fil[0] === "page") {
-      //     if (this.urlString.includes(`${fil[0]}=${fil[1]}`)) {
+      if (fil[0] === "id") {
+        const headerBagImg = document.querySelector(".header-bag-img");
+        const headerBagItemsCount = document.querySelector(
+          ".header-bag-items-count"
+        );
+        const headerBagItemsCountValue = document.querySelector(
+          ".header-bag-items-count-value"
+        );
 
-      //         console.log(Filtration.product);
+        const totalCount = Bag.bagItems.reduce(
+          (partialSum, a) => partialSum + +a.count,
+          0
+        );
 
-      //         // Pagination.paginationBtn(12, +fil[1], Filtration.product, false);
-      //     }
-      //   }
+        headerBagImg?.classList.add("active");
+        headerBagItemsCount?.classList.add("active");
+        if (headerBagItemsCountValue) {
+          headerBagItemsCountValue.textContent = `${totalCount}`;
+
+          if (totalCount === 0) {
+            headerBagImg?.classList.remove("active");
+            headerBagItemsCount?.classList.remove("active");
+          }
+        }
+      }
+
+        
+        
+        
+    }
+    
+    if (this.urlString === 'bag') {
+      const headerBagImg = document.querySelector('.header-bag-img');
+          const headerBagItemsCount = document.querySelector('.header-bag-items-count');
+          const headerBagItemsCountValue = document.querySelector('.header-bag-items-count-value')
+
+          const totalCount = Bag.bagItems.reduce((partialSum, a) => partialSum + +a.count, 0);
+
+          headerBagImg?.classList.add('active')
+          headerBagItemsCount?.classList.add('active')
+          if (headerBagItemsCountValue) {
+            headerBagItemsCountValue.textContent = `${totalCount}`
+          }
     }
   }
 }

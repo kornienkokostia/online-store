@@ -1,8 +1,3 @@
-import Component from "../../../core/templates/components";
-import productDB from "../../../db/productDB";
-import ProductInterface from "../../../models/products";
-import Pagination from "../pagination/pagination";
-import AppState from "../save-goods-state/index";
 import Filtration from "../filtration/filtration";
 
 class Routing {
@@ -13,8 +8,7 @@ class Routing {
 
     const array = value.split("&")[1];
 
-    let fil = array.split("=");
-    console.log(this.urlString);
+    let fil = array.split("=");  
     
 
     if (
@@ -128,7 +122,7 @@ class Routing {
     if (fil[0] === "stock") {
       let left = fil[1].split("to")[0];
       let right = fil[1].split("to")[1];
-      console.log(fil);
+      
 
       if (this.urlString.includes(fil[0])) {
         let prevLeftStock = window.location.hash
@@ -154,7 +148,7 @@ class Routing {
     if (fil[0] === "search") {
       if (this.urlString.includes(fil[0])) {
         let prev = window.location.hash.split("search=")[1].split("&")[0];
-        console.log(prev);
+        
 
         this.urlString = this.urlString.replace(
           `&${fil[0]}=${prev}`,
@@ -186,20 +180,7 @@ class Routing {
         Filtration.sorted(fil[1]);
       }
     }
-
-    // if (fil[0] === "page") {
-    //   if (this.urlString.includes(`${fil[0]}=`)) {
-    //     let prev = window.location.hash.split("page=")[1].split("&")[0];
-    //     console.log(prev);
-
-    //     this.urlString = this.urlString.replace(
-    //       `&${fil[0]}=${prev}`,
-    //       `&${fil[0]}=${fil[1]}`
-    //     );
-    //   } else {
-    //     this.urlString += `&${fil[0]}=${fil[1]}`;
-    //   }
-    // }
+    
 
     history.pushState(null, "null", `${this.urlString}`);
   }

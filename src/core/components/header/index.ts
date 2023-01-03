@@ -1,5 +1,6 @@
 import Component from '../../templates/components';
 import Filtration from '../filtration/filtration';
+import App from '../../../pages/app/index';
 
 export default class Header extends Component {
   constructor(tagName: string, className: string) {
@@ -20,6 +21,13 @@ export default class Header extends Component {
         }),
       ),
     );
+
+    logoDiv.addEventListener('click', () => {      
+      setTimeout(() => {
+        Filtration.resetAll();
+      }, 100)
+    })
+
     return logoDiv;
   }
   createBag() {

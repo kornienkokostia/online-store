@@ -221,7 +221,10 @@ class Filtration {
       if (this.brandArray.length === 4) {
         this.brandArray.length = 0;
       }
+
+      
       this.brandArray.push(fil);
+      
 
       this.filtrationList(fil, true);
     }
@@ -243,9 +246,10 @@ class Filtration {
     if (value === "true") {
       if (this.categoryArray.length === 5) {
         this.categoryArray.length = 0;
-      }
-
+      }      
+      
       this.categoryArray.push(fil);
+      
 
       this.filtrationList(fil, true);
     }
@@ -281,8 +285,7 @@ class Filtration {
     this.render();
     this.changePriceInputs();
 
-    //
-    // this.changeURL(`${this.URLstring}&stock=${left}to${right}`);
+    
   }
 
   static filtration() {
