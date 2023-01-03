@@ -78,7 +78,12 @@ class App {
         
         App.currentURL = hash;
         
-        App.renderNewPage(App.currentURL);
+        if (hash) {
+            App.renderNewPage(hash)
+        } else {
+           App.renderNewPage('main');   
+           window.location.hash = 'main'
+        }
     }
 
     private enableRouteChange() {
@@ -97,18 +102,9 @@ class App {
     run() {
         AppState.innit()
         App.container.append(this.header.render());
-
-        let hash = window.location.hash.slice(1);
-
-        if (hash.length === 0) {
-            window.location.hash = '#main'             
-            this.enableRouteChange();    
-        } else {
-            App.renderNewPage(hash); 
-            console.log('else');             
-            this.enableRouteChangeReload();
-        }
-        
+        App.renderNewPage('main');        
+        this.enableRouteChange();    
+        this.enableRouteChangeReload();
     }
     
 }

@@ -24,7 +24,6 @@ export default class Bag extends Component {
     document.querySelector('.header-bag-img')?.classList.remove('two-num-plus')
 
     const totalCount = Bag.bagItems.reduce((partialSum, a) => partialSum + +a.count, 0)
-    
     if (Bag.bagItems.length !== 0) {
       document.querySelector('.header-bag-items-count')?.classList.add('active')
       document.querySelector('.header-bag-img')?.classList.add('active')
@@ -232,10 +231,8 @@ export default class Bag extends Component {
     bagItemRemoveBtn.addEventListener('click', () => {
       const closestItem = bagItemRemoveBtn.closest('.bag-item') as HTMLElement
       closestItem.classList.add('hidden');
-     
+      
       setTimeout(() => {
-        
-        
         [...document.querySelectorAll('.bag-item')].map(el => el.classList.add('move'))
         document.querySelector('.bag-total')!.classList.add('move')
       }, 500);
@@ -243,13 +240,13 @@ export default class Bag extends Component {
         document.querySelector('.bag-goods')?.removeChild(closestItem);
         [...document.querySelectorAll('.bag-item')].map(el => el.classList.remove('move'))
         document.querySelector('.bag-total')!.classList.remove('move')
-        
+        updateAllInfo()
       }, 1000);
       
       
       const itemId = closestItem.getAttribute('good-id')
       Bag.bagItems.map(el => el.id === +itemId! ? Bag.bagItems.splice(Bag.bagItems.indexOf(el), 1) : false)
-      updateAllInfo()
+      
       if (Bag.bagItems.length === 0) {
         setTimeout(() => {
           document.querySelector('.bag-total')!.classList.add('hide')

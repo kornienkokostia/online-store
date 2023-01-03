@@ -8,7 +8,7 @@
         justify-content: center;
         width: 100%;
         height: 100%;
-        min-height: 150vh;
+       
         background-color: #ffffff;
         padding: 20px;
     }
@@ -23,7 +23,6 @@
         width: calc(40% - 20px);
         display: flex;
         flex-direction: column;
-        // justify-content: space-between;
         height: calc(100% - 54px);
         row-gap: 20px;
         min-height: 296px;
@@ -192,7 +191,6 @@
     &-image{
         display: flex;
         user-select: none;
-
         &-wrapper{
             display: flex;
             justify-content: center;
@@ -208,7 +206,6 @@
             object-fit: contain;
         }
     }
-
     &-dots{
         position: relative;
         display: flex;
@@ -234,8 +231,51 @@
         }
     }
     &-all-info{
-        display: flex;
+        display: block;
         width: 100%;
-        height: 300px;
+        column-gap: 20px;
+        column-count: 3;
+        margin-bottom: 20px;
+        &-title{
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+     
+        &-spec-item{
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            font-size: 17px;
+            padding: 5px 0;
+            &-dots{
+                position: absolute;
+                width: 100%;
+                border-bottom: 2px dotted var(--main-dark-grey);
+                z-index: 0;
+                top: 18.5px;
+            }
+            &-name{
+                position: relative;
+                
+                text-align: left;
+                color: var(--main-text-color-light);
+                z-index: 5;
+                & span{
+                    padding-right: 6px;
+                    background-color: #ffffff;
+                }
+            }
+            &-value{
+                position: relative;
+        
+                text-align: right;
+                
+                z-index: 5;
+                & span{
+                    padding-left: 6px;
+                    background-color: #ffffff;
+                }
+            }
+        }
     }
 }
