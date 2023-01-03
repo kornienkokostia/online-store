@@ -1,4 +1,10 @@
+import Component from "../../../core/templates/components";
+import productDB from "../../../db/productDB";
+import ProductInterface from "../../../models/products";
+import Pagination from "../pagination/pagination";
+import AppState from "../save-goods-state/index";
 import Filtration from "../filtration/filtration";
+import GoodsNav from "../goods_navigation/index";
 import Bag from "../bag/index";
 
 class RoutingWithReload {
@@ -245,34 +251,23 @@ class RoutingWithReload {
         }
       }
 
-      if (fil[0] === "id") {
-        const headerBagImg = document.querySelector(".header-bag-img");
-        const headerBagItemsCount = document.querySelector(
-          ".header-bag-items-count"
-        );
-        const headerBagItemsCountValue = document.querySelector(
-          ".header-bag-items-count-value"
-        );
+          if (fil[0] === 'id' ) {
+          const headerBagImg = document.querySelector('.header-bag-img');
+          const headerBagItemsCount = document.querySelector('.header-bag-items-count');
+          const headerBagItemsCountValue = document.querySelector('.header-bag-items-count-value')
 
-        const totalCount = Bag.bagItems.reduce(
-          (partialSum, a) => partialSum + +a.count,
-          0
-        );
+          const totalCount = Bag.bagItems.reduce((partialSum, a) => partialSum + +a.count, 0);
 
-        headerBagImg?.classList.add("active");
-        headerBagItemsCount?.classList.add("active");
-        if (headerBagItemsCountValue) {
-          headerBagItemsCountValue.textContent = `${totalCount}`;
-
-          if (totalCount === 0) {
-            headerBagImg?.classList.remove("active");
-            headerBagItemsCount?.classList.remove("active");
+          if (totalCount !== 0) {
+            headerBagImg?.classList.add('active')
+            headerBagItemsCount?.classList.add('active')
           }
+          if (headerBagItemsCountValue) {
+            headerBagItemsCountValue.textContent = `${totalCount}`
+          }
+          
         }
-      }
 
-        
-        
         
     }
     
@@ -283,8 +278,10 @@ class RoutingWithReload {
 
           const totalCount = Bag.bagItems.reduce((partialSum, a) => partialSum + +a.count, 0);
 
-          headerBagImg?.classList.add('active')
-          headerBagItemsCount?.classList.add('active')
+          if (totalCount !== 0) {
+            headerBagImg?.classList.add('active')
+            headerBagItemsCount?.classList.add('active')
+          }
           if (headerBagItemsCountValue) {
             headerBagItemsCountValue.textContent = `${totalCount}`
           }

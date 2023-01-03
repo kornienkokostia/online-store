@@ -27,8 +27,11 @@ export default class Bag extends Component {
     if (Bag.bagItems.length !== 0) {
       document.querySelector('.header-bag-items-count')?.classList.add('active')
       document.querySelector('.header-bag-img')?.classList.add('active')
+    } else {
+      document.querySelector('.header-bag-items-count')?.classList.remove('active')
+      document.querySelector('.header-bag-img')?.classList.remove('active')
     }
-    
+
     const bagCount = document.querySelector('.header-bag-items-count-value') as HTMLElement
     bagCount.textContent = `${totalCount}`
 
@@ -287,6 +290,7 @@ export default class Bag extends Component {
     Bag.bagItems.map(el => bagGoods.prepend(this.createBagItem(el.id)))
 
     this.container.append(this.createBadTotal());
+
 
     if (Bag.bagItems.length !== 0) {
       [...bagHeader.children][0].textContent = `Your bag total is $ 

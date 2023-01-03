@@ -1626,7 +1626,7 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  height: 130px;
+  height: 135px;
   width: 100%;
 }
 .footer-breadcrumbs-path {
@@ -1641,6 +1641,39 @@
 }
 .footer-breadcrumbs-path-el-link:hover {
   text-decoration: underline;
+}
+.footer-legal {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 20px;
+  color: #6e6e73;
+  font-size: 15px;
+}
+.footer-legal-img {
+  height: 35px;
+}
+.footer-legal-logos-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.footer-legal-logo {
+  height: 35px;
+  margin-right: 10px;
+  padding-right: 10px;
+  border-right: 1px solid var(--footer-border-color);
+}
+.footer-legal-logo:last-child {
+  border-right: none;
+  margin: 0;
+  padding: 0;
 }
 
 /* apple fonts */
