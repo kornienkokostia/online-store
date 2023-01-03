@@ -11,10 +11,26 @@ export default class Footer extends Component {
         const onlineStoreItem = this.elFactory('div', {class: 
             'footer-breadcrumbs-path-el'})
         const onlineStoreItemLink = this.elFactory('a', {class: 'footer-breadcrumbs-path-el-link', 
-            href: '/#main'})    
+            href: '/#main'})  
+        const onlineStoreItems = this.elFactory('div', {class: 
+            'footer-breadcrumbs-path-el-items'});
+        const onlineStoreItemsBrand = this.elFactory('div', {class: 
+            'footer-breadcrumbs-path-el-items-brand'});
+        const onlineStoreItemsCategory = this.elFactory('div', {class: 
+            'footer-breadcrumbs-path-el-items-category'});
+        const onlineStoreItemsCurrentItem = this.elFactory('div', {class: 
+            'footer-breadcrumbs-path-el-items-current'});
         onlineStoreItemLink.textContent = 'Online Store'  
-        onlineStoreItem.append(onlineStoreItemLink)  
-        breadcrumbsPath.append(onlineStoreItem)
+        onlineStoreItem.append(onlineStoreItemLink);
+        breadcrumbsPath.append(onlineStoreItem);
+        onlineStoreItems.append(onlineStoreItemsBrand);
+        onlineStoreItems.append(onlineStoreItemsCategory);
+        onlineStoreItems.append(onlineStoreItemsCurrentItem);
+        breadcrumbsPath.append(onlineStoreItems)
+
+        onlineStoreItemLink.addEventListener('click', () => {
+            window.scrollTo(0,0); 
+          })
 
         return breadcrumbsPath
     }

@@ -9,6 +9,7 @@ import Routing from "../../core/components/routing/routing";
 import RoutingWithReload from "../../core/components/routing/routingReload"
 import Filtration from "../../core/components/filtration/filtration";
 import Footer from '../../core/components/footer/index';
+import Product from '../../core/components/product/index';
 
 export const enum PageIDs {
     MainPage = 'main',
@@ -51,9 +52,9 @@ class App {
         } else if (idURL == PageIDs.ProductPage) { 
                    
             const currentPage = idPage.split('&')[1].split('=')[1];
+            let checkNumber = !/^[0-9]+$/.test(currentPage)
             
-            if (currentPage.length === 0)  {
-                
+            if (checkNumber || currentPage.length === 0 || currentPage.length > 2)  {
                 page = new ErrorPage(idURL, ErrorTypes.Error_404);
             }  else {
                 page = new ProductPage(idURL)
@@ -61,6 +62,7 @@ class App {
             
         } else {
             page = new ErrorPage(idURL, ErrorTypes.Error_404);
+            Product.breadCrumbsCheck(restURL)
         }
 
         if (page) {
@@ -71,10 +73,12 @@ class App {
             
             
             if (App.currentURL === 'main') {
-                RoutingWithReload.changeURL(restURL)
+                RoutingWithReload.changeURL(restURL);
+                Product.breadCrumbsCheck(restURL)
             }
             if (App.currentURL === 'product' || App.currentURL === 'bag') {                
-                RoutingWithReload.changeURL(restURL)                
+                RoutingWithReload.changeURL(restURL);  
+                Product.breadCrumbsCheck(restURL)
             }
         }
         
@@ -112,8 +116,7 @@ class App {
 
     run() {
         AppState.innit()
-        App.container.append(this.header.render());
-     
+        App.container.append(this.header.render());     
         App.container.append(this.footer.render()); 
        
         this.enableRouteChange();    

@@ -181,6 +181,9 @@ class RoutingWithReload {
 
       if (fil[0] === "search") {
         if (this.urlString.includes(`${fil[0]}=${fil[1]}`)) {
+          if (fil[1].includes('%20')) {            
+            fil[1] = fil[1].replace(/%20/gi, ' ') 
+          }
           const searchInput = document.querySelector(".header-search-input");
           const clearSearchField = document.querySelector(
             ".header-search-input-clear-btn"

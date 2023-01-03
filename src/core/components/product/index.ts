@@ -1,4 +1,5 @@
 import productDB from '../../../db/productDB';
+import ProductInterface from '../../../models/products';
 import Component from '../../templates/components';
 import Bag from '../bag/index';
 import AppState from '../save-goods-state/index';
@@ -433,4 +434,47 @@ export default class Product extends Component {
 
     return this.container;
   }
+
+    static breadCrumbsCheck = (value: string) => {
+        
+        
+
+        let bread: string = value.split('&')[0];
+        const breadCrumbs = document.querySelector('.footer-breadcrumbs-path-el-items');
+        
+        if(bread === 'product' && breadCrumbs instanceof HTMLElement) {
+            breadCrumbs.style.visibility = 'visible';
+
+            
+            let breadId: string = value.split('&')[1].split('=')[1];
+            let currentProduct: ProductInterface[] = [...productDB.filter(item => item.id === breadId)]
+            console.log(currentProduct);
+            
+            const brand = document.querySelector('.footer-breadcrumbs-path-el-items-brand');
+            const category = document.querySelector('.footer-breadcrumbs-path-el-items-category');
+            const currentItem = document.querySelector('.footer-breadcrumbs-path-el-items-current');
+
+            if (brand && category && currentItem) {
+                brand.textContent = currentProduct[0].brand.slice(0, 1).toUpperCase() + currentProduct[0].brand.slice(1);
+                category.textContent = currentProduct[0].category.slice(0, 1).toUpperCase() + currentProduct[0].category.slice(1);
+                currentItem.textContent = `${currentProduct[0].brand.slice(0, 1).toUpperCase() + currentProduct[0].brand.slice(1)} 
+                ${currentProduct[0].name} 
+                ${currentProduct[0].storage} 
+                ${currentProduct[0].color} 
+                ${currentProduct[0].model}`
+            }
+
+            
+
+        } 
+        
+
+        if (bread !== 'product' && breadCrumbs instanceof HTMLElement) {
+            breadCrumbs.style.visibility = 'hidden'
+        }
+
+        
+        
+
+    }
 }

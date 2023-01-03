@@ -25,7 +25,7 @@ export default class Header extends Component {
     logoDiv.addEventListener('click', () => {      
       setTimeout(() => {
         Filtration.resetAll();
-      }, 100)
+      }, 1)
     })
 
     return logoDiv;
@@ -94,6 +94,7 @@ export default class Header extends Component {
       searchInput.value = '';
       Filtration.searched(searchInput.value)  
       clearBtn.classList.remove('visible');
+      Filtration.filterByBrand('search', '');
       e.preventDefault();
     });
     searchInput.addEventListener('focusout', () => {
