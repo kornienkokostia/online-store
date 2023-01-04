@@ -2,12 +2,13 @@ import Component from "../../../core/templates/components";
 import productDB from "../../../db/productDB";
 import ProductInterface from "../../../models/products";
 import Pagination from "../pagination/pagination";
+import AppState from "../save-goods-state/index";
 
 class GoodsNav extends Component {
   protected currentPage: number;
   protected goodsPerPage: number;
   protected pagesCount: number = 4;
-  protected orient: string = "vertical";
+  protected orient: string = AppState.getGoodsOrientation();
   protected arrData: ProductInterface[];
 
   constructor(
@@ -16,14 +17,11 @@ class GoodsNav extends Component {
     className: string,
     currentPage: number,
     goodsPerPage: number,
-    orient: string
   ) {
     super(tagName, className);
     this.arrData = arrData;
     this.currentPage = currentPage;
     this.goodsPerPage = goodsPerPage;
-    this.orient = orient;
-
   }
 
   displayNavBtn(
@@ -57,7 +55,6 @@ class GoodsNav extends Component {
         Pagination.paginationBtn(
           this.goodsPerPage,
           this.currentPage,
-          this.orient,
           this.arrData,
           true
         );

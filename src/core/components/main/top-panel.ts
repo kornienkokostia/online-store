@@ -2,6 +2,7 @@ import productDB from '../../../db/productDB';
 import Component from '../../templates/components';
 import Pagination from "../pagination/pagination";
 import Filtration from '../filtration/filtration';
+import AppState from '../save-goods-state/index';
 
 const SortingOptions = [
   { value: 'name', displayValue: 'Name' },
@@ -28,9 +29,10 @@ export default class TopPanel extends Component {
     const selectBoxCurrentItem = this.elFactory('input', {
       class: 'select-box-current-item',
       type: 'text',
-      'current-selected-item': '',
+      'current-selected-item': 'new',
       placeholder: 'Select item',
     });
+    selectBoxCurrentItem.value = 'New'
 
     const selectBoxBtnImg = this.elFactory('img', {
       class: 'select-box-open-btn-img',
@@ -81,10 +83,13 @@ export default class TopPanel extends Component {
       selectBoxOptionsItem.textContent = displayValue;
       selectBoxOptionsItem.addEventListener('click', () => {
         changeCurrentOption(displayValue, value);
-        const seletSortItem = selectBoxCurrentItem.getAttribute('current-selected-item');
-        if (seletSortItem) {
-          Filtration.sorted(seletSortItem)
-        }      
+
+        const selectSortItem = selectBoxCurrentItem.getAttribute('current-selected-item');
+        if (selectSortItem) {
+          const sort = `${selectSortItem}`
+          Filtration.filterByBrand('sort', sort)
+        }  
+
       });
       selectBoxOptionsDiv.append(selectBoxOptionsItem);
     };
@@ -165,7 +170,7 @@ export default class TopPanel extends Component {
     const changeGridDiv = this.elFactory('div', { class: 'change-grid' });
     const changeGridToSquares = this.elFactory(
       'div',
-      { class: 'change-grid-to-squares change-grid-item active' },
+      { class: 'change-grid-to-squares change-grid-item' },
       this.elFactory('div', { class: 'square-grid' }),
       this.elFactory('div', { class: 'square-grid' }),
       this.elFactory('div', { class: 'square-grid' }),
@@ -181,6 +186,8 @@ export default class TopPanel extends Component {
       this.elFactory('div', { class: 'square-grid' }),
     );
 
+    AppState.getGoodsOrientation() === 'vertical' ? changeGridToSquares.classList.add('active') : changeGridToLines.classList.add('active')
+
     changeGridToSquares.addEventListener("click", () => {
       changeGridToSquares.classList.add("active");
       changeGridToLines.classList.remove("active");
@@ -188,8 +195,10 @@ export default class TopPanel extends Component {
         document.querySelector(".active-btn")?.textContent
       );
 
+      AppState.setGoodsOrientation('vertical')
+
       if (activeBtn) {
-        Pagination.paginationBtn(12, activeBtn, "vertical", productDB, false);
+        Pagination.paginationBtn(12, activeBtn, productDB, false);
       }
     });
 
@@ -200,8 +209,10 @@ export default class TopPanel extends Component {
         document.querySelector(".active-btn")?.textContent
       );
 
+      AppState.setGoodsOrientation('horizontal')
+
       if (activeBtn) {
-        Pagination.paginationBtn(12, activeBtn, "horizontal", productDB, false);
+        Pagination.paginationBtn(12, activeBtn, productDB, false);
       }
     });
 

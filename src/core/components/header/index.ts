@@ -1,4 +1,6 @@
 import Component from '../../templates/components';
+import Filtration from '../filtration/filtration';
+import App from '../../../pages/app/index';
 
 export default class Header extends Component {
   constructor(tagName: string, className: string) {
@@ -11,7 +13,7 @@ export default class Header extends Component {
       { class: 'header-logo' },
       this.elFactory(
         'a',
-        { class: 'header-logo-link', href: '' },
+        { class: 'header-logo-link', href: '#main' },
         this.elFactory('img', {
           class: 'header-logo-img',
           src: './assets/images/icons/logo.svg',
@@ -19,30 +21,37 @@ export default class Header extends Component {
         }),
       ),
     );
+
+    logoDiv.addEventListener('click', () => {      
+      setTimeout(() => {
+        Filtration.resetAll();
+      }, 1)
+    })
+
     return logoDiv;
   }
-  createCart() {
+  createBag() {
     const itemsCountSpan = this.elFactory('span', {
-      class: 'header-cart-items-count-value',
+      class: 'header-bag-items-count-value',
     });
-    itemsCountSpan.textContent = '0';
+    itemsCountSpan.textContent = '';
 
-    const cartDiv = this.elFactory(
-      'div',
-      { class: 'header-cart' },
+    const bagDiv = this.elFactory(
+      'a',
+      { class: 'header-bag', href: './#bag'},
       this.elFactory('img', {
-        class: 'header-cart-img',
-        src: './assets/images/icons/cart.svg',
-        alt: 'cart',
+        class: 'header-bag-img',
+        src: './assets/images/icons/bag.svg',
+        alt: 'bag',
       }),
       this.elFactory(
         'div',
-        { class: 'header-cart-items-count' },
+        { class: 'header-bag-items-count' },
         itemsCountSpan,
       ),
     );
-
-    return cartDiv;
+    
+    return bagDiv;
   }
   createHeaderSearch() {
     const searchDiv = this.elFactory('div', { class: 'header-search' });
@@ -73,13 +82,19 @@ export default class Header extends Component {
       searchInput.value != '' ? clearBtn.classList.add('visible') : false;
     });
     searchInput.addEventListener('input', () => {
+
+      const search = `${searchInput.value}`
+      Filtration.filterByBrand('search', search)
+      
       searchInput.value != ''
         ? clearBtn.classList.add('visible')
         : clearBtn.classList.remove('visible');
     });
     clearBtn.addEventListener('mousedown', e => {
       searchInput.value = '';
+      Filtration.searched(searchInput.value)  
       clearBtn.classList.remove('visible');
+      Filtration.filterByBrand('search', '');
       e.preventDefault();
     });
     searchInput.addEventListener('focusout', () => {
@@ -95,16 +110,17 @@ export default class Header extends Component {
   renderHeaderWrapper() {
     const headerWrapper = this.elFactory('div', { class: 'header' });
     const logo = this.createHeaderLogo();
-    const cart = this.createCart();
+    const bag = this.createBag();
     const searchBar = this.createHeaderSearch();
     headerWrapper.append(logo);
     headerWrapper.append(searchBar);
-    headerWrapper.append(cart);
+    headerWrapper.append(bag);
     this.container.append(headerWrapper);
   }
 
   render() {
     this.renderHeaderWrapper();
+
     return this.container;
   }
 }

@@ -2,11 +2,13 @@ import Component from "../../templates/components";
 import productDB from "../../../db/productDB";
 import ProductInterface from "../../../models/products";
 import GoodsNav from "../goods_navigation/index";
+import AppState from "../save-goods-state/index";
+import Bag from "../bag/index";
 
 export default class Goods extends Component {
   protected goodsPerPage: number = 12;
   protected currentPage: number = 1;
-  protected orient: string = "vertical";
+  protected orient: string = AppState.getGoodsOrientation();
   protected product: ProductInterface[] = productDB;
 
   constructor(
@@ -14,28 +16,22 @@ export default class Goods extends Component {
     className: string,
     goodsPerPage: number,
     currentPage: number,
-    orient: string,
     product: ProductInterface[]
   ) {
     super(tagName, className);
     this.goodsPerPage = goodsPerPage;
     this.currentPage = currentPage;
-    this.orient = orient;
     this.product = product;
   }
-
-  
 
   renderItems(
     arrData: ProductInterface[],
     goodsPerPage: number,
     currentPage: number,
-    orient: string    
   ) {
     this.product = arrData;
     this.goodsPerPage = goodsPerPage;
     this.currentPage = currentPage;
-    this.orient = orient;
 
     if (this.product.length === 0) {
       this.container?.classList.add('not-found')
@@ -61,9 +57,12 @@ export default class Goods extends Component {
       });
 
       const imgDiv = this.elFactory("div", { class: "goods-item-img" });
-
+      
       const imgItem = this.elFactory("img", { class: "img", src: item.imgs[0] });
       imgItem.ondragstart = () => false
+      
+      imgDiv.append(imgItem)
+      const imgDivWrapper = this.elFactory('a', {class: 'goods-item-img-wrapper', href: `./#product&id=${item.id}`}, imgDiv)
 
       const description = this.elFactory("div", {
         class: `${
@@ -71,10 +70,10 @@ export default class Goods extends Component {
             ? "goods-item-description"
             : "goods-item-description goods-item-description-horizontal"
         }`,
-      });
+      });     
 
-      const nameItem = this.elFactory("div", {
-        class: "goods-item-description-name",
+      const nameItem = this.elFactory("a", {
+        class: "goods-item-description-name", href: `./#product&id=${item.id}`
       });
 
       const priceAndBuy = this.elFactory("div", {
@@ -99,36 +98,41 @@ export default class Goods extends Component {
       
       const spanStock = document.createElement('span');
 
-      const buyButton = this.elFactory("button", {
-        class: "goods-item-wrapper-buyButton",
+      const addToBagBtn = this.elFactory("button", {
+        class: "goods-item-wrapper-add-to-bag-btn goods-item-wrapper-btn",
       });
+      addToBagBtn.textContent = "Buy";
+      const goodInBag = this.elFactory("div", {
+        class: "goods-item-wrapper-good-in-bag goods-item-wrapper-btn hidden",
+      }, this.elFactory('img', {
+        class: 'goods-item-wrapper-good-in-bag-img',
+        src: './assets/images/icons/selected-item.svg',
+      }));
 
-      buyButton.addEventListener("click", (e) => {
-        const target = e.target;
+      if (Bag.bagItems.filter(el => +el.id === +item.id).length > 0) {
+        addToBagBtn.classList.add('hidden')
+        goodInBag.classList.remove('hidden')
+      }
+      
+      addToBagBtn.addEventListener("click", () => {
+        Bag.bagItems.push({id: +item.id, count: 1})
+        Bag.updateBagCount()
+        addToBagBtn.classList.add('hidden')
+        goodInBag.classList.remove('hidden')
 
-        if (target instanceof Element) {
-          target.classList.toggle("goods-item-wrapper-buyButton-select");
-        }
+        AppState.setGoodsInBag(Bag.bagItems)
       });
 
       // name
-      nameItem.textContent = `${this.capitilizeFirstLetter(item.brand)} 
-        ${item.name} 
-        ${item.category === 'laptops' ? item.displaySize : ''} 
-        ${item.storage && item.category !== 'watches' && item.brand !== 'samsung' ? item.storage : ''} 
-        ${(item.category !== 'headphones' && item.category !== 'watches') || item.brand !== 'apple' 
-          ? item.color : '' 
-        } 
-        ${item.model}`;
+      nameItem.textContent = this.setGoodsItemName(item);
 
       price.textContent = "$" + item.price;
-      buyButton.textContent = "Buy";
       stock.textContent = `${item.stock}`;
       spanStock.textContent = "In stock: "
       stock.prepend(spanStock);
 
-      imgDiv.append(imgItem);
-      listItem.append(imgDiv);
+      
+      listItem.append(imgDivWrapper);
       description.append(nameItem);
       
       // rating
@@ -136,11 +140,13 @@ export default class Goods extends Component {
       for (let i = 0; i < 5; i++) {
         if (i < item.rating) {
           const ratingImg = this.elFactory('img', {class: 'goods-item-wrapper-rating-star', 
-          src: './assets/images/icons/rating-full.svg'})
+          src: './assets/images/icons/rating-full.svg', alt: 'rating-star'})
+          ratingImg.ondragstart = () => false
           ratingStars.append(ratingImg)
         } else {
           const ratingImg = this.elFactory('img', {class: 'goods-item-wrapper-rating-star', 
-          src: './assets/images/icons/rating-empty.svg'})
+          src: './assets/images/icons/rating-empty.svg', alt: 'rating-star'})
+          ratingImg.ondragstart = () => false
           ratingStars.append(ratingImg)
         }
       }
@@ -217,7 +223,8 @@ export default class Goods extends Component {
       priceAndBuy.append(price);
       listItem.append(stock)
       listItem.append(rating)
-      priceAndBuy.append(buyButton);
+      priceAndBuy.append(addToBagBtn);
+      priceAndBuy.append(goodInBag)
       listItem.append(priceAndBuy);
 
       return listItem;
@@ -241,21 +248,21 @@ export default class Goods extends Component {
       this.product,
       this.goodsPerPage,
       this.currentPage,
-      this.orient
     );
     const goodsNav = new GoodsNav(
       this.product,
       "div",
       "navigation-wrapper",
       this.currentPage,
-      this.goodsPerPage,
-      this.orient
+      this.goodsPerPage
     ).render();
 
     this.container.append(items);
     this.container.append(goodsNav);
 
-    
+    document.querySelector('.header-search')?.classList.remove('hidden')
+
+    Bag.updateBagCount()
 
     return this.container;
   }

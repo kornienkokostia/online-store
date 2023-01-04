@@ -45,7 +45,6 @@ export default interface ProductInterface {
     chipsetCores?: string,
     ram?: string,
     storageType?: string,
-    storageSize?: string,
     graphicsCardType?: string,
     wifiStandart?: string,
     ports?: string,

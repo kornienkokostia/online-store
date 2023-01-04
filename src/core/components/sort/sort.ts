@@ -1,6 +1,5 @@
 import productDB from "../../../db/productDB";
 import ProductInterface from "../../../models/products";
-import Pagination from "../pagination/pagination";
 
 class Sort {
   protected array: ProductInterface[] = productDB;
@@ -71,7 +70,6 @@ class Sort {
     }
 
     if (value === "rating-descending") {
-      console.log(value);
       this.array = this.array.sort((x, y) =>
         +x.rating < +y.rating ? 1 : +x.rating > +y.rating ? -1 : 0
       );

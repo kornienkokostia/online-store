@@ -37,13 +37,16 @@ export default class Filters extends Component {
       class: 'filters-item-option',
     });
 
+    const filterOptionCheckboxImg = this.elFactory('img', {
+      class: 'filters-item-option-checkbox-img',
+      src: './assets/images/icons/selected-item.svg',
+      alt: 'checkbox-img'
+    })
+    filterOptionCheckboxImg.ondragstart = () => false
     const filterOptionCheckbox = this.elFactory(
       'div',
       { class: 'filters-item-option-checkbox', category: item, checked: false },
-      this.elFactory('img', {
-        class: 'filters-item-option-checkbox-img',
-        src: './assets/images/icons/selected-item.svg',
-      }),
+      filterOptionCheckboxImg
     );
 
     const filterOptionName = this.elFactory('span', {
@@ -64,16 +67,15 @@ export default class Filters extends Component {
         let checkedValue;
 
         if (filterOptionCheckbox.getAttribute('checked') === ''){
-          checkedValue = true
+          checkedValue = 'true'
         } else {
-          checkedValue = false
+          checkedValue = 'false'
         }
 
-        //добавлять значения в хеш без перезагрузки = сомнительно
-        // history.pushState(null, "null", `${checkedCategory}`);
+        
 
-        if (checkedCategory ) {
-          Filtration.filtrationList(checkedCategory, checkedValue);
+        if (checkedCategory) {
+          Filtration.filterByBrand(checkedCategory, checkedValue);
         }
       }
 
@@ -263,16 +265,7 @@ export default class Filters extends Component {
           }
         } else {
           filterPriceMinValue.textContent = convertNumToSplitString(filterPriceSliderInputMin.value);
-          filterPriceMaxValue.textContent = convertNumToSplitString(filterPriceSliderInputMax.value);
-          
-          let leftPrice = document.querySelector('.filters-item-values-price-min-value')?.textContent;
-          let rightPrice = document.querySelector('.filters-item-values-price-max-value')?.textContent;
-
-          if (leftPrice && rightPrice) {
-            
-            Filtration.priceFunc(convertStringWithCommasToDefault(leftPrice), convertStringWithCommasToDefault(rightPrice))
-            
-          }
+          filterPriceMaxValue.textContent = convertNumToSplitString(filterPriceSliderInputMax.value);  
 
           filterPriceSliderProgress.style.left =
             ((minVal - +filterPriceSliderInputMin.min) /
@@ -289,6 +282,24 @@ export default class Filters extends Component {
             '%';
         }
       });
+
+      
+      el.addEventListener("mouseup", () => {
+        let leftPrice = document.querySelector(
+          ".filters-item-values-price-min-value"
+        )?.textContent;
+        let rightPrice = document.querySelector(
+          ".filters-item-values-price-max-value"
+        )?.textContent;
+
+        if (leftPrice && rightPrice) {
+          const convertPrice = `${convertStringWithCommasToDefault(
+            leftPrice
+          )}to${convertStringWithCommasToDefault(rightPrice)}`;
+          Filtration.filterByBrand("price", convertPrice);
+        }
+      });
+
     });
 
     filterPriceDualProgress.append(filterPriceSlider);
@@ -395,13 +406,6 @@ export default class Filters extends Component {
           filterStockMinValue.textContent = filterStockSliderInputMin.value;
           filterStockMaxValue.textContent = filterStockSliderInputMax.value;
 
-          let leftStock = document.querySelector('.filters-item-values-stock-min-value')?.textContent;
-          let rightStock = document.querySelector('.filters-item-values-stock-max-value')?.textContent;
-         
-          if (leftStock && rightStock) {
-            Filtration.stockFunc(leftStock, rightStock)
-          }    
-
           filterStockSliderProgress.style.left =
             ((minVal - +filterStockSliderInputMin.min) /
               (+filterStockSliderInputMin.max -
@@ -415,6 +419,20 @@ export default class Filters extends Component {
                 +filterStockSliderInputMax.min)) *
               100 +
             '%';
+        }
+      });
+
+      el.addEventListener("mouseup", () => {
+        let leftStock = document.querySelector(
+          ".filters-item-values-stock-min-value"
+        )?.textContent;
+        let rightStock = document.querySelector(
+          ".filters-item-values-stock-max-value"
+        )?.textContent;
+
+        if (leftStock && rightStock) {
+          const stock = `${leftStock}to${rightStock}`;
+          Filtration.filterByBrand("stock", stock);
         }
       });
     });

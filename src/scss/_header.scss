@@ -3,6 +3,7 @@
     justify-content: space-between;
     width: calc(100% - 20px);
     height: 100%;
+    max-width: 1260px;
     &-wrapper{
         width: 100%;
         height: 54px;
@@ -14,42 +15,80 @@
     &-logo{
         display: flex;
         align-items: center;
-        padding: 0 10px;
-        &-link, &-img{
+        &-link{
+            display: flex;
+            align-items: center;
+           height: 100%;
+           width: 100%;
+           padding: 0 10px;
+        }
+        &-img{
             height: 18px;
         }
         &:hover{
             cursor: pointer;
         }
     }
-    &-cart {
+    &-bag {
+        position: relative;
         display: flex;
         align-items: center;
         padding: 0 10px;
         &-img{
-            width: 19px;
+         
+            width: 17px;
             margin-top: -1px;
+            transform: translateX(0px);
+            transition: transform .3s cubic-bezier(0.25, 0.1, 0.3, 1);
+            &.active{
+                transform: translateX(-5px);
+            }
+            &.two-num{
+                transform: translateX(-12px);
+                &-plus{
+                    transform: translateX(-20px)
+                }
+            }
         }
         &:hover{
             cursor: pointer;
         }
         &-items-count{
             position: absolute;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
-            width: 15px;
-            height: 15px;
-            color: #ffffff;
-            background-color: var(--main-red);
-            border-radius: 4px;
-            right: 12px;
-            top: 10px;
-            &-value{
+            width: 16px;
+            height: 16px;
+            color: #000000;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 0px 4px;
+            top: 26px;
+            margin-right: 10px;
+            right: 0px;
+            transition: width 0.3s cubic-bezier(0.25, 0.1, 0.3, 1);;
+            &.active{
+                display: flex;
                 font-size: 12px;
-                font-family: SF-Pro-Display-Light;
-                margin-top: 1px;
+                &.two-num{
+                    width: 23.25px;
+                    &-plus{
+                        width: 30.93px;
+                        &::after{
+                            content: '+';
+                            font-size: 12px;
+                            margin-top: -1px;
+                        }
+                    }
+                }
+                &-value{
+                    font-size: 12px;
+                    font-family: SF-Pro-Display-Medium;
+                    margin-top: 1px;
+                }
             }
+            
         }
     }
     &-search{
@@ -61,6 +100,7 @@
         margin-left: auto;
         margin-right: auto;
         width: 350px;
+        transition: opacity, visibility .2s, .2s;
         &-input{
             width: 100%;
             height: 33px;
@@ -105,6 +145,10 @@
                 width: 100%;
                 height: 100%;
             }
+        } 
+        &.hidden{
+            visibility: hidden;
+            opacity: 0;
         }
     }
 }

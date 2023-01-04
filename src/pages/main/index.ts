@@ -5,12 +5,9 @@ import Filters from "../../core/components/main/filters";
 import productDB from "../../db/productDB";
 
 class MainPage extends Page {
-  static textObject = {
-    MainTitle: "Main Page",
-  };
-
   public filters: Filters = new Filters("div", "filters-wrapper");
   public topPanel: TopPanel = new TopPanel("div", "top-panel-wrapper");
+  public goods: Goods = new Goods("div", "goods-wrapper", 12, 1, productDB);
 
   constructor(id: string) {
     super(id);
@@ -18,11 +15,10 @@ class MainPage extends Page {
 
   render() {
     const mainDiv = document.createElement("main");
-    const goods = new Goods("div", "goods-wrapper", 12, 1, "vertical", productDB).render();
     mainDiv.classList.add("main");
     mainDiv.append(this.filters.render());
     mainDiv.append(this.topPanel.render());
-    mainDiv.append(goods);
+    mainDiv.append(this.goods.render());
     this.container.append(mainDiv);
     return this.container;
   }

@@ -1,25 +1,24 @@
 import Goods from "../../../core/components/main/goods";
 import ProductInterface from "models/products";
+import AppState from "../save-goods-state/index";
 
 class Pagination {
   static currentPage: number = 1;
   static goodsPerPage: number = 12;
-  static orientation: string = 'vertical';
+  static orientation: string = AppState.getGoodsOrientation();
 
   static displayList() {}
 
-  static paginationBtn(goodsPerPage: number, num: number, orient: string, product: ProductInterface[], 
+  static paginationBtn(goodsPerPage: number, num: number, product: ProductInterface[], 
       needScrollTop: boolean ) {
     this.currentPage = num;
-    this.goodsPerPage = goodsPerPage;
-    this.orientation = orient;    
+    this.goodsPerPage = goodsPerPage;  
 
     const btns = document.querySelector(".main");
     const ids = document.querySelector(".goods-wrapper");
 
     const onWindowScroll = () => {
       if (window.scrollY === 0) {
-          console.log(window.scrollY === 0)
               ids?.remove();
 
           const goods = new Goods(
@@ -27,7 +26,6 @@ class Pagination {
             "goods-wrapper",
             this.goodsPerPage,
             this.currentPage,
-            this.orientation,
             product
           ).render();
 
@@ -50,7 +48,6 @@ class Pagination {
         "goods-wrapper",
         this.goodsPerPage,
         this.currentPage,
-        this.orientation,
         product
       ).render();
 
