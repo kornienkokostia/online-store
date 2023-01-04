@@ -17,6 +17,20 @@ export default class Bag extends Component {
 
   convertNumToSplitString = (str: string) => str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
 
+  disableScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+    document.querySelector('html')!.style.scrollBehavior = 'auto'
+    window.onscroll = function() {
+      window.scrollTo(scrollLeft, scrollTop);
+    };
+  }
+
+  enableScroll() {
+    document.querySelector('html')!.style.scrollBehavior = 'smooth'
+    window.onscroll = function() {};
+  }
+
   static updateBagCount(){
     document.querySelector('.header-bag-items-count')?.classList.remove('two-num')
     document.querySelector('.header-bag-items-count')?.classList.remove('two-num-plus')
@@ -94,6 +108,14 @@ export default class Bag extends Component {
     const checkOutBtn = this.elFactory('button', {class: 'bag-btn bag-btn-check-out'})
     checkOutBtn.textContent = 'Check Out'
 
+    checkOutBtn.addEventListener('click', () => {
+      document.querySelector('.checkout-window')?.classList.add('active')
+      document.querySelector('.dark-bg')?.classList.add('active')
+      this.disableScroll()
+      
+    
+    })
+
     bagTotalDiv.append(bagTotalSummary)
     bagTotalDiv.append(checkOutBtn)
 
@@ -145,6 +167,7 @@ export default class Bag extends Component {
       this.totalPrice = `${allPriseVal}`
       const totalPriceEl = document.querySelector('.bag-total-summaty-value') as HTMLElement
       totalPriceEl.textContent = this.convertNumToSplitString(this.totalPrice)
+      document.querySelector('.checkout-header-total-value')!.textContent = this.convertNumToSplitString(this.totalPrice)
     }
 
     const updateBagTitle = () => {
@@ -281,7 +304,301 @@ export default class Bag extends Component {
     return bagItemDiv
   }
 
+  closeCheckoutWindow(){
+    document.querySelector('.checkout-window')?.classList.remove('active')
+    document.querySelector('.dark-bg')?.classList.remove('active')
+    this.enableScroll()
+  }
+
+  createCheckoutWindow(){
+    let formValidation = true
+
+    const checkout = this.elFactory('div', {class: 'checkout-window'})
+
+    const checkoutHeader = this.elFactory('div', {class: 'checkout-header'})
+
+    const checkoutHeaderCloseBtn = this.elFactory('button', {class: 'checkout-header-close-btn'})
+    const checkoutHeaderCloseBtnImg = this.elFactory('img', {class: 'checkout-header-close-btn-img', 
+      src: './assets/images/icons/checkout-close-btn.svg', alt: 'checkout-header-close-btn-img'})
+    checkoutHeaderCloseBtnImg.ondragstart = () => false
+    checkoutHeaderCloseBtn.append(checkoutHeaderCloseBtnImg) 
+
+    checkoutHeaderCloseBtn.addEventListener('click', () => {
+      this.closeCheckoutWindow()
+    })
+    
+    const checkoutHeaderTitle = this.elFactory('h2', {class: 'checkout-header-title'})
+    checkoutHeaderTitle.textContent = 'Checkout'
+    
+
+    const checkoutHeaderTotal = this.elFactory('div', {class: 'checkout-header-total'})
+    checkoutHeaderTotal.textContent = 'Order Summary: $'
+    const checkoutHeaderTotalSpan = this.elFactory('span', {class: 'checkout-header-total-value'})
+    checkoutHeaderTotalSpan.textContent = `${this.convertNumToSplitString(this.totalPrice)}`
+
+    checkoutHeaderTotal.append(checkoutHeaderTotalSpan)
+
+    checkoutHeader.append(checkoutHeaderCloseBtn, checkoutHeaderTitle, checkoutHeaderTotal)
+
+    const checkoutInfo = this.elFactory('div', {class: 'checkout-info'})
+
+    const checkoutInfoTitle = this.elFactory('div', {class: 'checkout-info-title'})
+    checkoutInfoTitle.textContent = 'Where should we send your order?'
+
+    checkoutInfo.append(checkoutInfoTitle)
+
+    // name adress block
+    const checkoutInfoNameAddress = this.elFactory('div', {class: 'checkout-info-item'})
+
+    const checkoutInfoNameAddressTitle = this.elFactory('p', {class: 'checkout-info-item-title'})
+    checkoutInfoNameAddressTitle.textContent = 'Enter your name and address:'
+
+    checkoutInfoNameAddress.append(checkoutInfoNameAddressTitle)
+
+    const errorMsgImg = this.elFactory('img', {class: 'checkout-info-field-error-img', 
+    src: './assets/images/icons/error.svg', alt: 'checkout-info-field-error-img'})
+    errorMsgImg.ondragstart = () => false
+
+    // First name
+    const checkoutInfoFirstName = this.elFactory('div', {class: 'checkout-info-field'})
+    const checkoutInfoFirstNameInput = this.elFactory('input', {class: 'checkout-info-field-input', 
+      type: 'text'})
+    const checkoutInfoFirstNameTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
+    checkoutInfoFirstNameTitle.textContent = 'First Name'
+
+    const checkoutInfoFirstNameError = this.elFactory('div', {class: 'checkout-info-field-error'})
+    const checkoutInfoFirstNameErrorText = this.elFactory('span', {class: 'checkout-info-field-error-msg'})
+    checkoutInfoFirstNameErrorText.textContent = 'Please enter a first name.'
+    
+    checkoutInfoFirstNameError.append(errorMsgImg, checkoutInfoFirstNameErrorText)
+
+    checkoutInfoFirstNameInput.addEventListener('focus', () => {
+      checkoutInfoFirstNameTitle.classList.add('active')
+      checkoutInfoFirstNameInput.classList.remove('error')
+    })
+    checkoutInfoFirstNameInput.addEventListener('focusout', () => {
+      formValidation = true
+      if (checkoutInfoFirstNameInput.value.length === 0) {
+        formValidation = false
+        checkoutInfoFirstNameTitle.classList.remove('active')
+        checkoutInfoFirstNameTitle.classList.add('error')
+        checkoutInfoFirstNameInput.classList.add('error')
+        checkoutInfoFirstNameError.classList.add('active')
+        checkoutInfoFirstNameErrorText.textContent = 'Please enter a first name.'
+      }
+      if (checkoutInfoFirstNameInput.value.length < 3 && checkoutInfoFirstNameInput.value.length !== 0) {
+        formValidation = false
+        checkoutInfoFirstNameError.classList.add('active')
+        checkoutInfoFirstNameInput.classList.add('error')
+        checkoutInfoFirstNameTitle.classList.add('error')
+        checkoutInfoFirstNameErrorText.textContent = 'Please enter a valid first name (>2 characters).'
+      }
+    })
+    checkoutInfoFirstNameInput.addEventListener('input', () => {
+      checkoutInfoFirstNameTitle.classList.remove('error')
+      checkoutInfoFirstNameError.classList.remove('active')
+    })
+
+    checkoutInfoFirstName.append(checkoutInfoFirstNameInput, checkoutInfoFirstNameTitle, checkoutInfoFirstNameError)
+
+    // Last name
+    const checkoutInfoLastName = this.elFactory('div', {class: 'checkout-info-field'})
+    const checkoutInfoLastNameInput = this.elFactory('input', {class: 'checkout-info-field-input', 
+      type: 'text'})
+    const checkoutInfoLastNameTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
+    checkoutInfoLastNameTitle.textContent = 'Last Name'
+
+    const checkoutInfoLastNameError = this.elFactory('div', {class: 'checkout-info-field-error'})
+    const checkoutInfoLastNameErrorText = this.elFactory('span', {class: 'checkout-info-field-error-msg'})
+    checkoutInfoLastNameErrorText.textContent = 'Please enter a last name.'
+    checkoutInfoLastNameError.append(errorMsgImg, checkoutInfoLastNameErrorText)
+
+    checkoutInfoLastNameInput.addEventListener('focus', () => {
+      checkoutInfoLastNameTitle.classList.add('active')
+      checkoutInfoLastNameInput.classList.remove('error')
+    })
+    checkoutInfoLastNameInput.addEventListener('focusout', () => {
+      formValidation = true
+      if (checkoutInfoLastNameInput.value.length === 0) {
+        formValidation = false
+        checkoutInfoLastNameTitle.classList.remove('active')
+        checkoutInfoLastNameTitle.classList.add('error')
+        checkoutInfoLastNameInput.classList.add('error')
+        checkoutInfoLastNameError.classList.add('active')
+        checkoutInfoLastNameErrorText.textContent = 'Please enter a last name.'
+      }
+      if (checkoutInfoLastNameInput.value.length < 3 && checkoutInfoLastNameInput.value.length !== 0) {
+        formValidation = false
+        checkoutInfoLastNameError.classList.add('active')
+        checkoutInfoLastNameInput.classList.add('error')
+        checkoutInfoLastNameTitle.classList.add('error')
+        checkoutInfoLastNameErrorText.textContent = 'Please enter a valid last name (>2 characters).'
+      }
+    })
+    checkoutInfoLastNameInput.addEventListener('input', () => {
+      checkoutInfoLastNameTitle.classList.remove('error')
+      checkoutInfoLastNameError.classList.remove('active')
+    })
+
+    checkoutInfoLastName.append(checkoutInfoLastNameInput, checkoutInfoLastNameTitle, checkoutInfoLastNameError)
+
+    // Address
+    const checkoutInfoAddress = this.elFactory('div', {class: 'checkout-info-field'})
+    const checkoutInfoAddressInput = this.elFactory('input', {class: 'checkout-info-field-input', 
+      type: 'text'})
+    const checkoutInfoAddressTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
+    checkoutInfoAddressTitle.textContent = 'Address'
+
+    const checkoutInfoAddressError = this.elFactory('div', {class: 'checkout-info-field-error'})
+    const checkoutInfoAddressErrorText = this.elFactory('span', {class: 'checkout-info-field-error-msg'})
+    checkoutInfoAddressErrorText.textContent = 'Please enter an address.'
+    checkoutInfoAddressError.append(errorMsgImg, checkoutInfoAddressErrorText)
+
+    checkoutInfoAddressInput.addEventListener('focus', () => {
+      checkoutInfoAddressTitle.classList.add('active')
+      checkoutInfoAddressInput.classList.remove('error')
+    })
+    checkoutInfoAddressInput.addEventListener('focusout', () => {
+      formValidation = true
+      if (checkoutInfoAddressInput.value.length === 0) {
+        formValidation = false
+        checkoutInfoAddressTitle.classList.remove('active')
+        checkoutInfoAddressTitle.classList.add('error')
+        checkoutInfoAddressInput.classList.add('error')
+        checkoutInfoAddressError.classList.add('active')
+        checkoutInfoAddressErrorText.textContent = 'Please enter an address.'
+      }
+      const inputArr = checkoutInfoAddressInput.value.trim().split(' ')
+  
+      if (checkoutInfoAddressInput.value.length !== 0 && (inputArr.length < 3 || 
+        inputArr.filter(el => el.length < 5).length !== 0)) {
+        formValidation = false
+        checkoutInfoAddressError.classList.add('active')
+        checkoutInfoAddressInput.classList.add('error')
+        checkoutInfoAddressTitle.classList.add('error')
+        checkoutInfoAddressErrorText.textContent = 'Please enter a valid address (>2 words, each >4 characters).'
+      }
+    })
+    checkoutInfoAddressInput.addEventListener('input', () => {
+      checkoutInfoAddressTitle.classList.remove('error')
+      checkoutInfoAddressError.classList.remove('active')
+    })
+
+    checkoutInfoAddress.append(checkoutInfoAddressInput, checkoutInfoAddressTitle, checkoutInfoAddressError)
+    
+    checkoutInfoNameAddress.append(checkoutInfoFirstName, checkoutInfoLastName, checkoutInfoAddress)
+
+    // Contact info block
+    const checkoutInfoContacts = this.elFactory('div', {class: 'checkout-info-item'})
+
+    const checkoutInfoContactsTitle = this.elFactory('p', {class: 'checkout-info-item-title'})
+    checkoutInfoContactsTitle.textContent = `What\u{2019}s your contact information?`
+
+    checkoutInfoContacts.append(checkoutInfoContactsTitle)
+
+    // Email address
+    const checkoutInfoEmailAddress = this.elFactory('div', {class: 'checkout-info-field'})
+    const checkoutInfoEmailAddressInput = this.elFactory('input', {class: 'checkout-info-field-input', 
+      type: 'text'})
+    const checkoutInfoEmailAddressTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
+    checkoutInfoEmailAddressTitle.textContent = 'Email Address'
+
+    const checkoutInfoEmailAddressError = this.elFactory('div', {class: 'checkout-info-field-error'})
+    const checkoutInfoEmailAddressErrorText = this.elFactory('span', {class: 'checkout-info-field-error-msg'})
+    checkoutInfoEmailAddressErrorText.textContent = 'Please enter an email address.'
+    checkoutInfoEmailAddressError.append(errorMsgImg, checkoutInfoEmailAddressErrorText)
+
+    checkoutInfoEmailAddressInput.addEventListener('focus', () => {
+      checkoutInfoEmailAddressTitle.classList.add('active')
+      checkoutInfoEmailAddressInput.classList.remove('error')
+    })
+    checkoutInfoEmailAddressInput.addEventListener('focusout', () => {
+      formValidation = true
+      if (checkoutInfoEmailAddressInput.value.length === 0) {
+        formValidation = false
+        checkoutInfoEmailAddressTitle.classList.remove('active')
+        checkoutInfoEmailAddressTitle.classList.add('error')
+        checkoutInfoEmailAddressInput.classList.add('error')
+        checkoutInfoEmailAddressError.classList.add('active')
+        checkoutInfoEmailAddressErrorText.textContent = 'Please enter an email address.'
+      }
+      const emailValidation = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+      
+      if (checkoutInfoEmailAddressInput.value.length !== 0 && 
+        !emailValidation.test(checkoutInfoEmailAddressInput.value)) {
+        formValidation = false
+        checkoutInfoEmailAddressError.classList.add('active')
+        checkoutInfoEmailAddressInput.classList.add('error')
+        checkoutInfoEmailAddressTitle.classList.add('error')
+        checkoutInfoEmailAddressErrorText.textContent = 'Please enter a valid email address.'
+      }
+    })
+    checkoutInfoEmailAddressInput.addEventListener('input', () => {
+      checkoutInfoEmailAddressTitle.classList.remove('error')
+      checkoutInfoEmailAddressError.classList.remove('active')
+    })
+
+    checkoutInfoEmailAddress.append(checkoutInfoEmailAddressInput, checkoutInfoEmailAddressTitle, checkoutInfoEmailAddressError)
+
+    // Phone
+    const checkoutInfoPhoneNum = this.elFactory('div', {class: 'checkout-info-field'})
+    const checkoutInfoPhoneNumInput = this.elFactory('input', {class: 'checkout-info-field-input', 
+      type: 'text'})
+    const checkoutInfoPhoneNumTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
+    checkoutInfoPhoneNumTitle.textContent = 'Phone Number'
+
+    const checkoutInfoPhoneNumError = this.elFactory('div', {class: 'checkout-info-field-error'})
+    const checkoutInfoPhoneNumErrorText = this.elFactory('span', {class: 'checkout-info-field-error-msg'})
+    checkoutInfoPhoneNumErrorText.textContent = 'Please enter a phone number.'
+    checkoutInfoPhoneNumError.append(errorMsgImg, checkoutInfoPhoneNumErrorText)
+
+    checkoutInfoPhoneNumInput.addEventListener('focus', () => {
+      checkoutInfoPhoneNumTitle.classList.add('active')
+      checkoutInfoPhoneNumInput.classList.remove('error')
+    })
+    checkoutInfoPhoneNumInput.addEventListener('focusout', () => {
+      formValidation = true
+      if (checkoutInfoPhoneNumInput.value.length === 0) {
+        formValidation = false
+        checkoutInfoPhoneNumTitle.classList.remove('active')
+        checkoutInfoPhoneNumTitle.classList.add('error')
+        checkoutInfoPhoneNumInput.classList.add('error')
+        checkoutInfoPhoneNumError.classList.add('active')
+        checkoutInfoPhoneNumErrorText.textContent = 'Please enter a phone number.'
+      }
+      if (checkoutInfoPhoneNumInput.value.length < 3 && checkoutInfoPhoneNumInput.value.length !== 0) {
+        formValidation = false
+        checkoutInfoPhoneNumError.classList.add('active')
+        checkoutInfoPhoneNumInput.classList.add('error')
+        checkoutInfoPhoneNumTitle.classList.add('error')
+        checkoutInfoPhoneNumErrorText.textContent = 'Please enter a valid phone number.'
+      }
+    })
+    checkoutInfoPhoneNumInput.addEventListener('input', () => {
+      checkoutInfoPhoneNumTitle.classList.remove('error')
+      checkoutInfoPhoneNumError.classList.remove('active')
+    })
+
+    checkoutInfoPhoneNum.append(checkoutInfoPhoneNumInput, checkoutInfoPhoneNumTitle, checkoutInfoPhoneNumError)
+
+    checkoutInfoContacts.append(checkoutInfoEmailAddress, checkoutInfoPhoneNum)
+
+    checkoutInfo.append(checkoutInfoNameAddress)
+    checkoutInfo.append(checkoutInfoContacts)
+
+    checkout.append(checkoutHeader)
+    checkout.append(checkoutInfo)
+
+    return checkout
+  }
+
   render() {
+    const darkBg = this.elFactory('div', {class: 'dark-bg'})
+    darkBg.addEventListener('click', () => {
+      this.closeCheckoutWindow()
+    })
+    this.container.append(darkBg)
+   
     const bagHeader = this.createBagHeader()
     this.container.append(bagHeader)
     const bagGoods =  this.elFactory('div', {class: 'bag-goods'})
@@ -291,6 +608,7 @@ export default class Bag extends Component {
 
     this.container.append(this.createBadTotal());
 
+     this.container.append(this.createCheckoutWindow());
 
     if (Bag.bagItems.length !== 0) {
       [...bagHeader.children][0].textContent = `Your bag total is $ 

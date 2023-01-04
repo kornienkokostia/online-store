@@ -43,23 +43,6 @@ class Routing {
           Filtration.categoryFunc(fil[0], fil[1]);
         }
       }
-
-      // const atttr = document.querySelectorAll(
-      //   ".filters-item-option-checkbox"
-      // );
-      // atttr.forEach((item) => {
-      //   let category = item.getAttribute("category");
-      //   if (category === fil[0]) {
-      //     if (fil[1] === "true") {
-      //       item.setAttribute("checked", "");
-      //       item.classList.add("active");
-      //     }
-      //     if (fil[1] === "false") {
-      //       item.setAttribute("checked", "false");
-      //       item.classList.remove("active");
-      //     }
-      //   }
-      // });
     }
     if (
       fil[0] === "apple" ||

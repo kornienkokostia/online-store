@@ -39,6 +39,10 @@
   src: url('./assets/fonts/SF-Pro-Display-Medium.ttf');
 }
 
+html{
+   scroll-behavior: smooth;
+}
+
 body {
   background: var(--main-bg);
   font-family: 'SF-Pro-Display-Regular';
@@ -54,7 +58,7 @@ h1{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  scroll-behavior: smooth;
+ 
 }
 
 /* variables */
