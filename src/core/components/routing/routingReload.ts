@@ -94,6 +94,8 @@ class RoutingWithReload {
           this.newBrandArray = brandArr;
           Filtration.brandArray = this.newBrandArray;
           Filtration.filtrationList(fil[0], true);
+          
+          
         }
       }
 

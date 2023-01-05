@@ -215,9 +215,11 @@ class Filtration {
 
   static brandFunc(fil: string, value: string) {
     if (value === "true") {
+
       if (this.brandArray.length === 4) {
         this.brandArray.length = 0;
       }
+
 
       if (this.brandArray.includes(fil)) {
         this.brandArray = [...new Set(this.brandArray)];
@@ -225,6 +227,10 @@ class Filtration {
         this.filtrationList(fil, true);
       } else {
         this.brandArray.push(fil);
+        console.log(this.brandArray);
+        console.log(fil);
+        console.log(this.brandArray);
+        
 
         this.filtrationList(fil, true);
       }
@@ -310,6 +316,10 @@ class Filtration {
     this.orient = Pagination.orientation;
     this.product.length = 0;
     let arr: ProductInterface[] = [];
+
+    if (this.categoryArray.length === 0) {
+      this.categoryArray = [...FiltersOptionsCategory];
+    }
 
     const brandLength: number = this.brandArray.length;
     const categoryLength: number = this.categoryArray.length;
