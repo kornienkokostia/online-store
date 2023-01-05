@@ -227,10 +227,6 @@ class Filtration {
         this.filtrationList(fil, true);
       } else {
         this.brandArray.push(fil);
-        console.log(this.brandArray);
-        console.log(fil);
-        console.log(this.brandArray);
-        
 
         this.filtrationList(fil, true);
       }
