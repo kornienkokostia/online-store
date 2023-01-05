@@ -10,6 +10,7 @@ import RoutingWithReload from "../../core/components/routing/routingReload"
 import Filtration from "../../core/components/filtration/filtration";
 import Footer from '../../core/components/footer/index';
 import Product from '../../core/components/product/index';
+import Bag from '../../core/components/bag/index';
 
 export const enum PageIDs {
     MainPage = 'main',
@@ -80,6 +81,7 @@ class App {
                 RoutingWithReload.changeURL(restURL);  
                 Product.breadCrumbsCheck(restURL)
             }
+            Bag.updateBagCount()
         }
         
     }
