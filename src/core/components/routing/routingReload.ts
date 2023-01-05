@@ -20,8 +20,8 @@ class RoutingWithReload {
   static changeURL(value: string) {
     this.urlString = value;
 
-    const currentHash = window.location.hash
-    
+    const currentHash = window.location.hash;
+
     const array = value.split("&");
 
     const parametersArray = [...array.slice(1)];
@@ -30,35 +30,27 @@ class RoutingWithReload {
 
     let categoryArr: string[] = [];
     let brandArr: string[] = [];
-    
+
     if (
-      !(currentHash.includes(`&smartphones=true`)) &&
-      !(currentHash.includes(`&headphones=true`)) &&
-      !(currentHash.includes(`&laptops=true`)) &&
-      !(currentHash.includes(`&watches=true`)) &&
-      !(currentHash.includes(`&tablets=true`))
+      !currentHash.includes(`&smartphones=true`) &&
+      !currentHash.includes(`&headphones=true`) &&
+      !currentHash.includes(`&laptops=true`) &&
+      !currentHash.includes(`&watches=true`) &&
+      !currentHash.includes(`&tablets=true`)
     ) {
-      
       Filtration.categoryArray.length = 0;
       this.newCategoryArray.length = 0;
-      console.log(this.newCategoryArray, Filtration.categoryArray);
-    } 
+    }
 
     if (
-      !(currentHash.includes(`&apple=true`)) &&
-      !(currentHash.includes(`&samsung=true`)) &&   
-      !(currentHash.includes(`&xiaomi=true`)) &&
-      !(currentHash.includes(`&asus=true`))
+      !currentHash.includes(`&apple=true`) &&
+      !currentHash.includes(`&samsung=true`) &&
+      !currentHash.includes(`&xiaomi=true`) &&
+      !currentHash.includes(`&asus=true`)
     ) {
-
-
-      this.newBrandArray = [...FiltersOptionsBrand]
-      Filtration.brandArray = [...FiltersOptionsBrand]
-      console.log(this.newBrandArray, Filtration.brandArray);
-    } 
-    
-    console.log('ROUTING WITH RELOAD');
-    
+      this.newBrandArray = [...FiltersOptionsBrand];
+      Filtration.brandArray = [...FiltersOptionsBrand];
+    }
 
     for (let i = 0; i < len; i++) {
       let fil = parametersArray[i].split("=");
@@ -89,8 +81,6 @@ class RoutingWithReload {
           Filtration.categoryArray = this.newCategoryArray;
           Filtration.filtrationList(fil[0], true);
         }
-
-        console.log(this.newCategoryArray);
       }
       if (
         fil[0] === "apple" ||
@@ -115,8 +105,6 @@ class RoutingWithReload {
           this.newBrandArray = brandArr;
           Filtration.brandArray = this.newBrandArray;
           Filtration.filtrationList(fil[0], true);
-          
-          
         }
       }
 
