@@ -19,6 +19,8 @@ class RoutingWithReload {
 
   static changeURL(value: string) {
     this.urlString = value;
+
+    const currentHash = window.location.hash
     
     const array = value.split("&");
 
@@ -29,15 +31,34 @@ class RoutingWithReload {
     let categoryArr: string[] = [];
     let brandArr: string[] = [];
     
-    // if (
-    //   !this.urlString.includes(`smartphones`) ||
-    //   !this.urlString.includes(`headphones`) ||
-    //   !this.urlString.includes(`laptops`) ||
-    //   !this.urlString.includes(`watches`) ||
-    //   !this.urlString.includes(`tablets`)
-    // ) {
-    //   console.log("не содержит");
-    // }
+    if (
+      !(currentHash.includes(`&smartphones=true`)) &&
+      !(currentHash.includes(`&headphones=true`)) &&
+      !(currentHash.includes(`&laptops=true`)) &&
+      !(currentHash.includes(`&watches=true`)) &&
+      !(currentHash.includes(`&tablets=true`))
+    ) {
+      
+      Filtration.categoryArray.length = 0;
+      this.newCategoryArray.length = 0;
+      console.log(this.newCategoryArray, Filtration.categoryArray);
+    } 
+
+    if (
+      !(currentHash.includes(`&apple=true`)) &&
+      !(currentHash.includes(`&samsung=true`)) &&   
+      !(currentHash.includes(`&xiaomi=true`)) &&
+      !(currentHash.includes(`&asus=true`))
+    ) {
+
+
+      this.newBrandArray = [...FiltersOptionsBrand]
+      Filtration.brandArray = [...FiltersOptionsBrand]
+      console.log(this.newBrandArray, Filtration.brandArray);
+    } 
+    
+    console.log('ROUTING WITH RELOAD');
+    
 
     for (let i = 0; i < len; i++) {
       let fil = parametersArray[i].split("=");
