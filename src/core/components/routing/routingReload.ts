@@ -6,19 +6,38 @@ import AppState from "../save-goods-state/index";
 import Filtration from "../filtration/filtration";
 import GoodsNav from "../goods_navigation/index";
 import Bag from "../bag/index";
+import {
+  FiltersOptionsBrand,
+  FiltersOptionsCategory,
+} from "../../../db/filtersDB";
 
 class RoutingWithReload {
   static urlString: string = "";
 
-    static changeURL(value: string) {
-      
-    this.urlString = value;
+  static newCategoryArray: string[] = [];
+  static newBrandArray: string[] = [];
 
+  static changeURL(value: string) {
+    this.urlString = value;
+    
     const array = value.split("&");
 
     const parametersArray = [...array.slice(1)];
 
     const len = parametersArray.length;
+
+    let categoryArr: string[] = [];
+    let brandArr: string[] = [];
+    
+    // if (
+    //   !this.urlString.includes(`smartphones`) ||
+    //   !this.urlString.includes(`headphones`) ||
+    //   !this.urlString.includes(`laptops`) ||
+    //   !this.urlString.includes(`watches`) ||
+    //   !this.urlString.includes(`tablets`)
+    // ) {
+    //   console.log("не содержит");
+    // }
 
     for (let i = 0; i < len; i++) {
       let fil = parametersArray[i].split("=");
@@ -34,16 +53,23 @@ class RoutingWithReload {
           const atttr = document.querySelectorAll(
             ".filters-item-option-checkbox"
           );
+
           atttr.forEach((item) => {
             let category = item.getAttribute("category");
+
             if (category === fil[0]) {
+              categoryArr.push(fil[0]);
               item.setAttribute("checked", "");
               item.classList.add("active");
             }
           });
 
-          Filtration.categoryFunc(fil[0], fil[1]);
+          this.newCategoryArray = categoryArr;
+          Filtration.categoryArray = this.newCategoryArray;
+          Filtration.filtrationList(fil[0], true);
         }
+
+        console.log(this.newCategoryArray);
       }
       if (
         fil[0] === "apple" ||
@@ -55,17 +81,22 @@ class RoutingWithReload {
           const atttr = document.querySelectorAll(
             ".filters-item-option-checkbox"
           );
+
           atttr.forEach((item) => {
             let category = item.getAttribute("category");
             if (category === fil[0]) {
+              brandArr.push(fil[0]);
               item.setAttribute("checked", "");
               item.classList.add("active");
             }
           });
 
-          Filtration.brandFunc(fil[0], fil[1]);
+          this.newBrandArray = brandArr;
+          Filtration.brandArray = this.newBrandArray;
+          Filtration.filtrationList(fil[0], true);
         }
       }
+
       if (fil[0] === "price") {
         let left = fil[1].split("to")[0];
         let right = fil[1].split("to")[1];
@@ -181,8 +212,8 @@ class RoutingWithReload {
 
       if (fil[0] === "search") {
         if (this.urlString.includes(`${fil[0]}=${fil[1]}`)) {
-          if (fil[1].includes('%20')) {            
-            fil[1] = fil[1].replace(/%20/gi, ' ') 
+          if (fil[1].includes("%20")) {
+            fil[1] = fil[1].replace(/%20/gi, " ");
           }
           const searchInput = document.querySelector(".header-search-input");
           const clearSearchField = document.querySelector(
@@ -254,40 +285,51 @@ class RoutingWithReload {
         }
       }
 
-          if (fil[0] === 'id' ) {
-          const headerBagImg = document.querySelector('.header-bag-img');
-          const headerBagItemsCount = document.querySelector('.header-bag-items-count');
-          const headerBagItemsCountValue = document.querySelector('.header-bag-items-count-value')
+      if (fil[0] === "id") {
+        const headerBagImg = document.querySelector(".header-bag-img");
+        const headerBagItemsCount = document.querySelector(
+          ".header-bag-items-count"
+        );
+        const headerBagItemsCountValue = document.querySelector(
+          ".header-bag-items-count-value"
+        );
 
-          const totalCount = Bag.bagItems.reduce((partialSum, a) => partialSum + +a.count, 0);
+        const totalCount = Bag.bagItems.reduce(
+          (partialSum, a) => partialSum + +a.count,
+          0
+        );
 
-          if (totalCount !== 0) {
-            headerBagImg?.classList.add('active')
-            headerBagItemsCount?.classList.add('active')
-          }
-          if (headerBagItemsCountValue) {
-            headerBagItemsCountValue.textContent = `${totalCount}`
-          }
-          
+        if (totalCount !== 0) {
+          headerBagImg?.classList.add("active");
+          headerBagItemsCount?.classList.add("active");
         }
-
-        
+        if (headerBagItemsCountValue) {
+          headerBagItemsCountValue.textContent = `${totalCount}`;
+        }
+      }
     }
-    
-    if (this.urlString === 'bag') {
-      const headerBagImg = document.querySelector('.header-bag-img');
-          const headerBagItemsCount = document.querySelector('.header-bag-items-count');
-          const headerBagItemsCountValue = document.querySelector('.header-bag-items-count-value')
 
-          const totalCount = Bag.bagItems.reduce((partialSum, a) => partialSum + +a.count, 0);
+    if (this.urlString === "bag") {
+      const headerBagImg = document.querySelector(".header-bag-img");
+      const headerBagItemsCount = document.querySelector(
+        ".header-bag-items-count"
+      );
+      const headerBagItemsCountValue = document.querySelector(
+        ".header-bag-items-count-value"
+      );
 
-          if (totalCount !== 0) {
-            headerBagImg?.classList.add('active')
-            headerBagItemsCount?.classList.add('active')
-          }
-          if (headerBagItemsCountValue) {
-            headerBagItemsCountValue.textContent = `${totalCount}`
-          }
+      const totalCount = Bag.bagItems.reduce(
+        (partialSum, a) => partialSum + +a.count,
+        0
+      );
+
+      if (totalCount !== 0) {
+        headerBagImg?.classList.add("active");
+        headerBagItemsCount?.classList.add("active");
+      }
+      if (headerBagItemsCountValue) {
+        headerBagItemsCountValue.textContent = `${totalCount}`;
+      }
     }
   }
 }

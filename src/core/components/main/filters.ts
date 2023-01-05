@@ -72,8 +72,6 @@ export default class Filters extends Component {
           checkedValue = 'false'
         }
 
-        
-
         if (checkedCategory) {
           Filtration.filterByBrand(checkedCategory, checkedValue);
         }

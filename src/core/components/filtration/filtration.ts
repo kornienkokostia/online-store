@@ -8,7 +8,7 @@ import Pagination from "../pagination/pagination";
 import Sort from "../sort/sort";
 import Search from "../search/search";
 import AppState from "../save-goods-state/index";
-import { throws } from "assert";
+// import { throws } from "assert";
 import MainPage from "../../../pages/main/index";
 import Routing from "../routing/routing";
 
@@ -26,7 +26,7 @@ class Filtration {
   static product: ProductInterface[] = [];
 
   static brandArray: string[] = [...FiltersOptionsBrand];
-  static categoryArray: string[] = [...FiltersOptionsCategory];
+  static categoryArray: string[] = [];
 
   static getMinPriceVal = (arr: ProductInterface[]) =>
     Math.min(
@@ -62,7 +62,7 @@ class Filtration {
   static orient: string = AppState.getGoodsOrientation();
   static search: string = "";
 
-  // static URLstring: string = `#${MainPage.}`;
+  
   static URLstring: string = `#main-page`;
 
   static changePriceInputs = () => {
@@ -210,10 +210,7 @@ class Filtration {
       Routing.changeURL(currentURL);
     }
 
-    // if (fil === 'page') {
-    //   const currentURL = `&page=${value}`;
-    //   Routing.changeURL(currentURL);
-    // }
+    
   }
 
   static brandFunc(fil: string, value: string) {
@@ -222,20 +219,28 @@ class Filtration {
         this.brandArray.length = 0;
       }
 
-      
-      this.brandArray.push(fil);
-      
+      if (this.brandArray.includes(fil)) {
+        this.brandArray = [...new Set(this.brandArray)];
 
-      this.filtrationList(fil, true);
+        this.filtrationList(fil, true);
+      } else {
+        this.brandArray.push(fil);
+
+        this.filtrationList(fil, true);
+      }
     }
 
     if (value === "false") {
-      this.brandArray = this.brandArray.filter((goods) => goods !== fil);
-      if (this.brandArray.length === 0) {
-        this.brandArray.push(...["apple", "samsung", "xiaomi", "asus"]);
-      }
+      if (this.brandArray.length > 0) {
+        this.brandArray = this.brandArray.filter((goods) => goods !== fil);
 
-      this.filtrationList(fil, false);
+        if (this.brandArray.length === 0) {
+          this.brandArray = [...FiltersOptionsBrand];
+          this.filtrationList(fil, false);
+        } else {
+          this.filtrationList(fil, false);
+        }
+      }
     }
 
     this.changePriceInputs();
@@ -243,33 +248,46 @@ class Filtration {
   }
 
   static categoryFunc(fil: string, value: string) {
+    
+
     if (value === "true") {
       if (this.categoryArray.length === 5) {
         this.categoryArray.length = 0;
-      }      
-      
-      this.categoryArray.push(fil);
-      
+      }
 
-      this.filtrationList(fil, true);
+      if (this.categoryArray.includes(fil)) {
+        this.categoryArray = [...new Set(this.categoryArray)];
+       
+
+        this.filtrationList(fil, true);
+      } else {
+        this.categoryArray.push(fil);
+        
+
+        this.filtrationList(fil, true);
+      }
     }
 
     if (value === "false") {
-      this.categoryArray = this.categoryArray.filter((goods) => goods !== fil);
-
-      if (this.categoryArray.length === 0) {
-        this.categoryArray.push(
-          ...["smartphones", "headphones", "laptops", "watches", "tablets"]
+      if (this.categoryArray.length > 0) {
+        this.categoryArray = this.categoryArray.filter(
+          (goods) => goods !== fil
         );
-      }
 
-      this.filtrationList(fil, false);
+        if (this.categoryArray.length === 0) {
+          this.categoryArray = [...FiltersOptionsCategory];
+
+          this.filtrationList(fil, false);
+        } else {
+          this.filtrationList(fil, false);
+        }
+      }
     }
 
     this.changePriceInputs();
     this.changeStockInputs();
   }
-
+  
   static priceFunc(left: string, right: string) {
     this.priceLeft = left;
     this.priceRight = right;
