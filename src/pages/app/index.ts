@@ -65,7 +65,7 @@ class App {
             
         } else {
             page = new ErrorPage(idURL, ErrorTypes.Error_404);
-            
+            Product._404Check();            
         }
 
         if (page) {
@@ -81,7 +81,7 @@ class App {
             }
             if (App.currentURL === 'product'  || App.currentURL === 'bag') { 
                               
-               // RoutingWithReload.changeURL(restURL);  
+                //RoutingWithReload.changeURL(restURL);  
                 Product.breadCrumbsCheck(restURL)
             }
 

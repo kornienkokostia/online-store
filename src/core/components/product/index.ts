@@ -527,6 +527,22 @@ export default class Product extends Component {
     return this.container;
   }
 
+  static _404Check() {
+
+    const breadCrumbs = document.querySelector(
+      ".footer-breadcrumbs-path-el-items"
+    ); 
+    const footerBag = document.querySelector(
+      ".footer-breadcrumbs-path-add-item"
+    );
+
+    if (breadCrumbs instanceof HTMLElement && footerBag instanceof HTMLElement) {
+      breadCrumbs.style.visibility = 'hidden'
+      footerBag.style.visibility = 'hidden'
+    }
+
+  }
+
   static breadCrumbsCheck = (value: string) => {
 
     let bread: string = value.split("&")[0];
@@ -534,6 +550,8 @@ export default class Product extends Component {
     const breadCrumbs = document.querySelector(
         ".footer-breadcrumbs-path-el-items"
       );    
+
+    
 
     if (bread === "product" && breadCrumbs instanceof HTMLElement) {
       breadCrumbs.style.visibility = "visible";
@@ -585,10 +603,6 @@ export default class Product extends Component {
         breadCrumbs.style.visibility = 'hidden'
       }
         
-        
-
-
-      
     }
 
     if (bread !== "product" && breadCrumbs instanceof HTMLElement) {
@@ -604,13 +618,33 @@ export default class Product extends Component {
       }
   
       if (bread == "bag" && breadCrumbs instanceof HTMLElement) {
-        const footerBreadcrumbs = document.querySelector(
-          ".footer-breadcrumbs-path-el"
+        
+
+        const footerBag = document.querySelector(
+          ".footer-breadcrumbs-path-add-item"
         );
-        const bread = document.createElement("div");
-        bread.classList.add("footer-breadcrumbs-path-add-item");
-        bread.textContent = "Bag";
-        footerBreadcrumbs?.append(bread);
+
+        if (footerBag && footerBag instanceof HTMLElement) {
+          footerBag.style.display = 'flex'
+          footerBag.textContent = 'Bag'
+        }
+        
       }
+
+      if (bread !== "bag" && breadCrumbs instanceof HTMLElement) {
+        const footerBag = document.querySelector(
+          ".footer-breadcrumbs-path-add-item"
+        );
+
+        if (footerBag && footerBag instanceof HTMLElement) {
+          footerBag.style.display = 'none'
+          
+        }
+
+      }
+
+      
+      
+
   };
 }
