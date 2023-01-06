@@ -420,7 +420,26 @@
             }
         }
     }
-       
+    &-submit-btn{
+        width: 326px;
+        min-height: 50px;
+        margin: 15px 0 0;
+        font-size: 15px;
+        background-color: var(--main-blue);
+        letter-spacing: .022em;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        color: #ffffff;  
+        &:hover{
+            background-color: var(--main-blue-hover);
+        } 
+        &:disabled{
+            background-color: #ebebeb;
+            color: var(--main-black);
+            cursor: default;
+        }
+    }   
 }
 .dark-bg{
     visibility: hidden;

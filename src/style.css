@@ -1499,6 +1499,26 @@
   width: 0px;
   opacity: 0;
 }
+.checkout-submit-btn {
+  width: 326px;
+  min-height: 50px;
+  margin: 15px 0 0;
+  font-size: 15px;
+  background-color: var(--main-blue);
+  letter-spacing: 0.022em;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #ffffff;
+}
+.checkout-submit-btn:hover {
+  background-color: var(--main-blue-hover);
+}
+.checkout-submit-btn:disabled {
+  background-color: #ebebeb;
+  color: var(--main-black);
+  cursor: default;
+}
 
 .dark-bg {
   visibility: hidden;

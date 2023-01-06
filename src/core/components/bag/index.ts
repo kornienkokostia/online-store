@@ -276,7 +276,6 @@ export default class Bag extends Component {
       if (Bag.bagItems.length === 0) {
         setTimeout(() => {
           document.querySelector('.bag-total')!.classList.add('hide')
-          
         }, 500)
         
         setTimeout(() => {
@@ -310,7 +309,12 @@ export default class Bag extends Component {
     this.enableScroll()
   }
 
+  
+
   createCheckoutWindow(){
+    const checkAllFields = () => {
+    
+    }
     let formValidation = true
 
     const checkout = this.elFactory('div', {class: 'checkout-window'})
@@ -345,6 +349,11 @@ export default class Bag extends Component {
       src: './assets/images/icons/error.svg', alt: 'checkout-info-field-error-img'})
       renderErrorImg.ondragstart = () => false
       return renderErrorImg
+    }
+    const addErrorClass = (title: HTMLSpanElement, input: HTMLInputElement, error: HTMLDivElement) => {
+      title.classList.add('error')
+      input.classList.add('error')
+      error.classList.add('active')
     }
 
     const checkoutInfo = this.elFactory('div', {class: 'checkout-info'})
@@ -382,15 +391,11 @@ export default class Bag extends Component {
       if (checkoutInfoFirstNameInput.value.length === 0) {
         formValidation = false
         checkoutInfoFirstNameTitle.classList.remove('active')
-        checkoutInfoFirstNameTitle.classList.add('error')
-        checkoutInfoFirstNameInput.classList.add('error')
-        checkoutInfoFirstNameError.classList.add('active')
+        addErrorClass(checkoutInfoFirstNameTitle, checkoutInfoFirstNameInput, checkoutInfoFirstNameError)
       }
       if (checkoutInfoFirstNameInput.value.length < 3 && checkoutInfoFirstNameInput.value.length !== 0) {
         formValidation = false
-        checkoutInfoFirstNameError.classList.add('active')
-        checkoutInfoFirstNameInput.classList.add('error')
-        checkoutInfoFirstNameTitle.classList.add('error')
+        addErrorClass(checkoutInfoFirstNameTitle, checkoutInfoFirstNameInput, checkoutInfoFirstNameError)
       }
     })
     checkoutInfoFirstNameInput.addEventListener('input', () => {
@@ -423,16 +428,11 @@ export default class Bag extends Component {
       if (checkoutInfoLastNameInput.value.length === 0) {
         formValidation = false
         checkoutInfoLastNameTitle.classList.remove('active')
-        checkoutInfoLastNameTitle.classList.add('error')
-        checkoutInfoLastNameInput.classList.add('error')
-        checkoutInfoLastNameError.classList.add('active')
+        addErrorClass(checkoutInfoLastNameTitle, checkoutInfoLastNameInput, checkoutInfoLastNameError)
       }
       if (checkoutInfoLastNameInput.value.length < 3 && checkoutInfoLastNameInput.value.length !== 0) {
         formValidation = false
-        checkoutInfoLastNameError.classList.add('active')
-        checkoutInfoLastNameInput.classList.add('error')
-        checkoutInfoLastNameTitle.classList.add('error')
-       
+        addErrorClass(checkoutInfoLastNameTitle, checkoutInfoLastNameInput, checkoutInfoLastNameError)
       }
     })
     checkoutInfoLastNameInput.addEventListener('input', () => {
@@ -465,18 +465,14 @@ export default class Bag extends Component {
       if (checkoutInfoAddressInput.value.length === 0) {
         formValidation = false
         checkoutInfoAddressTitle.classList.remove('active')
-        checkoutInfoAddressTitle.classList.add('error')
-        checkoutInfoAddressInput.classList.add('error')
-        checkoutInfoAddressError.classList.add('active')
+        addErrorClass(checkoutInfoAddressTitle, checkoutInfoAddressInput, checkoutInfoAddressError)
       }
       const inputArr = checkoutInfoAddressInput.value.trim().split(' ')
   
       if (checkoutInfoAddressInput.value.length !== 0 && (inputArr.length < 3 || 
         inputArr.filter(el => el.length < 5).length !== 0)) {
         formValidation = false
-        checkoutInfoAddressError.classList.add('active')
-        checkoutInfoAddressInput.classList.add('error')
-        checkoutInfoAddressTitle.classList.add('error')
+        addErrorClass(checkoutInfoAddressTitle, checkoutInfoAddressInput, checkoutInfoAddressError)
       }
     })
     checkoutInfoAddressInput.addEventListener('input', () => {
@@ -519,17 +515,13 @@ export default class Bag extends Component {
       if (checkoutInfoEmailAddressInput.value.length === 0) {
         formValidation = false
         checkoutInfoEmailAddressTitle.classList.remove('active')
-        checkoutInfoEmailAddressTitle.classList.add('error')
-        checkoutInfoEmailAddressInput.classList.add('error')
-        checkoutInfoEmailAddressError.classList.add('active')
+        addErrorClass(checkoutInfoEmailAddressTitle, checkoutInfoEmailAddressInput, checkoutInfoEmailAddressError)
       }
       const emailValidation = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
       if (checkoutInfoEmailAddressInput.value.length !== 0 && 
         !emailValidation.test(checkoutInfoEmailAddressInput.value)) {
         formValidation = false
-        checkoutInfoEmailAddressError.classList.add('active')
-        checkoutInfoEmailAddressInput.classList.add('error')
-        checkoutInfoEmailAddressTitle.classList.add('error')
+        addErrorClass(checkoutInfoEmailAddressTitle, checkoutInfoEmailAddressInput, checkoutInfoEmailAddressError)
       }
     })
     checkoutInfoEmailAddressInput.addEventListener('input', () => {
@@ -562,16 +554,12 @@ export default class Bag extends Component {
       if (checkoutInfoPhoneNumInput.value.length === 0) {
         formValidation = false
         checkoutInfoPhoneNumTitle.classList.remove('active')
-        checkoutInfoPhoneNumTitle.classList.add('error')
-        checkoutInfoPhoneNumInput.classList.add('error')
-        checkoutInfoPhoneNumError.classList.add('active')
+        addErrorClass(checkoutInfoPhoneNumTitle, checkoutInfoPhoneNumInput, checkoutInfoPhoneNumError)
       }
       const validPhone = /^\+([0-9]{9,15})?$/
       if (checkoutInfoPhoneNumInput.value.length !== 0 && !validPhone.test(checkoutInfoPhoneNumInput.value)) {
         formValidation = false
-        checkoutInfoPhoneNumError.classList.add('active')
-        checkoutInfoPhoneNumInput.classList.add('error')
-        checkoutInfoPhoneNumTitle.classList.add('error')
+        addErrorClass(checkoutInfoPhoneNumTitle, checkoutInfoPhoneNumInput, checkoutInfoPhoneNumError)
       }
     })
     checkoutInfoPhoneNumInput.addEventListener('input', () => {
@@ -690,17 +678,13 @@ export default class Bag extends Component {
        if (checkoutInfoCardNumInput.value.length === 0) {
          formValidation = false
          checkoutInfoCardNumTitle.classList.remove('active')
-         checkoutInfoCardNumTitle.classList.add('error')
-         checkoutInfoCardNumInput.classList.add('error')
-         checkoutInfoCardNumError.classList.add('active')
+         addErrorClass(checkoutInfoCardNumTitle, checkoutInfoCardNumInput, checkoutInfoCardNumError)
        }
 
        if (checkoutInfoCardNumInput.value.length !== 0 && (checkoutInfoCardNumInput.value.length !== 19 ||
         !cardValidation(checkoutInfoCardNumInput.value).success)) {
          formValidation = false
-         checkoutInfoCardNumError.classList.add('active')
-         checkoutInfoCardNumInput.classList.add('error')
-         checkoutInfoCardNumTitle.classList.add('error')
+         addErrorClass(checkoutInfoCardNumTitle, checkoutInfoCardNumInput, checkoutInfoCardNumError)
        }
      })
      checkoutInfoCardNumInput.addEventListener('input', () => {
@@ -758,17 +742,13 @@ export default class Bag extends Component {
       if (checkoutInfoExpirationDateInput.value.length === 0) {
         formValidation = false
         checkoutInfoExpirationDateTitle.classList.remove('active')
-        checkoutInfoExpirationDateTitle.classList.add('error')
-        checkoutInfoExpirationDateInput.classList.add('error')
-        checkoutInfoExpirationDateError.classList.add('active')
+        addErrorClass(checkoutInfoExpirationDateTitle, checkoutInfoExpirationDateInput, checkoutInfoExpirationDateError)
       }
       if (checkoutInfoExpirationDateInput.value.length !== 0 && 
         (+checkoutInfoExpirationDateInput.value.slice(0, 2) > 12 ||
         +checkoutInfoExpirationDateInput.value.slice(3, 5) < 23)) {
         formValidation = false
-        checkoutInfoExpirationDateError.classList.add('active')
-        checkoutInfoExpirationDateInput.classList.add('error')
-        checkoutInfoExpirationDateTitle.classList.add('error')
+        addErrorClass(checkoutInfoExpirationDateTitle, checkoutInfoExpirationDateInput, checkoutInfoExpirationDateError)
       }
     })
     checkoutInfoExpirationDateInput.addEventListener('input', () => {
@@ -802,16 +782,12 @@ export default class Bag extends Component {
       if (checkoutInfoCVVInput.value.length === 0) {
         formValidation = false
         checkoutInfoCVVTitle.classList.remove('active')
-        checkoutInfoCVVTitle.classList.add('error')
-        checkoutInfoCVVInput.classList.add('error')
-        checkoutInfoCVVError.classList.add('active')
+        addErrorClass(checkoutInfoCVVTitle, checkoutInfoCVVInput, checkoutInfoCVVError)
       }
 
       if (checkoutInfoCVVInput.value.length !== 0 && checkoutInfoCVVInput.value.length !== 3) {
         formValidation = false
-        checkoutInfoCVVError.classList.add('active')
-        checkoutInfoCVVInput.classList.add('error')
-        checkoutInfoCVVTitle.classList.add('error')
+        addErrorClass(checkoutInfoCVVTitle, checkoutInfoCVVInput, checkoutInfoCVVError)
       }
     })
     checkoutInfoCVVInput.addEventListener('input', () => {
@@ -833,9 +809,14 @@ export default class Bag extends Component {
     
     checkoutInfo.append(checkoutInfoTitle2)
     checkoutInfo.append(checkoutInfoCard)
-    
+
+    const checkoutSubmit = this.elFactory('button', {class: 'checkout-submit-btn', disabled: 'true'})
+    checkoutSubmit.textContent = 'Place Our Order'
+    checkoutInfo.append(checkoutSubmit)
+
     checkout.append(checkoutHeader)
     checkout.append(checkoutInfo)
+    
 
     return checkout
   }
