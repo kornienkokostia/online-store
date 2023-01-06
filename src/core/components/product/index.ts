@@ -239,7 +239,6 @@ export default class Product extends Component {
       const wrapper = document.querySelector(
         ".product-main-info-wrapper"
       ) as HTMLElement;
-      console.log(wrapper.offsetHeight);
       window.scrollTo(0, wrapper.offsetHeight + 75 + 20 + 54);
     });
 
@@ -303,6 +302,21 @@ export default class Product extends Component {
       buyBtn.textContent = "Added to Bag";
       AppState.setGoodsInBag(Bag.bagItems);
     });
+    buyNowBtn.addEventListener('click', () => {
+      if (Bag.bagItems.filter((el) => +el.id === +this.product.id).length === 0) {
+        Bag.bagItems.push({ id: +this.product.id, count: 1 });
+        AppState.setGoodsInBag(Bag.bagItems);
+      }
+      window.location.hash = '#bag'
+      document.querySelector('.checkout-window')?.classList.add('active')
+      document.querySelector('.dark-bg')?.classList.add('active')
+      setTimeout(() => {
+        document.querySelector('.checkout-window')?.classList.add('active')
+        document.querySelector('.dark-bg')?.classList.add('active')
+      }, 100)
+      
+      Bag.disableScroll()   
+    })
 
     productMainInfoBuyBtns.append(buyNowBtn, buyBtn);
 

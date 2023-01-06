@@ -17,7 +17,7 @@ export default class Bag extends Component {
 
   convertNumToSplitString = (str: string) => str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
 
-  disableScroll() {
+  static disableScroll() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
     document.querySelector('html')!.style.scrollBehavior = 'auto'
@@ -111,9 +111,7 @@ export default class Bag extends Component {
     checkOutBtn.addEventListener('click', () => {
       document.querySelector('.checkout-window')?.classList.add('active')
       document.querySelector('.dark-bg')?.classList.add('active')
-      this.disableScroll()
-      
-    
+      Bag.disableScroll()    
     })
 
     bagTotalDiv.append(bagTotalSummary)
@@ -309,14 +307,16 @@ export default class Bag extends Component {
     this.enableScroll()
   }
 
-  
-
   createCheckoutWindow(){
-    const checkAllFields = () => {
-    
-    }
     let formValidation = true
 
+    const checkAllFields = () => {
+      const allFields = [...document.querySelectorAll('.checkout-info-field-input')] as HTMLInputElement[]
+      const isAllFilled = allFields.filter(el => el.value !== '').length === allFields.length
+      isAllFilled && formValidation ? document.querySelector('.checkout-submit-btn')?.removeAttribute('disabled') : 
+        document.querySelector('.checkout-submit-btn')?.setAttribute('disabled', 'true')
+    }
+    
     const checkout = this.elFactory('div', {class: 'checkout-window'})
 
     const checkoutHeader = this.elFactory('div', {class: 'checkout-header'})
@@ -372,7 +372,7 @@ export default class Bag extends Component {
     // First name
     const checkoutInfoFirstName = this.elFactory('div', {class: 'checkout-info-field'})
     const checkoutInfoFirstNameInput = this.elFactory('input', {class: 'checkout-info-field-input first-name-input', 
-      type: 'text', title: 'Please fill out this field.'})
+      type: 'text', title: 'Please fill out this field.', autocomplete: "given-name", maxlength: "14"})
     const checkoutInfoFirstNameTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
     checkoutInfoFirstNameTitle.textContent = 'First Name'
 
@@ -387,14 +387,11 @@ export default class Bag extends Component {
       checkoutInfoFirstNameInput.classList.remove('error')
     })
     checkoutInfoFirstNameInput.addEventListener('focusout', () => {
-      formValidation = true
       if (checkoutInfoFirstNameInput.value.length === 0) {
-        formValidation = false
         checkoutInfoFirstNameTitle.classList.remove('active')
         addErrorClass(checkoutInfoFirstNameTitle, checkoutInfoFirstNameInput, checkoutInfoFirstNameError)
       }
       if (checkoutInfoFirstNameInput.value.length < 3 && checkoutInfoFirstNameInput.value.length !== 0) {
-        formValidation = false
         addErrorClass(checkoutInfoFirstNameTitle, checkoutInfoFirstNameInput, checkoutInfoFirstNameError)
       }
     })
@@ -403,6 +400,14 @@ export default class Bag extends Component {
       checkoutInfoFirstNameError.classList.remove('active')
       checkoutInfoFirstNameInput.value.length !== 0 ? checkoutInfoFirstNameInput.removeAttribute('title') :
         checkoutInfoFirstNameInput.setAttribute('title', 'Please fill out this field.')
+      formValidation = true
+      if (checkoutInfoFirstNameInput.value.length === 0) {
+        formValidation = false
+      }
+      if (checkoutInfoFirstNameInput.value.length < 3 && checkoutInfoFirstNameInput.value.length !== 0) {
+        formValidation = false
+      }
+      checkAllFields()
     })
 
     checkoutInfoFirstName.append(checkoutInfoFirstNameInput, checkoutInfoFirstNameTitle, checkoutInfoFirstNameError)
@@ -410,7 +415,7 @@ export default class Bag extends Component {
     // Last name
     const checkoutInfoLastName = this.elFactory('div', {class: 'checkout-info-field'})
     const checkoutInfoLastNameInput = this.elFactory('input', {class: 'checkout-info-field-input last-name-input', 
-      type: 'text', title: 'Please fill out this field.'})
+      type: 'text', title: 'Please fill out this field.', autocomplete: "family-name", maxlength: "20"})
     const checkoutInfoLastNameTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
     checkoutInfoLastNameTitle.textContent = 'Last Name'
 
@@ -424,14 +429,11 @@ export default class Bag extends Component {
       checkoutInfoLastNameInput.classList.remove('error')
     })
     checkoutInfoLastNameInput.addEventListener('focusout', () => {
-      formValidation = true
       if (checkoutInfoLastNameInput.value.length === 0) {
-        formValidation = false
         checkoutInfoLastNameTitle.classList.remove('active')
         addErrorClass(checkoutInfoLastNameTitle, checkoutInfoLastNameInput, checkoutInfoLastNameError)
       }
       if (checkoutInfoLastNameInput.value.length < 3 && checkoutInfoLastNameInput.value.length !== 0) {
-        formValidation = false
         addErrorClass(checkoutInfoLastNameTitle, checkoutInfoLastNameInput, checkoutInfoLastNameError)
       }
     })
@@ -440,6 +442,14 @@ export default class Bag extends Component {
       checkoutInfoLastNameError.classList.remove('active')
       checkoutInfoLastNameInput.value.length !== 0 ? checkoutInfoLastNameInput.removeAttribute('title') :
         checkoutInfoLastNameInput.setAttribute('title', 'Please fill out this field.')
+      formValidation = true
+      if (checkoutInfoLastNameInput.value.length === 0) {
+        formValidation = false
+      }
+      if (checkoutInfoLastNameInput.value.length < 3 && checkoutInfoLastNameInput.value.length !== 0) {
+        formValidation = false
+      }
+      checkAllFields()  
     })
 
     checkoutInfoLastName.append(checkoutInfoLastNameInput, checkoutInfoLastNameTitle, checkoutInfoLastNameError)
@@ -460,18 +470,15 @@ export default class Bag extends Component {
       checkoutInfoAddressTitle.classList.add('active')
       checkoutInfoAddressInput.classList.remove('error')
     })
+
     checkoutInfoAddressInput.addEventListener('focusout', () => {
-      formValidation = true
       if (checkoutInfoAddressInput.value.length === 0) {
-        formValidation = false
         checkoutInfoAddressTitle.classList.remove('active')
         addErrorClass(checkoutInfoAddressTitle, checkoutInfoAddressInput, checkoutInfoAddressError)
-      }
+      } 
       const inputArr = checkoutInfoAddressInput.value.trim().split(' ')
-  
       if (checkoutInfoAddressInput.value.length !== 0 && (inputArr.length < 3 || 
         inputArr.filter(el => el.length < 5).length !== 0)) {
-        formValidation = false
         addErrorClass(checkoutInfoAddressTitle, checkoutInfoAddressInput, checkoutInfoAddressError)
       }
     })
@@ -480,6 +487,16 @@ export default class Bag extends Component {
       checkoutInfoAddressError.classList.remove('active')
       checkoutInfoAddressInput.value.length !== 0 ? checkoutInfoAddressInput.removeAttribute('title') :
         checkoutInfoAddressInput.setAttribute('title', 'Please fill out this field.')
+      formValidation = true
+      if (checkoutInfoAddressInput.value.length === 0) {
+        formValidation = false
+      } 
+      const inputArr = checkoutInfoAddressInput.value.trim().split(' ')
+      if (checkoutInfoAddressInput.value.length !== 0 && (inputArr.length < 3 || 
+        inputArr.filter(el => el.length < 5).length !== 0)) {
+        formValidation = false
+      }       
+      checkAllFields() 
     })
 
     checkoutInfoAddress.append(checkoutInfoAddressInput, checkoutInfoAddressTitle, checkoutInfoAddressError)
@@ -497,7 +514,7 @@ export default class Bag extends Component {
     // Email address
     const checkoutInfoEmailAddress = this.elFactory('div', {class: 'checkout-info-field'})
     const checkoutInfoEmailAddressInput = this.elFactory('input', {class: 'checkout-info-field-input email-input', 
-      type: 'text', title: 'Please fill out this field.'})
+      type: 'email', title: 'Please fill out this field.', autocomplete: "email", maxlength: "50"})
     const checkoutInfoEmailAddressTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
     checkoutInfoEmailAddressTitle.textContent = 'Email Address'
 
@@ -510,25 +527,33 @@ export default class Bag extends Component {
       checkoutInfoEmailAddressTitle.classList.add('active')
       checkoutInfoEmailAddressInput.classList.remove('error')
     })
+    
+    const emailValidation = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+    
     checkoutInfoEmailAddressInput.addEventListener('focusout', () => {
-      formValidation = true
       if (checkoutInfoEmailAddressInput.value.length === 0) {
-        formValidation = false
         checkoutInfoEmailAddressTitle.classList.remove('active')
         addErrorClass(checkoutInfoEmailAddressTitle, checkoutInfoEmailAddressInput, checkoutInfoEmailAddressError)
       }
-      const emailValidation = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
       if (checkoutInfoEmailAddressInput.value.length !== 0 && 
         !emailValidation.test(checkoutInfoEmailAddressInput.value)) {
-        formValidation = false
         addErrorClass(checkoutInfoEmailAddressTitle, checkoutInfoEmailAddressInput, checkoutInfoEmailAddressError)
-      }
+      } 
     })
     checkoutInfoEmailAddressInput.addEventListener('input', () => {
       checkoutInfoEmailAddressTitle.classList.remove('error')
       checkoutInfoEmailAddressError.classList.remove('active')
       checkoutInfoEmailAddressInput.value.length !== 0 ? checkoutInfoEmailAddressInput.removeAttribute('title') :
         checkoutInfoEmailAddressInput.setAttribute('title', 'Please fill out this field.')
+      formValidation = true
+      if (checkoutInfoEmailAddressInput.value.length === 0) {
+        formValidation = false
+      }
+      if (checkoutInfoEmailAddressInput.value.length !== 0 && 
+        !emailValidation.test(checkoutInfoEmailAddressInput.value)) {
+        formValidation = false
+      } 
+      checkAllFields() 
     })
 
     checkoutInfoEmailAddress.append(checkoutInfoEmailAddressInput, checkoutInfoEmailAddressTitle, checkoutInfoEmailAddressError)
@@ -536,7 +561,7 @@ export default class Bag extends Component {
     // Phone
     const checkoutInfoPhoneNum = this.elFactory('div', {class: 'checkout-info-field'})
     const checkoutInfoPhoneNumInput = this.elFactory('input', {class: 'checkout-info-field-input phone-input', 
-      type: 'text', title: 'Please fill out this field.'})
+      type: 'tel', title: 'Please fill out this field.', autocomplete: "tel"})
     const checkoutInfoPhoneNumTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
     checkoutInfoPhoneNumTitle.textContent = 'Phone Number'
 
@@ -549,16 +574,15 @@ export default class Bag extends Component {
       checkoutInfoPhoneNumTitle.classList.add('active')
       checkoutInfoPhoneNumInput.classList.remove('error')
     })
+    
+    const validPhone = /^\+([0-9]{9,15})?$/
+    
     checkoutInfoPhoneNumInput.addEventListener('focusout', () => {
-      formValidation = true
       if (checkoutInfoPhoneNumInput.value.length === 0) {
-        formValidation = false
         checkoutInfoPhoneNumTitle.classList.remove('active')
         addErrorClass(checkoutInfoPhoneNumTitle, checkoutInfoPhoneNumInput, checkoutInfoPhoneNumError)
-      }
-      const validPhone = /^\+([0-9]{9,15})?$/
+      }      
       if (checkoutInfoPhoneNumInput.value.length !== 0 && !validPhone.test(checkoutInfoPhoneNumInput.value)) {
-        formValidation = false
         addErrorClass(checkoutInfoPhoneNumTitle, checkoutInfoPhoneNumInput, checkoutInfoPhoneNumError)
       }
     })
@@ -569,6 +593,14 @@ export default class Bag extends Component {
       checkoutInfoPhoneNumError.classList.remove('active')
       checkoutInfoPhoneNumInput.value.length !== 0 ? checkoutInfoPhoneNumInput.removeAttribute('title') :
         checkoutInfoPhoneNumInput.setAttribute('title', 'Please fill out this field.')
+      formValidation = true
+      if (checkoutInfoPhoneNumInput.value.length === 0) {
+        formValidation = false
+      }
+      if (checkoutInfoPhoneNumInput.value.length !== 0 && !validPhone.test(checkoutInfoPhoneNumInput.value)) {
+        formValidation = false
+      }
+      checkAllFields() 
     })
 
     checkoutInfoPhoneNum.append(checkoutInfoPhoneNumInput, checkoutInfoPhoneNumTitle, checkoutInfoPhoneNumError)
@@ -656,7 +688,6 @@ export default class Bag extends Component {
       if (target === 'card-exp') {res = countBackSpaces(text)}
       return res
     }
-  
       let position = inputEl.selectionEnd;
       let previousValue = inputEl.value;
       inputEl.value = format(inputEl.value, target);
@@ -668,22 +699,17 @@ export default class Bag extends Component {
           inputEl.selectionEnd = position! + (countCurrent - countPrevious);
       }
     }
-      
      checkoutInfoCardNumInput.addEventListener('focus', () => {
        checkoutInfoCardNumTitle.classList.add('active')
        checkoutInfoCardNumInput.classList.remove('error')
      })
      checkoutInfoCardNumInput.addEventListener('focusout', () => {
-       formValidation = true
        if (checkoutInfoCardNumInput.value.length === 0) {
-         formValidation = false
          checkoutInfoCardNumTitle.classList.remove('active')
          addErrorClass(checkoutInfoCardNumTitle, checkoutInfoCardNumInput, checkoutInfoCardNumError)
        }
-
        if (checkoutInfoCardNumInput.value.length !== 0 && (checkoutInfoCardNumInput.value.length !== 19 ||
         !cardValidation(checkoutInfoCardNumInput.value).success)) {
-         formValidation = false
          addErrorClass(checkoutInfoCardNumTitle, checkoutInfoCardNumInput, checkoutInfoCardNumError)
        }
      })
@@ -696,7 +722,6 @@ export default class Bag extends Component {
             el.classList.contains(`${cardValidation(checkoutInfoCardNumInput.value).name}`) ?
              el.classList.add('active') : el.classList.add('hidden')
           })
-          
         } else {
           [...document.querySelectorAll('.checkout-info-field-card')].map(el => {
             el.classList.remove('hidden')
@@ -714,6 +739,15 @@ export default class Bag extends Component {
        checkoutInfoCardNumError.classList.remove('active')
        checkoutInfoCardNumInput.value.length !== 0 ? checkoutInfoCardNumInput.removeAttribute('title') :
         checkoutInfoCardNumInput.setAttribute('title', 'Please fill out this field.')
+        formValidation = true
+        if (checkoutInfoCardNumInput.value.length === 0) {
+          formValidation = false
+        }
+        if (checkoutInfoCardNumInput.value.length !== 0 && (checkoutInfoCardNumInput.value.length !== 19 ||
+         !cardValidation(checkoutInfoCardNumInput.value).success)) {
+          formValidation = false
+        }
+        checkAllFields() 
      })
  
     checkoutInfoCardNum.append(checkoutInfoCardNumInput, checkoutInfoCardNumTitle, checkoutInfoCardNumError, checkoutCardsImgs)
@@ -738,18 +772,15 @@ export default class Bag extends Component {
       checkoutInfoExpirationDateInput.classList.remove('error')
     })
     checkoutInfoExpirationDateInput.addEventListener('focusout', () => {
-      formValidation = true
       if (checkoutInfoExpirationDateInput.value.length === 0) {
-        formValidation = false
         checkoutInfoExpirationDateTitle.classList.remove('active')
         addErrorClass(checkoutInfoExpirationDateTitle, checkoutInfoExpirationDateInput, checkoutInfoExpirationDateError)
       }
       if (checkoutInfoExpirationDateInput.value.length !== 0 && 
         (+checkoutInfoExpirationDateInput.value.slice(0, 2) > 12 ||
         +checkoutInfoExpirationDateInput.value.slice(3, 5) < 23)) {
-        formValidation = false
         addErrorClass(checkoutInfoExpirationDateTitle, checkoutInfoExpirationDateInput, checkoutInfoExpirationDateError)
-      }
+      } 
     })
     checkoutInfoExpirationDateInput.addEventListener('input', () => {
       reformatInputField(checkoutInfoExpirationDateInput, 'card-exp')
@@ -757,6 +788,16 @@ export default class Bag extends Component {
       checkoutInfoExpirationDateError.classList.remove('active')
       checkoutInfoExpirationDateInput.value.length !== 0 ? checkoutInfoExpirationDateInput.removeAttribute('title') :
         checkoutInfoExpirationDateInput.setAttribute('title', 'Please fill out this field.')
+      formValidation = true
+      if (checkoutInfoExpirationDateInput.value.length === 0) {
+        formValidation = false
+      }
+      if (checkoutInfoExpirationDateInput.value.length !== 0 && 
+        (+checkoutInfoExpirationDateInput.value.slice(0, 2) > 12 ||
+        +checkoutInfoExpirationDateInput.value.slice(3, 5) < 23)) {
+        formValidation = false
+      }
+      checkAllFields()  
     })
 
     checkoutInfoExpirationDate.append(checkoutInfoExpirationDateInput, checkoutInfoExpirationDateTitle, checkoutInfoExpirationDateError)
@@ -778,15 +819,11 @@ export default class Bag extends Component {
       checkoutInfoCVVInput.classList.remove('error')
     })
     checkoutInfoCVVInput.addEventListener('focusout', () => {
-      formValidation = true
       if (checkoutInfoCVVInput.value.length === 0) {
-        formValidation = false
         checkoutInfoCVVTitle.classList.remove('active')
         addErrorClass(checkoutInfoCVVTitle, checkoutInfoCVVInput, checkoutInfoCVVError)
       }
-
       if (checkoutInfoCVVInput.value.length !== 0 && checkoutInfoCVVInput.value.length !== 3) {
-        formValidation = false
         addErrorClass(checkoutInfoCVVTitle, checkoutInfoCVVInput, checkoutInfoCVVError)
       }
     })
@@ -794,6 +831,16 @@ export default class Bag extends Component {
       checkoutInfoCVVInput.value = checkoutInfoCVVInput.value.replace(/[^\dA-Z]/g, '')
       checkoutInfoCVVTitle.classList.remove('error')
       checkoutInfoCVVError.classList.remove('active')
+      checkoutInfoCVVInput.value.length !== 0 ? checkoutInfoCVVInput.removeAttribute('title') :
+        checkoutInfoCVVInput.setAttribute('title', 'Please fill out this field.')
+      formValidation = true
+      if (checkoutInfoCVVInput.value.length === 0) {
+        formValidation = false
+      }
+      if (checkoutInfoCVVInput.value.length !== 0 && checkoutInfoCVVInput.value.length !== 3) {
+        formValidation = false
+      }
+      checkAllFields() 
     })
 
     checkoutInfoCVV.append(checkoutInfoCVVInput, checkoutInfoCVVTitle, checkoutInfoCVVError)
@@ -812,6 +859,29 @@ export default class Bag extends Component {
 
     const checkoutSubmit = this.elFactory('button', {class: 'checkout-submit-btn', disabled: 'true'})
     checkoutSubmit.textContent = 'Place Our Order'
+
+    checkoutSubmit.addEventListener('click', () => {
+      this.closeCheckoutWindow()
+      window.scrollTo(0, 0)
+      Bag.bagItems = []
+      document.querySelector('.bag-goods')!.innerHTML = ''
+      document.querySelector('.header-bag-items-count')?.classList.remove('active', 'two-num', 'two-num-plus')
+      document.querySelector('.header-bag-img')?.classList.remove('active', 'two-num', 'two-num-plus')
+      document.querySelector('.bag-total')!.classList.add('hide')
+      const bagTitle = document.querySelector('.bag-header-title') as HTMLElement
+      bagTitle.textContent = `Your bag is empty.`
+      AppState.setGoodsInBag(Bag.bagItems)
+      setTimeout(() => {
+        document.querySelector('.success-purchase')?.classList.add('active')
+      }, 500)
+      setTimeout(() => {
+        window.location.hash = '#main'
+      }, 5000)
+      setTimeout(() => {
+        document.querySelector('.success-purchase')?.classList.remove('active')
+      }, 6000)
+    })
+
     checkoutInfo.append(checkoutSubmit)
 
     checkout.append(checkoutHeader)
@@ -820,6 +890,13 @@ export default class Bag extends Component {
 
     return checkout
   }
+  createSuccessPurchaseMsg(){
+    const successPurchase = this.elFactory('div', {class: 'success-purchase'})
+    const successPurchaseSpan = this.elFactory('span', {})
+    successPurchaseSpan.textContent = `Success! You complited your purchase. We will email you all the details.`
+    successPurchase.append(successPurchaseSpan)
+    return successPurchase
+  }
 
   render() {
     const darkBg = this.elFactory('div', {class: 'dark-bg'})
@@ -827,6 +904,7 @@ export default class Bag extends Component {
       this.closeCheckoutWindow()
     })
     this.container.append(darkBg)
+    document.body.prepend(this.createSuccessPurchaseMsg())
    
     const bagHeader = this.createBagHeader()
     this.container.append(bagHeader)
