@@ -536,6 +536,8 @@ export default class Product extends Component {
 
     document.querySelector(".header-search")?.classList.add("hidden");
 
+    document.querySelector(".header-menu-btn-block-wrapper")?.classList.add("hidden");
+
     window.scrollTo(0, 0);
 
     return this.container;
@@ -656,9 +658,5 @@ export default class Product extends Component {
         }
 
       }
-
-      
-      
-
   };
 }

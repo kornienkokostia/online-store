@@ -1,3 +1,10 @@
+@media (max-width: 1000px) {
+    #current-page .main{
+        grid-template-columns: 1fr;
+        column-gap: 0px;
+    }
+}
+
 .main{
     width: 100%;
     display: grid;

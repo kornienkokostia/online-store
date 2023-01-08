@@ -413,8 +413,7 @@ class Filtration {
     Filtration.stockRight = this.getMaxStockVal([...productDB]);
 
     this.orient = Pagination.orientation;
-    this.URLstring = "#main";
-    window.location.hash = "#main";
+    history.pushState(null, "null", `#main`);
     if (searchField instanceof HTMLInputElement) {
       searchField.value = "";
       searchField.textContent = "";
