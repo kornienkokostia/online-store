@@ -1,13 +1,3 @@
-@import './normalize';
-@import './main';
-@import './header';
-@import './goods';
-@import './top-panel';
-@import './filters';
-@import './navigation_goods';
-@import './bag';
-@import './product';
-@import './footer';
 
 /* apple fonts */
 @font-face {
@@ -98,3 +88,15 @@ h1{
   display: flex;
   justify-content: center;
 }
+
+@import './normalize';
+@import './main';
+@import './header';
+@import './goods';
+@import './top-panel';
+@import './filters';
+@import './navigation_goods';
+@import './bag';
+@import './product';
+@import './footer';
+@import './media';
