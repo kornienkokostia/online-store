@@ -27,8 +27,7 @@
       position: absolute;
       right: 20px;
       top: 127px;
-      
-      width: 280px;
+      width: 50%;
       justify-content: flex-end;
       column-gap: 10px;
     }
@@ -43,7 +42,7 @@
       width: calc(100vw - 82px);
     }
     & .select-box-items{
-      width: 238.4px;
+      width: calc(100vw - 82px);
       z-index: 5;
     }
   }

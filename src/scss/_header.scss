@@ -64,6 +64,13 @@
         }
     }
 }
+@media (max-width: 340px) {
+    .header-wrapper .header{
+        &-search{
+            width: 280px;
+        }
+    }
+}
 
 .header{
     display: flex;

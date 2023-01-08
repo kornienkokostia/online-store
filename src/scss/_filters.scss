@@ -64,6 +64,15 @@
         opacity: 0;
     }
 }
+@media (max-width: 340px) {
+    .main .filters-wrapper{
+        &.mobile-menu-open{
+            & .filters{
+                width: 280px;
+            }
+        }
+    }
+}
 
 
 .filters {
