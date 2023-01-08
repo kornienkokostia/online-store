@@ -76,7 +76,7 @@ export default class Product extends Component {
       arr[num].classList.add("active");
     };
 
-    productImagesSliderNextBtn.addEventListener("mouseup", () => {
+    const moveRight = () => {
       let currentItem = +productImages.getAttribute("current-item")!;
 
       if (currentItem < this.product.imgs.length) {
@@ -90,8 +90,9 @@ export default class Product extends Component {
           productImagesSliderNextBtn.classList.add("hidden");
         }
       }
-    });
-    productImagesSliderPrevBtn.addEventListener("mouseup", () => {
+    }
+
+    const moveLeft = () => {
       let currentItem = +productImages.getAttribute("current-item")! - 1;
       if (currentItem < this.product.imgs.length && currentItem > 0) {
         productImages.style.left = `-${currentItem * 100 - 100}%`;
@@ -104,7 +105,31 @@ export default class Product extends Component {
           productImagesSliderNextBtn.classList.remove("hidden");
         }
       }
+    }
+
+    productImagesSliderNextBtn.addEventListener("mouseup", () => {
+      moveRight()
     });
+    productImagesSliderPrevBtn.addEventListener("mouseup", () => {
+      moveLeft()
+    });
+
+    let touchstartX = 0
+    let touchendX = 0
+        
+    function checkDirection() {
+      if (touchendX < touchstartX) moveRight()
+      if (touchendX > touchstartX) moveLeft()
+    }
+
+    productImagesSlider.addEventListener('touchstart', e => {
+      touchstartX = e.changedTouches[0].screenX
+    })
+
+    productImagesSlider.addEventListener('touchend', e => {
+      touchendX = e.changedTouches[0].screenX
+      checkDirection()
+    })
 
     const productDotsWrapper = this.elFactory("div", {
       class: "product-dots-wrapper",
@@ -597,6 +622,8 @@ export default class Product extends Component {
         const currentItem = document.querySelector(
           ".footer-breadcrumbs-path-el-items-current"
         );
+
+        const capitilizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1)
   
         if (brand && category && currentItem) {
           brand.textContent =
@@ -605,14 +632,13 @@ export default class Product extends Component {
           category.textContent =
             currentProduct[0].category.slice(0, 1).toUpperCase() +
             currentProduct[0].category.slice(1);
-          currentItem.textContent = `${
-            currentProduct[0].brand.slice(0, 1).toUpperCase() +
-            currentProduct[0].brand.slice(1)
-          } 
-                  ${currentProduct[0].name} 
-                  ${currentProduct[0].storage} 
-                  ${currentProduct[0].color} 
-                  ${currentProduct[0].model}`;
+          currentItem.textContent = `${capitilizeFirstLetter(currentProduct[0].brand)} 
+            ${currentProduct[0].name} 
+            ${currentProduct[0].category === 'laptops' ? currentProduct[0].displaySize : ''} 
+            ${currentProduct[0].storage && currentProduct[0].category !== 'watches' && currentProduct[0].brand !== 'samsung' ? currentProduct[0].storage : ''} 
+            ${(currentProduct[0].category !== 'headphones' && currentProduct[0].category !== 'watches') || currentProduct[0].brand !== 'apple' 
+            ? currentProduct[0].color : ''} 
+            ${currentProduct[0].model}`
         }
     
       } else {

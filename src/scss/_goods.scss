@@ -5,6 +5,12 @@
   .main .goods .goods-horizontal {    
     grid-template-columns: repeat(1, 1fr);
   }
+  .main .goods{
+    &-item:hover{
+      box-shadow: none;
+      transform: none;
+    }
+  }
 }
 @media (max-width: 900px) {
   .main .goods:not(.goods-horizontal){
