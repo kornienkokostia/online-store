@@ -255,15 +255,17 @@ export default class Bag extends Component {
     bagItemRemoveBtn.addEventListener('click', () => {
       const closestItem = bagItemRemoveBtn.closest('.bag-item') as HTMLElement
       closestItem.classList.add('hidden');
+
+      const moveHeightClass = window.innerWidth <= 550 ? 'move-mobile' : 'move'
       
       setTimeout(() => {
-        [...document.querySelectorAll('.bag-item')].map(el => el.classList.add('move'))
-        document.querySelector('.bag-total')!.classList.add('move')
+        [...document.querySelectorAll('.bag-item')].map(el => el.classList.add(moveHeightClass))
+        document.querySelector('.bag-total')!.classList.add(moveHeightClass)
       }, 500);
       setTimeout(() => {
         document.querySelector('.bag-goods')?.removeChild(closestItem);
-        [...document.querySelectorAll('.bag-item')].map(el => el.classList.remove('move'))
-        document.querySelector('.bag-total')!.classList.remove('move')
+        [...document.querySelectorAll('.bag-item')].map(el => el.classList.remove(moveHeightClass))
+        document.querySelector('.bag-total')!.classList.remove(moveHeightClass)
         updateAllInfo()
       }, 1000);
       
@@ -643,6 +645,8 @@ export default class Bag extends Component {
     checkoutCardDiscover.ondragstart = () => false
     checkoutCardsImgs.append(checkoutCardVisa, checkoutCardMastercard, checkoutCardDiscover)
 
+    
+
     const cardValidation = (card: string) => {
       const oneNum = card.slice(0, 1)
       const twoNums = card.slice(0, 2)
@@ -715,7 +719,7 @@ export default class Bag extends Component {
      })
      checkoutInfoCardNumInput.addEventListener('input', () => {
       reformatInputField(checkoutInfoCardNumInput, 'card-num')
-
+      
       if (checkoutInfoCardNumInput.value.length >= 4) {
         if (cardValidation(checkoutInfoCardNumInput.value).success) {
           [...document.querySelectorAll('.checkout-info-field-card')].map(el => {
@@ -735,6 +739,7 @@ export default class Bag extends Component {
           el.classList.remove('active')
         })
       }
+      
        checkoutInfoCardNumTitle.classList.remove('error')
        checkoutInfoCardNumError.classList.remove('active')
        checkoutInfoCardNumInput.value.length !== 0 ? checkoutInfoCardNumInput.removeAttribute('title') :
@@ -923,6 +928,8 @@ export default class Bag extends Component {
     }
 
     document.querySelector('.header-search')?.classList.add('hidden')
+
+    document.querySelector(".header-menu-btn-block-wrapper")?.classList.add("hidden");
 
     Bag.updateBagCount() 
    
