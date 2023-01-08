@@ -20,12 +20,15 @@ export default class Footer extends Component {
             'footer-breadcrumbs-path-el-items-category'});
         const onlineStoreItemsCurrentItem = this.elFactory('div', {class: 
             'footer-breadcrumbs-path-el-items-current'});
+        const onlineStoreItemsBag = this.elFactory('div', {class: 
+            'footer-breadcrumbs-path-add-item'});
         onlineStoreItemLink.textContent = 'Online Store'  
         onlineStoreItem.append(onlineStoreItemLink);
         breadcrumbsPath.append(onlineStoreItem);
         onlineStoreItems.append(onlineStoreItemsBrand);
         onlineStoreItems.append(onlineStoreItemsCategory);
         onlineStoreItems.append(onlineStoreItemsCurrentItem);
+        breadcrumbsPath.append(onlineStoreItemsBag)
         breadcrumbsPath.append(onlineStoreItems)
 
         onlineStoreItemLink.addEventListener('click', () => {

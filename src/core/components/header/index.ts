@@ -107,14 +107,48 @@ export default class Header extends Component {
     return searchDiv;
   }
 
+  createMenuBtn(){
+    const headerMenuBtnWrapper = this.elFactory('div', {class: 'header-menu-btn-block-wrapper'}) 
+    const headerMenuBtn = this.elFactory('div', {class: 'header-menu-btn-block'})
+
+    const headerMenuTopWrapper = this.elFactory('span', {class: 'header-menu-btn-top-wrapper header-menu-btn-wrapper'})
+    const headerMenuTop = this.elFactory('span', {class: 'header-menu-btn-top header-menu-btn'})
+    headerMenuTopWrapper.append(headerMenuTop)
+
+    const headerMenuBottomWrapper = this.elFactory('span', {class: 'header-menu-btn-bottom-wrapper header-menu-btn-wrapper'})
+    const headerMenuBottom = this.elFactory('span', {class: 'header-menu-btn-bottom header-menu-btn'})
+    headerMenuBottomWrapper.append(headerMenuBottom)
+
+    headerMenuBtn.append(headerMenuTopWrapper, headerMenuBottomWrapper)
+
+    headerMenuBtnWrapper.append(headerMenuBtn)
+
+    headerMenuBtnWrapper.addEventListener('click', () => {
+      headerMenuBtnWrapper.classList.toggle('mobile-menu-open')
+      document.querySelector('.header-mobile-bg')?.classList.toggle('active')
+      document.body.classList.toggle('mobile-menu-open')
+      document.querySelector('.filters-wrapper')?.classList.toggle('mobile-menu-open')
+    })
+
+    window.addEventListener('resize', () => {
+      
+    })
+
+    return headerMenuBtnWrapper
+  }
+
   renderHeaderWrapper() {
+    const mobileBtn = this.createMenuBtn()
     const headerWrapper = this.elFactory('div', { class: 'header' });
     const logo = this.createHeaderLogo();
     const bag = this.createBag();
     const searchBar = this.createHeaderSearch();
+    const headerMobileBg = this.elFactory('div', {class: 'header-mobile-bg'})
+    headerWrapper.append(mobileBtn)
     headerWrapper.append(logo);
     headerWrapper.append(searchBar);
     headerWrapper.append(bag);
+    headerWrapper.append(headerMobileBg)
     this.container.append(headerWrapper);
   }
 

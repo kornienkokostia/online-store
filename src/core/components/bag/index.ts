@@ -17,7 +17,7 @@ export default class Bag extends Component {
 
   convertNumToSplitString = (str: string) => str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
 
-  disableScroll() {
+  static disableScroll() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
     document.querySelector('html')!.style.scrollBehavior = 'auto'
@@ -111,9 +111,7 @@ export default class Bag extends Component {
     checkOutBtn.addEventListener('click', () => {
       document.querySelector('.checkout-window')?.classList.add('active')
       document.querySelector('.dark-bg')?.classList.add('active')
-      this.disableScroll()
-      
-    
+      Bag.disableScroll()    
     })
 
     bagTotalDiv.append(bagTotalSummary)
@@ -257,15 +255,17 @@ export default class Bag extends Component {
     bagItemRemoveBtn.addEventListener('click', () => {
       const closestItem = bagItemRemoveBtn.closest('.bag-item') as HTMLElement
       closestItem.classList.add('hidden');
+
+      const moveHeightClass = window.innerWidth <= 550 ? 'move-mobile' : 'move'
       
       setTimeout(() => {
-        [...document.querySelectorAll('.bag-item')].map(el => el.classList.add('move'))
-        document.querySelector('.bag-total')!.classList.add('move')
+        [...document.querySelectorAll('.bag-item')].map(el => el.classList.add(moveHeightClass))
+        document.querySelector('.bag-total')!.classList.add(moveHeightClass)
       }, 500);
       setTimeout(() => {
         document.querySelector('.bag-goods')?.removeChild(closestItem);
-        [...document.querySelectorAll('.bag-item')].map(el => el.classList.remove('move'))
-        document.querySelector('.bag-total')!.classList.remove('move')
+        [...document.querySelectorAll('.bag-item')].map(el => el.classList.remove(moveHeightClass))
+        document.querySelector('.bag-total')!.classList.remove(moveHeightClass)
         updateAllInfo()
       }, 1000);
       
@@ -276,7 +276,6 @@ export default class Bag extends Component {
       if (Bag.bagItems.length === 0) {
         setTimeout(() => {
           document.querySelector('.bag-total')!.classList.add('hide')
-          
         }, 500)
         
         setTimeout(() => {
@@ -313,6 +312,13 @@ export default class Bag extends Component {
   createCheckoutWindow(){
     let formValidation = true
 
+    const checkAllFields = () => {
+      const allFields = [...document.querySelectorAll('.checkout-info-field-input')] as HTMLInputElement[]
+      const isAllFilled = allFields.filter(el => el.value !== '').length === allFields.length
+      isAllFilled && formValidation ? document.querySelector('.checkout-submit-btn')?.removeAttribute('disabled') : 
+        document.querySelector('.checkout-submit-btn')?.setAttribute('disabled', 'true')
+    }
+    
     const checkout = this.elFactory('div', {class: 'checkout-window'})
 
     const checkoutHeader = this.elFactory('div', {class: 'checkout-header'})
@@ -330,7 +336,6 @@ export default class Bag extends Component {
     const checkoutHeaderTitle = this.elFactory('h2', {class: 'checkout-header-title'})
     checkoutHeaderTitle.textContent = 'Checkout'
     
-
     const checkoutHeaderTotal = this.elFactory('div', {class: 'checkout-header-total'})
     checkoutHeaderTotal.textContent = 'Order Summary: $'
     const checkoutHeaderTotalSpan = this.elFactory('span', {class: 'checkout-header-total-value'})
@@ -339,13 +344,24 @@ export default class Bag extends Component {
     checkoutHeaderTotal.append(checkoutHeaderTotalSpan)
 
     checkoutHeader.append(checkoutHeaderCloseBtn, checkoutHeaderTitle, checkoutHeaderTotal)
+    
+    // error img
+    const renderErrorImg = () => {
+      const renderErrorImg = this.elFactory('img', {class: 'checkout-info-field-error-img', 
+      src: './assets/images/icons/error.svg', alt: 'checkout-info-field-error-img'})
+      renderErrorImg.ondragstart = () => false
+      return renderErrorImg
+    }
+    const addErrorClass = (title: HTMLSpanElement, input: HTMLInputElement, error: HTMLDivElement) => {
+      title.classList.add('error')
+      input.classList.add('error')
+      error.classList.add('active')
+    }
 
     const checkoutInfo = this.elFactory('div', {class: 'checkout-info'})
 
     const checkoutInfoTitle = this.elFactory('div', {class: 'checkout-info-title'})
     checkoutInfoTitle.textContent = 'Where should we send your order?'
-
-    checkoutInfo.append(checkoutInfoTitle)
 
     // name adress block
     const checkoutInfoNameAddress = this.elFactory('div', {class: 'checkout-info-item'})
@@ -355,133 +371,134 @@ export default class Bag extends Component {
 
     checkoutInfoNameAddress.append(checkoutInfoNameAddressTitle)
 
-    const errorMsgImg = this.elFactory('img', {class: 'checkout-info-field-error-img', 
-    src: './assets/images/icons/error.svg', alt: 'checkout-info-field-error-img'})
-    errorMsgImg.ondragstart = () => false
-
     // First name
     const checkoutInfoFirstName = this.elFactory('div', {class: 'checkout-info-field'})
-    const checkoutInfoFirstNameInput = this.elFactory('input', {class: 'checkout-info-field-input', 
-      type: 'text'})
+    const checkoutInfoFirstNameInput = this.elFactory('input', {class: 'checkout-info-field-input first-name-input', 
+      type: 'text', title: 'Please fill out this field.', autocomplete: "given-name", maxlength: "14"})
     const checkoutInfoFirstNameTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
     checkoutInfoFirstNameTitle.textContent = 'First Name'
 
     const checkoutInfoFirstNameError = this.elFactory('div', {class: 'checkout-info-field-error'})
     const checkoutInfoFirstNameErrorText = this.elFactory('span', {class: 'checkout-info-field-error-msg'})
-    checkoutInfoFirstNameErrorText.textContent = 'Please enter a first name.'
-    
-    checkoutInfoFirstNameError.append(errorMsgImg, checkoutInfoFirstNameErrorText)
+    checkoutInfoFirstNameErrorText.textContent = 'Please enter a valid first name (>2 characters).'
+
+    checkoutInfoFirstNameError.append(renderErrorImg(), checkoutInfoFirstNameErrorText)
 
     checkoutInfoFirstNameInput.addEventListener('focus', () => {
       checkoutInfoFirstNameTitle.classList.add('active')
       checkoutInfoFirstNameInput.classList.remove('error')
     })
     checkoutInfoFirstNameInput.addEventListener('focusout', () => {
-      formValidation = true
       if (checkoutInfoFirstNameInput.value.length === 0) {
-        formValidation = false
         checkoutInfoFirstNameTitle.classList.remove('active')
-        checkoutInfoFirstNameTitle.classList.add('error')
-        checkoutInfoFirstNameInput.classList.add('error')
-        checkoutInfoFirstNameError.classList.add('active')
-        checkoutInfoFirstNameErrorText.textContent = 'Please enter a first name.'
+        addErrorClass(checkoutInfoFirstNameTitle, checkoutInfoFirstNameInput, checkoutInfoFirstNameError)
       }
       if (checkoutInfoFirstNameInput.value.length < 3 && checkoutInfoFirstNameInput.value.length !== 0) {
-        formValidation = false
-        checkoutInfoFirstNameError.classList.add('active')
-        checkoutInfoFirstNameInput.classList.add('error')
-        checkoutInfoFirstNameTitle.classList.add('error')
-        checkoutInfoFirstNameErrorText.textContent = 'Please enter a valid first name (>2 characters).'
+        addErrorClass(checkoutInfoFirstNameTitle, checkoutInfoFirstNameInput, checkoutInfoFirstNameError)
       }
     })
     checkoutInfoFirstNameInput.addEventListener('input', () => {
       checkoutInfoFirstNameTitle.classList.remove('error')
       checkoutInfoFirstNameError.classList.remove('active')
+      checkoutInfoFirstNameInput.value.length !== 0 ? checkoutInfoFirstNameInput.removeAttribute('title') :
+        checkoutInfoFirstNameInput.setAttribute('title', 'Please fill out this field.')
+      formValidation = true
+      if (checkoutInfoFirstNameInput.value.length === 0) {
+        formValidation = false
+      }
+      if (checkoutInfoFirstNameInput.value.length < 3 && checkoutInfoFirstNameInput.value.length !== 0) {
+        formValidation = false
+      }
+      checkAllFields()
     })
 
     checkoutInfoFirstName.append(checkoutInfoFirstNameInput, checkoutInfoFirstNameTitle, checkoutInfoFirstNameError)
 
     // Last name
     const checkoutInfoLastName = this.elFactory('div', {class: 'checkout-info-field'})
-    const checkoutInfoLastNameInput = this.elFactory('input', {class: 'checkout-info-field-input', 
-      type: 'text'})
+    const checkoutInfoLastNameInput = this.elFactory('input', {class: 'checkout-info-field-input last-name-input', 
+      type: 'text', title: 'Please fill out this field.', autocomplete: "family-name", maxlength: "20"})
     const checkoutInfoLastNameTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
     checkoutInfoLastNameTitle.textContent = 'Last Name'
 
     const checkoutInfoLastNameError = this.elFactory('div', {class: 'checkout-info-field-error'})
     const checkoutInfoLastNameErrorText = this.elFactory('span', {class: 'checkout-info-field-error-msg'})
-    checkoutInfoLastNameErrorText.textContent = 'Please enter a last name.'
-    checkoutInfoLastNameError.append(errorMsgImg, checkoutInfoLastNameErrorText)
+    checkoutInfoLastNameErrorText.textContent = 'Please enter a valid last name (>2 characters).'
+    checkoutInfoLastNameError.append(renderErrorImg(), checkoutInfoLastNameErrorText)
 
     checkoutInfoLastNameInput.addEventListener('focus', () => {
       checkoutInfoLastNameTitle.classList.add('active')
       checkoutInfoLastNameInput.classList.remove('error')
     })
     checkoutInfoLastNameInput.addEventListener('focusout', () => {
-      formValidation = true
       if (checkoutInfoLastNameInput.value.length === 0) {
-        formValidation = false
         checkoutInfoLastNameTitle.classList.remove('active')
-        checkoutInfoLastNameTitle.classList.add('error')
-        checkoutInfoLastNameInput.classList.add('error')
-        checkoutInfoLastNameError.classList.add('active')
-        checkoutInfoLastNameErrorText.textContent = 'Please enter a last name.'
+        addErrorClass(checkoutInfoLastNameTitle, checkoutInfoLastNameInput, checkoutInfoLastNameError)
       }
       if (checkoutInfoLastNameInput.value.length < 3 && checkoutInfoLastNameInput.value.length !== 0) {
-        formValidation = false
-        checkoutInfoLastNameError.classList.add('active')
-        checkoutInfoLastNameInput.classList.add('error')
-        checkoutInfoLastNameTitle.classList.add('error')
-        checkoutInfoLastNameErrorText.textContent = 'Please enter a valid last name (>2 characters).'
+        addErrorClass(checkoutInfoLastNameTitle, checkoutInfoLastNameInput, checkoutInfoLastNameError)
       }
     })
     checkoutInfoLastNameInput.addEventListener('input', () => {
       checkoutInfoLastNameTitle.classList.remove('error')
       checkoutInfoLastNameError.classList.remove('active')
+      checkoutInfoLastNameInput.value.length !== 0 ? checkoutInfoLastNameInput.removeAttribute('title') :
+        checkoutInfoLastNameInput.setAttribute('title', 'Please fill out this field.')
+      formValidation = true
+      if (checkoutInfoLastNameInput.value.length === 0) {
+        formValidation = false
+      }
+      if (checkoutInfoLastNameInput.value.length < 3 && checkoutInfoLastNameInput.value.length !== 0) {
+        formValidation = false
+      }
+      checkAllFields()  
     })
 
     checkoutInfoLastName.append(checkoutInfoLastNameInput, checkoutInfoLastNameTitle, checkoutInfoLastNameError)
 
     // Address
     const checkoutInfoAddress = this.elFactory('div', {class: 'checkout-info-field'})
-    const checkoutInfoAddressInput = this.elFactory('input', {class: 'checkout-info-field-input', 
-      type: 'text'})
+    const checkoutInfoAddressInput = this.elFactory('input', {class: 'checkout-info-field-input address-input', 
+      type: 'text', title: 'Please fill out this field.'})
     const checkoutInfoAddressTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
     checkoutInfoAddressTitle.textContent = 'Address'
 
     const checkoutInfoAddressError = this.elFactory('div', {class: 'checkout-info-field-error'})
     const checkoutInfoAddressErrorText = this.elFactory('span', {class: 'checkout-info-field-error-msg'})
-    checkoutInfoAddressErrorText.textContent = 'Please enter an address.'
-    checkoutInfoAddressError.append(errorMsgImg, checkoutInfoAddressErrorText)
+    checkoutInfoAddressErrorText.textContent = 'Please enter a valid address (>2 words, each >4 characters).'
+    checkoutInfoAddressError.append(renderErrorImg(), checkoutInfoAddressErrorText)
 
     checkoutInfoAddressInput.addEventListener('focus', () => {
       checkoutInfoAddressTitle.classList.add('active')
       checkoutInfoAddressInput.classList.remove('error')
     })
+
     checkoutInfoAddressInput.addEventListener('focusout', () => {
-      formValidation = true
       if (checkoutInfoAddressInput.value.length === 0) {
-        formValidation = false
         checkoutInfoAddressTitle.classList.remove('active')
-        checkoutInfoAddressTitle.classList.add('error')
-        checkoutInfoAddressInput.classList.add('error')
-        checkoutInfoAddressError.classList.add('active')
-        checkoutInfoAddressErrorText.textContent = 'Please enter an address.'
-      }
+        addErrorClass(checkoutInfoAddressTitle, checkoutInfoAddressInput, checkoutInfoAddressError)
+      } 
       const inputArr = checkoutInfoAddressInput.value.trim().split(' ')
-  
       if (checkoutInfoAddressInput.value.length !== 0 && (inputArr.length < 3 || 
         inputArr.filter(el => el.length < 5).length !== 0)) {
-        formValidation = false
-        checkoutInfoAddressError.classList.add('active')
-        checkoutInfoAddressInput.classList.add('error')
-        checkoutInfoAddressTitle.classList.add('error')
-        checkoutInfoAddressErrorText.textContent = 'Please enter a valid address (>2 words, each >4 characters).'
+        addErrorClass(checkoutInfoAddressTitle, checkoutInfoAddressInput, checkoutInfoAddressError)
       }
     })
     checkoutInfoAddressInput.addEventListener('input', () => {
       checkoutInfoAddressTitle.classList.remove('error')
       checkoutInfoAddressError.classList.remove('active')
+      checkoutInfoAddressInput.value.length !== 0 ? checkoutInfoAddressInput.removeAttribute('title') :
+        checkoutInfoAddressInput.setAttribute('title', 'Please fill out this field.')
+      formValidation = true
+      if (checkoutInfoAddressInput.value.length === 0) {
+        formValidation = false
+      } 
+      const inputArr = checkoutInfoAddressInput.value.trim().split(' ')
+      if (checkoutInfoAddressInput.value.length !== 0 && (inputArr.length < 3 || 
+        inputArr.filter(el => el.length < 5).length !== 0)) {
+        formValidation = false
+      }       
+      checkAllFields() 
     })
 
     checkoutInfoAddress.append(checkoutInfoAddressInput, checkoutInfoAddressTitle, checkoutInfoAddressError)
@@ -498,98 +515,392 @@ export default class Bag extends Component {
 
     // Email address
     const checkoutInfoEmailAddress = this.elFactory('div', {class: 'checkout-info-field'})
-    const checkoutInfoEmailAddressInput = this.elFactory('input', {class: 'checkout-info-field-input', 
-      type: 'text'})
+    const checkoutInfoEmailAddressInput = this.elFactory('input', {class: 'checkout-info-field-input email-input', 
+      type: 'email', title: 'Please fill out this field.', autocomplete: "email", maxlength: "50"})
     const checkoutInfoEmailAddressTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
     checkoutInfoEmailAddressTitle.textContent = 'Email Address'
 
     const checkoutInfoEmailAddressError = this.elFactory('div', {class: 'checkout-info-field-error'})
     const checkoutInfoEmailAddressErrorText = this.elFactory('span', {class: 'checkout-info-field-error-msg'})
-    checkoutInfoEmailAddressErrorText.textContent = 'Please enter an email address.'
-    checkoutInfoEmailAddressError.append(errorMsgImg, checkoutInfoEmailAddressErrorText)
+    checkoutInfoEmailAddressErrorText.textContent = 'Please enter a valid email address.'
+    checkoutInfoEmailAddressError.append(renderErrorImg(), checkoutInfoEmailAddressErrorText)
 
     checkoutInfoEmailAddressInput.addEventListener('focus', () => {
       checkoutInfoEmailAddressTitle.classList.add('active')
       checkoutInfoEmailAddressInput.classList.remove('error')
     })
+    
+    const emailValidation = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+    
     checkoutInfoEmailAddressInput.addEventListener('focusout', () => {
-      formValidation = true
       if (checkoutInfoEmailAddressInput.value.length === 0) {
-        formValidation = false
         checkoutInfoEmailAddressTitle.classList.remove('active')
-        checkoutInfoEmailAddressTitle.classList.add('error')
-        checkoutInfoEmailAddressInput.classList.add('error')
-        checkoutInfoEmailAddressError.classList.add('active')
-        checkoutInfoEmailAddressErrorText.textContent = 'Please enter an email address.'
+        addErrorClass(checkoutInfoEmailAddressTitle, checkoutInfoEmailAddressInput, checkoutInfoEmailAddressError)
       }
-      const emailValidation = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-      
       if (checkoutInfoEmailAddressInput.value.length !== 0 && 
         !emailValidation.test(checkoutInfoEmailAddressInput.value)) {
-        formValidation = false
-        checkoutInfoEmailAddressError.classList.add('active')
-        checkoutInfoEmailAddressInput.classList.add('error')
-        checkoutInfoEmailAddressTitle.classList.add('error')
-        checkoutInfoEmailAddressErrorText.textContent = 'Please enter a valid email address.'
-      }
+        addErrorClass(checkoutInfoEmailAddressTitle, checkoutInfoEmailAddressInput, checkoutInfoEmailAddressError)
+      } 
     })
     checkoutInfoEmailAddressInput.addEventListener('input', () => {
       checkoutInfoEmailAddressTitle.classList.remove('error')
       checkoutInfoEmailAddressError.classList.remove('active')
+      checkoutInfoEmailAddressInput.value.length !== 0 ? checkoutInfoEmailAddressInput.removeAttribute('title') :
+        checkoutInfoEmailAddressInput.setAttribute('title', 'Please fill out this field.')
+      formValidation = true
+      if (checkoutInfoEmailAddressInput.value.length === 0) {
+        formValidation = false
+      }
+      if (checkoutInfoEmailAddressInput.value.length !== 0 && 
+        !emailValidation.test(checkoutInfoEmailAddressInput.value)) {
+        formValidation = false
+      } 
+      checkAllFields() 
     })
 
     checkoutInfoEmailAddress.append(checkoutInfoEmailAddressInput, checkoutInfoEmailAddressTitle, checkoutInfoEmailAddressError)
 
     // Phone
     const checkoutInfoPhoneNum = this.elFactory('div', {class: 'checkout-info-field'})
-    const checkoutInfoPhoneNumInput = this.elFactory('input', {class: 'checkout-info-field-input', 
-      type: 'text'})
+    const checkoutInfoPhoneNumInput = this.elFactory('input', {class: 'checkout-info-field-input phone-input', 
+      type: 'tel', title: 'Please fill out this field.', autocomplete: "tel"})
     const checkoutInfoPhoneNumTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
     checkoutInfoPhoneNumTitle.textContent = 'Phone Number'
 
     const checkoutInfoPhoneNumError = this.elFactory('div', {class: 'checkout-info-field-error'})
     const checkoutInfoPhoneNumErrorText = this.elFactory('span', {class: 'checkout-info-field-error-msg'})
-    checkoutInfoPhoneNumErrorText.textContent = 'Please enter a phone number.'
-    checkoutInfoPhoneNumError.append(errorMsgImg, checkoutInfoPhoneNumErrorText)
+    checkoutInfoPhoneNumErrorText.textContent = 'Please enter a valid phone number.'
+    checkoutInfoPhoneNumError.append(renderErrorImg(), checkoutInfoPhoneNumErrorText)
 
     checkoutInfoPhoneNumInput.addEventListener('focus', () => {
       checkoutInfoPhoneNumTitle.classList.add('active')
       checkoutInfoPhoneNumInput.classList.remove('error')
     })
+    
+    const validPhone = /^\+([0-9]{9,15})?$/
+    
     checkoutInfoPhoneNumInput.addEventListener('focusout', () => {
-      formValidation = true
       if (checkoutInfoPhoneNumInput.value.length === 0) {
-        formValidation = false
         checkoutInfoPhoneNumTitle.classList.remove('active')
-        checkoutInfoPhoneNumTitle.classList.add('error')
-        checkoutInfoPhoneNumInput.classList.add('error')
-        checkoutInfoPhoneNumError.classList.add('active')
-        checkoutInfoPhoneNumErrorText.textContent = 'Please enter a phone number.'
-      }
-      if (checkoutInfoPhoneNumInput.value.length < 3 && checkoutInfoPhoneNumInput.value.length !== 0) {
-        formValidation = false
-        checkoutInfoPhoneNumError.classList.add('active')
-        checkoutInfoPhoneNumInput.classList.add('error')
-        checkoutInfoPhoneNumTitle.classList.add('error')
-        checkoutInfoPhoneNumErrorText.textContent = 'Please enter a valid phone number.'
+        addErrorClass(checkoutInfoPhoneNumTitle, checkoutInfoPhoneNumInput, checkoutInfoPhoneNumError)
+      }      
+      if (checkoutInfoPhoneNumInput.value.length !== 0 && !validPhone.test(checkoutInfoPhoneNumInput.value)) {
+        addErrorClass(checkoutInfoPhoneNumTitle, checkoutInfoPhoneNumInput, checkoutInfoPhoneNumError)
       }
     })
     checkoutInfoPhoneNumInput.addEventListener('input', () => {
+      var newValue = checkoutInfoPhoneNumInput.value.replace(new RegExp(/[^\d\+]/,'ig'), '');
+      checkoutInfoPhoneNumInput.value = newValue;
       checkoutInfoPhoneNumTitle.classList.remove('error')
       checkoutInfoPhoneNumError.classList.remove('active')
+      checkoutInfoPhoneNumInput.value.length !== 0 ? checkoutInfoPhoneNumInput.removeAttribute('title') :
+        checkoutInfoPhoneNumInput.setAttribute('title', 'Please fill out this field.')
+      formValidation = true
+      if (checkoutInfoPhoneNumInput.value.length === 0) {
+        formValidation = false
+      }
+      if (checkoutInfoPhoneNumInput.value.length !== 0 && !validPhone.test(checkoutInfoPhoneNumInput.value)) {
+        formValidation = false
+      }
+      checkAllFields() 
     })
 
     checkoutInfoPhoneNum.append(checkoutInfoPhoneNumInput, checkoutInfoPhoneNumTitle, checkoutInfoPhoneNumError)
 
     checkoutInfoContacts.append(checkoutInfoEmailAddress, checkoutInfoPhoneNum)
 
+    // Payment info title
+    const checkoutInfoTitle2 = this.elFactory('div', {class: 'checkout-info-title'})
+    checkoutInfoTitle2.textContent = 'How do you want to pay?'
+
+    // Card info block
+    const checkoutInfoCard = this.elFactory('div', {class: 'checkout-info-item'})
+
+    const checkoutInfoCardTitle = this.elFactory('p', {class: 'checkout-info-item-title'})
+    checkoutInfoCardTitle.textContent = `Enter your card information:`
+
+    checkoutInfoCard.append(checkoutInfoCardTitle)
+
+     // Card
+     const checkoutInfoCardNum = this.elFactory('div', {class: 'checkout-info-field'})
+     const checkoutInfoCardNumInput = this.elFactory('input', {class: 'checkout-info-field-input card-input', 
+       type: 'text', maxlength: '19', title: 'Please fill out this field.'})
+     const checkoutInfoCardNumTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
+     checkoutInfoCardNumTitle.textContent = `Credit/Debit Card Number`
+ 
+     const checkoutInfoCardNumError = this.elFactory('div', {class: 'checkout-info-field-error'})
+     const checkoutInfoCardNumErrorText = this.elFactory('span', {class: 'checkout-info-field-error-msg'})
+     checkoutInfoCardNumErrorText.textContent = 'Please enter a valid card number.'
+     checkoutInfoCardNumError.append(renderErrorImg(), checkoutInfoCardNumErrorText)
+
+     const checkoutCardsImgs = this.elFactory('div', {class: 'checkout-info-field-cards'})
+     const checkoutCardVisa = this.elFactory('img', {class: 'checkout-info-field-card visa', 
+      src: './assets/images/cards/visa.png', alt: 'checkout-info-field-card-img'})
+    checkoutCardVisa.ondragstart = () => false
+    const checkoutCardMastercard = this.elFactory('img', {class: 'checkout-info-field-card mastercard', 
+      src: './assets/images/cards/mastercard.png', alt: 'checkout-info-field-card-img'})
+    checkoutCardMastercard.ondragstart = () => false
+    const checkoutCardDiscover = this.elFactory('img', {class: 'checkout-info-field-card discover', 
+      src: './assets/images/cards/discover.png', alt: 'checkout-info-field-card-img'})
+    checkoutCardDiscover.ondragstart = () => false
+    checkoutCardsImgs.append(checkoutCardVisa, checkoutCardMastercard, checkoutCardDiscover)
+
+    
+
+    const cardValidation = (card: string) => {
+      const oneNum = card.slice(0, 1)
+      const twoNums = card.slice(0, 2)
+      const threeNums = card.slice(0, 3)
+      const fourNums = card.slice(0, 4)
+      if (+oneNum === 4) {
+        return {success: true, name: 'visa'}
+      }
+      if (+twoNums >= 51 && +twoNums <= 55) {
+        return {success: true, name: 'mastercard'}
+      }
+      if (+twoNums === 64 || +twoNums === 65 || +threeNums === 622 || +fourNums === 6011) {
+        return {success: true, name: 'discover'}
+      }
+      return {success: false}
+    }
+
+    const reformatInputField = (inputEl: HTMLInputElement, target: string) => {
+      const format = (value: string, target: string) => {
+          let res = ''
+          if (target === 'card-num') {
+            res = value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim()
+          }
+          if (target === 'card-exp') {
+            res = value.replace(/[^\dA-Z]/g, '').replace(/(.{2})/g, '$1/').trim()
+            if (res[res.length - 1] === '/') {
+              res = res.slice(0, res.length - 1)
+            }
+          }
+          return res
+      }
+      const countSpaces = (text: string) => {
+          var spaces = text.match(/(\s+)/g);
+          return spaces ? spaces.length : 0;
+      }
+      const countBackSpaces = (text: string) => {
+        var spaces = text.match(/(\/)/g);
+        return spaces ? spaces.length : 0;
+    }
+    const count = (text: string, target: string) => {
+      let res = 0
+      if (target === 'card-num') {res = countSpaces(text)}
+      if (target === 'card-exp') {res = countBackSpaces(text)}
+      return res
+    }
+      let position = inputEl.selectionEnd;
+      let previousValue = inputEl.value;
+      inputEl.value = format(inputEl.value, target);
+  
+      if (position !== inputEl.value.length) {
+          let beforeCaret = previousValue.slice(0, position!);
+          var countPrevious = count(beforeCaret, target);
+          var countCurrent = count(format(beforeCaret, target), target);
+          inputEl.selectionEnd = position! + (countCurrent - countPrevious);
+      }
+    }
+     checkoutInfoCardNumInput.addEventListener('focus', () => {
+       checkoutInfoCardNumTitle.classList.add('active')
+       checkoutInfoCardNumInput.classList.remove('error')
+     })
+     checkoutInfoCardNumInput.addEventListener('focusout', () => {
+       if (checkoutInfoCardNumInput.value.length === 0) {
+         checkoutInfoCardNumTitle.classList.remove('active')
+         addErrorClass(checkoutInfoCardNumTitle, checkoutInfoCardNumInput, checkoutInfoCardNumError)
+       }
+       if (checkoutInfoCardNumInput.value.length !== 0 && (checkoutInfoCardNumInput.value.length !== 19 ||
+        !cardValidation(checkoutInfoCardNumInput.value).success)) {
+         addErrorClass(checkoutInfoCardNumTitle, checkoutInfoCardNumInput, checkoutInfoCardNumError)
+       }
+     })
+     checkoutInfoCardNumInput.addEventListener('input', () => {
+      reformatInputField(checkoutInfoCardNumInput, 'card-num')
+      
+      if (checkoutInfoCardNumInput.value.length >= 4) {
+        if (cardValidation(checkoutInfoCardNumInput.value).success) {
+          [...document.querySelectorAll('.checkout-info-field-card')].map(el => {
+            el.classList.contains(`${cardValidation(checkoutInfoCardNumInput.value).name}`) ?
+             el.classList.add('active') : el.classList.add('hidden')
+          })
+        } else {
+          [...document.querySelectorAll('.checkout-info-field-card')].map(el => {
+            el.classList.remove('hidden')
+            el.classList.remove('active')
+          })
+        }
+      }
+      if (checkoutInfoCardNumInput.value.length < 4) {
+        [...document.querySelectorAll('.checkout-info-field-card')].map(el => {
+          el.classList.remove('hidden')
+          el.classList.remove('active')
+        })
+      }
+      
+       checkoutInfoCardNumTitle.classList.remove('error')
+       checkoutInfoCardNumError.classList.remove('active')
+       checkoutInfoCardNumInput.value.length !== 0 ? checkoutInfoCardNumInput.removeAttribute('title') :
+        checkoutInfoCardNumInput.setAttribute('title', 'Please fill out this field.')
+        formValidation = true
+        if (checkoutInfoCardNumInput.value.length === 0) {
+          formValidation = false
+        }
+        if (checkoutInfoCardNumInput.value.length !== 0 && (checkoutInfoCardNumInput.value.length !== 19 ||
+         !cardValidation(checkoutInfoCardNumInput.value).success)) {
+          formValidation = false
+        }
+        checkAllFields() 
+     })
+ 
+    checkoutInfoCardNum.append(checkoutInfoCardNumInput, checkoutInfoCardNumTitle, checkoutInfoCardNumError, checkoutCardsImgs)
+
+    // Exparation date and cvv
+    const checkoutInfoExpirationDateCVVWrapper = this.elFactory('div', {class: 'checkout-info-wrapper'})
+
+    // Expiration date
+    const checkoutInfoExpirationDate = this.elFactory('div', {class: 'checkout-info-field'})
+    const checkoutInfoExpirationDateInput = this.elFactory('input', {class: 'checkout-info-field-input card-exp-input', 
+      type: 'text', maxlength: '5', title: 'Please fill out this field.'})
+    const checkoutInfoExpirationDateTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
+    checkoutInfoExpirationDateTitle.textContent = 'Expiration MM/YY'
+
+    const checkoutInfoExpirationDateError = this.elFactory('div', {class: 'checkout-info-field-error'})
+    const checkoutInfoExpirationDateErrorText = this.elFactory('span', {class: 'checkout-info-field-error-msg'})
+    checkoutInfoExpirationDateErrorText.textContent = 'Please enter a valid expiration date.'
+    checkoutInfoExpirationDateError.append(renderErrorImg(), checkoutInfoExpirationDateErrorText)
+
+    checkoutInfoExpirationDateInput.addEventListener('focus', () => {
+      checkoutInfoExpirationDateTitle.classList.add('active')
+      checkoutInfoExpirationDateInput.classList.remove('error')
+    })
+    checkoutInfoExpirationDateInput.addEventListener('focusout', () => {
+      if (checkoutInfoExpirationDateInput.value.length === 0) {
+        checkoutInfoExpirationDateTitle.classList.remove('active')
+        addErrorClass(checkoutInfoExpirationDateTitle, checkoutInfoExpirationDateInput, checkoutInfoExpirationDateError)
+      }
+      if (checkoutInfoExpirationDateInput.value.length !== 0 && 
+        (+checkoutInfoExpirationDateInput.value.slice(0, 2) > 12 ||
+        +checkoutInfoExpirationDateInput.value.slice(3, 5) < 23)) {
+        addErrorClass(checkoutInfoExpirationDateTitle, checkoutInfoExpirationDateInput, checkoutInfoExpirationDateError)
+      } 
+    })
+    checkoutInfoExpirationDateInput.addEventListener('input', () => {
+      reformatInputField(checkoutInfoExpirationDateInput, 'card-exp')
+      checkoutInfoExpirationDateTitle.classList.remove('error')
+      checkoutInfoExpirationDateError.classList.remove('active')
+      checkoutInfoExpirationDateInput.value.length !== 0 ? checkoutInfoExpirationDateInput.removeAttribute('title') :
+        checkoutInfoExpirationDateInput.setAttribute('title', 'Please fill out this field.')
+      formValidation = true
+      if (checkoutInfoExpirationDateInput.value.length === 0) {
+        formValidation = false
+      }
+      if (checkoutInfoExpirationDateInput.value.length !== 0 && 
+        (+checkoutInfoExpirationDateInput.value.slice(0, 2) > 12 ||
+        +checkoutInfoExpirationDateInput.value.slice(3, 5) < 23)) {
+        formValidation = false
+      }
+      checkAllFields()  
+    })
+
+    checkoutInfoExpirationDate.append(checkoutInfoExpirationDateInput, checkoutInfoExpirationDateTitle, checkoutInfoExpirationDateError)
+
+    // CVV
+    const checkoutInfoCVV = this.elFactory('div', {class: 'checkout-info-field'})
+    const checkoutInfoCVVInput = this.elFactory('input', {class: 'checkout-info-field-input card-cvv-input', 
+      type: 'text', maxlength: '3', title: 'Please fill out this field.'})
+    const checkoutInfoCVVTitle = this.elFactory('span', {class: 'checkout-info-field-input-name'})
+    checkoutInfoCVVTitle.textContent = 'CVV'
+
+    const checkoutInfoCVVError = this.elFactory('div', {class: 'checkout-info-field-error'})
+    const checkoutInfoCVVErrorText = this.elFactory('span', {class: 'checkout-info-field-error-msg'})
+    checkoutInfoCVVErrorText.textContent = 'Please enter a valid security code.'
+    checkoutInfoCVVError.append(renderErrorImg(), checkoutInfoCVVErrorText)
+
+    checkoutInfoCVVInput.addEventListener('focus', () => {
+      checkoutInfoCVVTitle.classList.add('active')
+      checkoutInfoCVVInput.classList.remove('error')
+    })
+    checkoutInfoCVVInput.addEventListener('focusout', () => {
+      if (checkoutInfoCVVInput.value.length === 0) {
+        checkoutInfoCVVTitle.classList.remove('active')
+        addErrorClass(checkoutInfoCVVTitle, checkoutInfoCVVInput, checkoutInfoCVVError)
+      }
+      if (checkoutInfoCVVInput.value.length !== 0 && checkoutInfoCVVInput.value.length !== 3) {
+        addErrorClass(checkoutInfoCVVTitle, checkoutInfoCVVInput, checkoutInfoCVVError)
+      }
+    })
+    checkoutInfoCVVInput.addEventListener('input', () => {
+      checkoutInfoCVVInput.value = checkoutInfoCVVInput.value.replace(/[^\dA-Z]/g, '')
+      checkoutInfoCVVTitle.classList.remove('error')
+      checkoutInfoCVVError.classList.remove('active')
+      checkoutInfoCVVInput.value.length !== 0 ? checkoutInfoCVVInput.removeAttribute('title') :
+        checkoutInfoCVVInput.setAttribute('title', 'Please fill out this field.')
+      formValidation = true
+      if (checkoutInfoCVVInput.value.length === 0) {
+        formValidation = false
+      }
+      if (checkoutInfoCVVInput.value.length !== 0 && checkoutInfoCVVInput.value.length !== 3) {
+        formValidation = false
+      }
+      checkAllFields() 
+    })
+
+    checkoutInfoCVV.append(checkoutInfoCVVInput, checkoutInfoCVVTitle, checkoutInfoCVVError)
+
+    checkoutInfoExpirationDateCVVWrapper.append(checkoutInfoExpirationDate, checkoutInfoCVV)
+
+    checkoutInfoCard.append(checkoutInfoCardNum, checkoutInfoExpirationDateCVVWrapper)
+    
+    checkoutInfo.append(checkoutInfoTitle)
+
     checkoutInfo.append(checkoutInfoNameAddress)
     checkoutInfo.append(checkoutInfoContacts)
+    
+    checkoutInfo.append(checkoutInfoTitle2)
+    checkoutInfo.append(checkoutInfoCard)
+
+    const checkoutSubmit = this.elFactory('button', {class: 'checkout-submit-btn', disabled: 'true'})
+    checkoutSubmit.textContent = 'Place Our Order'
+
+    checkoutSubmit.addEventListener('click', () => {
+      this.closeCheckoutWindow()
+      window.scrollTo(0, 0)
+      Bag.bagItems = []
+      document.querySelector('.bag-goods')!.innerHTML = ''
+      document.querySelector('.header-bag-items-count')?.classList.remove('active', 'two-num', 'two-num-plus')
+      document.querySelector('.header-bag-img')?.classList.remove('active', 'two-num', 'two-num-plus')
+      document.querySelector('.bag-total')!.classList.add('hide')
+      const bagTitle = document.querySelector('.bag-header-title') as HTMLElement
+      bagTitle.textContent = `Your bag is empty.`
+      AppState.setGoodsInBag(Bag.bagItems)
+      setTimeout(() => {
+        document.querySelector('.success-purchase')?.classList.add('active')
+      }, 500)
+      setTimeout(() => {
+        window.location.hash = '#main'
+      }, 5000)
+      setTimeout(() => {
+        document.querySelector('.success-purchase')?.classList.remove('active')
+      }, 6000)
+    })
+
+    checkoutInfo.append(checkoutSubmit)
 
     checkout.append(checkoutHeader)
     checkout.append(checkoutInfo)
+    
 
     return checkout
+  }
+  createSuccessPurchaseMsg(){
+    const successPurchase = this.elFactory('div', {class: 'success-purchase'})
+    const successPurchaseSpan = this.elFactory('span', {})
+    successPurchaseSpan.textContent = `Success! You complited your purchase. We will email you all the details.`
+    successPurchase.append(successPurchaseSpan)
+    return successPurchase
   }
 
   render() {
@@ -598,6 +909,7 @@ export default class Bag extends Component {
       this.closeCheckoutWindow()
     })
     this.container.append(darkBg)
+    document.body.prepend(this.createSuccessPurchaseMsg())
    
     const bagHeader = this.createBagHeader()
     this.container.append(bagHeader)
@@ -616,6 +928,10 @@ export default class Bag extends Component {
     }
 
     document.querySelector('.header-search')?.classList.add('hidden')
+
+    document.querySelector(".header-menu-btn-block-wrapper")?.classList.add("hidden");
+
+    Bag.updateBagCount() 
    
     return this.container;
   }

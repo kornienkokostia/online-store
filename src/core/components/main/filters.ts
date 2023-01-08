@@ -21,15 +21,30 @@ export default class Filters extends Component {
       Filtration.resetAll(); 
     })
 
+    
+
     const copyLinkButton = this.elFactory('button', {
       class: 'filters-btn copy-link-btn',
     });
     copyLinkButton.textContent = 'Copy link';
 
+    copyLinkButton.addEventListener('click', () => {
+      this.copyLinkURLString();
+    })
+
     filtersButtonsDiv.append(resetFiltersButton);
     filtersButtonsDiv.append(copyLinkButton);
 
     return filtersButtonsDiv;
+  }
+
+  copyLinkURLString() {
+    let copyText = window.location.href;
+    navigator.clipboard.writeText(copyText).then(() => {
+      console.log('Async: Copying to clipboard was successful!');
+    }, err => {
+      console.error('Async: Could not copy text: ', err);
+    });
   }
 
   renderFilterOption(item: string) {
@@ -71,8 +86,6 @@ export default class Filters extends Component {
         } else {
           checkedValue = 'false'
         }
-
-        
 
         if (checkedCategory) {
           Filtration.filterByBrand(checkedCategory, checkedValue);

@@ -261,6 +261,7 @@ export default class Goods extends Component {
     this.container.append(goodsNav);
 
     document.querySelector('.header-search')?.classList.remove('hidden')
+    document.querySelector(".header-menu-btn-block-wrapper")?.classList.remove("hidden");
 
     Bag.updateBagCount()
 
