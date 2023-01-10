@@ -30,6 +30,10 @@ export default class Filters extends Component {
 
     copyLinkButton.addEventListener('click', () => {
       this.copyLinkURLString();
+      copyLinkButton.textContent = 'Copied!'
+      setTimeout(() => {
+        copyLinkButton.textContent = 'Copy link'
+      }, 2000)
     })
 
     filtersButtonsDiv.append(resetFiltersButton);

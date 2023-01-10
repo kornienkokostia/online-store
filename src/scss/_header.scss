@@ -1,76 +1,5 @@
-@media (max-width: 1000px) {
-    .header-wrapper .header{
-        width: 100%;
-        &-search{
-            visibility: hidden;
-            opacity: 0;
-            transition: .3s;
-            transform: translateY(46px);
-            & .header-search-input{
-                height: 0px;
-                transition: .3s;
-                
-            }
-            & .header-search-input-img{
-                height: 0px;
-                transition: .3s;
-                
-            }   
-            & .header-search-input-clear-btn{
-                height: 0px;
-                transition: .3s;
-               
-            }
-        }
-        &-bag {
-            padding: 0 20px;
-            &-items-count{
-                margin-right: 20px;
-            }
-        }
-        &-menu-btn{
-            &-block-wrapper{
-                display: block;
-                &.mobile-menu-open ~ .header-search{
-                    visibility: visible;
-                    opacity: 1;
-                    & .header-search-input{
-                        height: 33px;
-                        
-                    }
-                    & .header-search-input-img{
-                        height: 14px;
-                    }
-                    & .header-search-input-clear-btn{
-                        height: 16px;
-                        transition: .3s;
-                       
-                    }
-                }
-            }
-        }
-        &-mobile-bg{
-            display: block;
-        }
-        &-logo-link{
-            padding: 0 20px;
-        }
-    }
-}
-@media (max-width: 550px) {
-    .header-wrapper .header{
-        &-search{
-            width: 300px;
-        }
-    }
-}
-@media (max-width: 340px) {
-    .header-wrapper .header{
-        &-search{
-            width: 280px;
-        }
-    }
-}
+
+
 
 .header{
     display: flex;
@@ -247,9 +176,7 @@
             display: none;
             height: 54px;
             width: 57px;
-            &.hidden{
-                display: none;
-            }
+           
             &.mobile-menu-open .header-menu-btn-top{
                 transition: transform .1806s cubic-bezier(0.04, 0.04, 0.12, 0.96);
                 transform: none;
