@@ -32,6 +32,9 @@
         &-menu-btn{
             &-block-wrapper{
                 display: block;
+                &.hidden{
+                    display: none;
+                }
                 &.mobile-menu-open ~ .header-search{
                     visibility: visible;
                     opacity: 1;

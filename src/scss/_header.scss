@@ -176,9 +176,7 @@
             display: none;
             height: 54px;
             width: 57px;
-            &.hidden{
-                display: none;
-            }
+           
             &.mobile-menu-open .header-menu-btn-top{
                 transition: transform .1806s cubic-bezier(0.04, 0.04, 0.12, 0.96);
                 transform: none;
