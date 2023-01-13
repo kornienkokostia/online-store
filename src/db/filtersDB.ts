@@ -1,8 +1,8 @@
 export const FiltersOptionsCategory = [
-    'smartphones',
-    'watches',
-    'headphones',
-    'tablets',
-    'laptops',
+  'smartphones',
+  'watches',
+  'headphones',
+  'tablets',
+  'laptops',
 ];
 export const FiltersOptionsBrand = ['apple', 'xiaomi', 'samsung', 'asus'];

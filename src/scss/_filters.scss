@@ -1,6 +1,3 @@
-
-
-
 .filters {
   display: flex;
   flex-direction: column;
@@ -36,187 +33,210 @@
     flex-direction: column;
     row-gap: 20px;
   }
-  &-item{
+  &-item {
     width: 100%;
     height: 49.5px;
     background-color: #ffffff;
     border-radius: 15px;
-    transition: height .4s cubic-bezier(0.645, 0.045, 0.355, 1) .1s;
-    &-category.active, &-brand.active, &-price.active, &-stock.active{
-        height: 133px;
-        transition: height .4s cubic-bezier(0.645, 0.045, 0.355, 1) .1s;
-        &> .filters-item-options{
-            visibility: visible;
-            opacity: 1;
-            transition: opacity .5s cubic-bezier(0.645, 0.045, 0.355, 1) .1s;
-            -webkit-transition: opacity .5s cubic-bezier(0.645, 0.045, 0.355, 1) .1s;
-            &> .filters-item-option{
-                height: 19.54px;
-                transition: height .5s cubic-bezier(0.645, 0.045, 0.355, 1) .1s;
-            }
+    transition: height 0.4s cubic-bezier(0.645, 0.045, 0.355, 1) 0.1s;
+    &-category.active,
+    &-brand.active,
+    &-price.active,
+    &-stock.active {
+      height: 133px;
+      transition: height 0.4s cubic-bezier(0.645, 0.045, 0.355, 1) 0.1s;
+      & > .filters-item-options {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0.1s;
+        -webkit-transition: opacity 0.5s cubic-bezier(0.645, 0.045, 0.355, 1)
+          0.1s;
+        & > .filters-item-option {
+          height: 19.54px;
+          transition: height 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) 0.1s;
         }
-        &> .filters-item-dual-progress{
-            visibility: visible;
-            opacity: 1;
-            height: 72px;
-            transform: translateY(0px);
-            transition: opacity, height, transform .4s cubic-bezier(0.645, 0.045, 0.355, 1) .12s,
-            .4s cubic-bezier(0.645, 0.045, 0.355, 1) .12s, .4s cubic-bezier(0.645, 0.045, 0.355, 1) .12s;
-            -webkit-transition: opacity, height, transform .4s cubic-bezier(0.645, 0.045, 0.355, 1) .12s,
-            .4s cubic-bezier(0.645, 0.045, 0.355, 1) .12s, .4s cubic-bezier(0.645, 0.045, 0.355, 1) .12s;
+      }
+      & > .filters-item-dual-progress {
+        visibility: visible;
+        opacity: 1;
+        height: 72px;
+        transform: translateY(0px);
+        transition: opacity, height,
+          transform 0.4s cubic-bezier(0.645, 0.045, 0.355, 1) 0.12s,
+          0.4s cubic-bezier(0.645, 0.045, 0.355, 1) 0.12s,
+          0.4s cubic-bezier(0.645, 0.045, 0.355, 1) 0.12s;
+        -webkit-transition: opacity, height,
+          transform 0.4s cubic-bezier(0.645, 0.045, 0.355, 1) 0.12s,
+          0.4s cubic-bezier(0.645, 0.045, 0.355, 1) 0.12s,
+          0.4s cubic-bezier(0.645, 0.045, 0.355, 1) 0.12s;
 
-            &> .filters-item-slider-price, &> .filters-item-slider-stock{
-                height: 3px;
-                transition: height .4s cubic-bezier(0.645, 0.045, 0.355, 1) .12s;
-                &> .filters-item-input-price input::-webkit-slider-thumb,
-                &> .filters-item-input-stock input::-webkit-slider-thumb{
-                    height: 20px;
-                    width: 20px;
-                    transition: width, height .4s cubic-bezier(0.645, 0.045, 0.355, 1) .12s, .4s cubic-bezier(0.645, 0.045, 0.355, 1) .12s;
-                }
-            }
+        & > .filters-item-slider-price,
+        & > .filters-item-slider-stock {
+          height: 3px;
+          transition: height 0.4s cubic-bezier(0.645, 0.045, 0.355, 1) 0.12s;
+          & > .filters-item-input-price input::-webkit-slider-thumb,
+          & > .filters-item-input-stock input::-webkit-slider-thumb {
+            height: 20px;
+            width: 20px;
+            transition: width,
+              height 0.4s cubic-bezier(0.645, 0.045, 0.355, 1) 0.12s,
+              0.4s cubic-bezier(0.645, 0.045, 0.355, 1) 0.12s;
+          }
         }
+      }
     }
-    &-price.active, &-stock.active{
-        height: 116.5px;
+    &-price.active,
+    &-stock.active {
+      height: 116.5px;
     }
-    &-header{
-        padding: 15px 15px 10px 15px;
-        display: flex;
-        justify-content: space-between;
-        position: relative;
+    &-header {
+      padding: 15px 15px 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      user-select: none;
+      &-title {
+        font-size: 17px;
+        font-family: 'SF-Pro-Display-Semibold';
+      }
+      &-expand-btn {
+        position: absolute;
+        right: 0;
+        top: 0;
+        background-color: transparent;
+        border: none;
+        width: 49.5px;
+        height: 49.5px;
+        cursor: pointer;
         user-select: none;
-        &-title{
-            font-size: 17px;
-            font-family: 'SF-Pro-Display-Semibold';
+        transition: transform 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+        &-img {
+          width: 100%;
+          height: 9.81px;
+          margin-bottom: 2px;
         }
-        &-expand-btn{
-            position: absolute;
-            right: 0;
-            top: 0;
-            background-color: transparent;
-            border: none;
-            width: 49.5px;
-            height: 49.5px;
-            cursor: pointer;
-            user-select: none;
-            transition: transform .5s cubic-bezier(0.645, 0.045, 0.355, 1);
-            &-img{
-                width: 100%;
-                height: 9.81px;
-                margin-bottom: 2px;
-            }
-            &.active{
-                transform: rotateX(180deg);
-            }
+        &.active {
+          transform: rotateX(180deg);
         }
+      }
     }
-    &-options{
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        padding: 0 15px 15px;
-        row-gap: 7px;
-        column-gap: 15px;
-        visibility: hidden;
-        opacity: 0;
-        transition: opacity, height .4s cubic-bezier(0.645, 0.045, 0.355, 1), .4s cubic-bezier(0.645, 0.045, 0.355, 1);
-        -webkit-transition: opacity, height .4s cubic-bezier(0.645, 0.045, 0.355, 1), .4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    &-options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      padding: 0 15px 15px;
+      row-gap: 7px;
+      column-gap: 15px;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity, height 0.4s cubic-bezier(0.645, 0.045, 0.355, 1),
+        0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+      -webkit-transition: opacity,
+        height 0.4s cubic-bezier(0.645, 0.045, 0.355, 1),
+        0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
     }
-    &-option{
+    &-option {
+      display: flex;
+      align-items: center;
+      column-gap: 5px;
+      font-size: 17px;
+      height: 0px;
+      cursor: pointer;
+      transition: height 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+      &-checkbox {
         display: flex;
         align-items: center;
-        column-gap: 5px;
-        font-size: 17px;
-        height: 0px;
-        cursor: pointer;
-        transition: height .4s cubic-bezier(0.645, 0.045, 0.355, 1);
-        &-checkbox{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 17.5px;
-            height: 17.5px;
-            border: 1.5px solid var(--main-dark-grey);
-            border-radius: 4px;
-            &.active{
-                background-color: var(--main-blue);
-                border: 1px solid var(--main-blue);
-                & > .filters-item-option-checkbox-img{
-                    visibility: visible;
-                    opacity: 1;
-                }
-            }
-            &-img{
-                width: 9px;
-                height: 9px;
-                visibility: hidden;
-                opacity: 0;
-            }
+        justify-content: center;
+        width: 17.5px;
+        height: 17.5px;
+        border: 1.5px solid var(--main-dark-grey);
+        border-radius: 4px;
+        &.active {
+          background-color: var(--main-blue);
+          border: 1px solid var(--main-blue);
+          & > .filters-item-option-checkbox-img {
+            visibility: visible;
+            opacity: 1;
+          }
         }
-        &-name{
-            user-select: none;
+        &-img {
+          width: 9px;
+          height: 9px;
+          visibility: hidden;
+          opacity: 0;
         }
+      }
+      &-name {
+        user-select: none;
+      }
     }
-    &-dual-progress{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 20px 15px 15px 15px;
-        height: 0px;
-        font-size: 17px;
-        visibility: hidden;
-        opacity: 0;
-        transform: translateY(-25px);
-        transition: opacity, height, transform .4s cubic-bezier(0.645, 0.045, 0.355, 1),
-            .4s cubic-bezier(0.645, 0.045, 0.355, 1), .4s cubic-bezier(0.645, 0.045, 0.355, 1);
-        -webkit-transition: opacity, height, transform .4s cubic-bezier(0.645, 0.045, 0.355, 1),
-        .4s cubic-bezier(0.645, 0.045, 0.355, 1), .4s cubic-bezier(0.645, 0.045, 0.355, 1);
+    &-dual-progress {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 15px 15px 15px;
+      height: 0px;
+      font-size: 17px;
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-25px);
+      transition: opacity, height,
+        transform 0.4s cubic-bezier(0.645, 0.045, 0.355, 1),
+        0.4s cubic-bezier(0.645, 0.045, 0.355, 1),
+        0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+      -webkit-transition: opacity, height,
+        transform 0.4s cubic-bezier(0.645, 0.045, 0.355, 1),
+        0.4s cubic-bezier(0.645, 0.045, 0.355, 1),
+        0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
     }
-    &-slider-price, &-slider-stock{
-        position: relative;
-        width: 100%;
-        height: 0px;
-        background-color: var(--main-light-grey);
-        border-radius: 1.5px;
-        transition: height .4s cubic-bezier(0.645, 0.045, 0.355, 1);
-        &-progress{
-            position: absolute;
-            height: 100%;
-            left: 25%;
-            right: 25%;
-            border-radius: 1px;
-            background-color: var(--main-blue);
-        }
+    &-slider-price,
+    &-slider-stock {
+      position: relative;
+      width: 100%;
+      height: 0px;
+      background-color: var(--main-light-grey);
+      border-radius: 1.5px;
+      transition: height 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+      &-progress {
+        position: absolute;
+        height: 100%;
+        left: 25%;
+        right: 25%;
+        border-radius: 1px;
+        background-color: var(--main-blue);
+      }
     }
-    &-input-price, &-input-stock{
+    &-input-price,
+    &-input-stock {
+      position: absolute;
+      width: 100%;
+      top: -9px;
+      & input {
         position: absolute;
         width: 100%;
-        top: -9px;
-        & input{
-            position: absolute;
-            width: 100%;
-            -webkit-appearance: none;
-            appearance: none;
-            background: none;
-            pointer-events: none;
-            &::-webkit-slider-thumb{
-                -webkit-appearance: none;
-                height: 0px;
-                width: 0px;
-                background-color: #ffffff;
-                border-radius: 50%;
-                cursor: pointer;
-                pointer-events: auto;
-                transition: height, width .4s cubic-bezier(0.645, 0.045, 0.355, 1), 
-                .4s cubic-bezier(0.645, 0.045, 0.355, 1);
-                box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.08), 0px 1px 2px rgba(0, 0, 0, 0.08), 0px 4px 12px rgba(0, 0, 0, 0.16);
-            }
+        -webkit-appearance: none;
+        appearance: none;
+        background: none;
+        pointer-events: none;
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          height: 0px;
+          width: 0px;
+          background-color: #ffffff;
+          border-radius: 50%;
+          cursor: pointer;
+          pointer-events: auto;
+          transition: height, width 0.4s cubic-bezier(0.645, 0.045, 0.355, 1),
+            0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+          box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.08),
+            0px 1px 2px rgba(0, 0, 0, 0.08), 0px 4px 12px rgba(0, 0, 0, 0.16);
         }
+      }
     }
-    &-values-price, &-values-stock{
-        display: flex;
-        justify-content: space-between;
-        user-select: none;
+    &-values-price,
+    &-values-stock {
+      display: flex;
+      justify-content: space-between;
+      user-select: none;
     }
   }
 }

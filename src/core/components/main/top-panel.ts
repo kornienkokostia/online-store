@@ -1,6 +1,6 @@
 import productDB from '../../../db/productDB';
 import Component from '../../templates/components';
-import Pagination from "../pagination/pagination";
+import Pagination from '../pagination/pagination';
 import Filtration from '../filtration/filtration';
 import AppState from '../save-goods-state/index';
 
@@ -10,7 +10,7 @@ const SortingOptions = [
   { value: 'price-ascending', displayValue: 'Price (ascending)' },
   { value: 'price-descending', displayValue: 'Price (descending)' },
   { value: 'rating-ascending', displayValue: 'Rating (ascending)' },
-  { value: 'rating-descending', displayValue: 'Rating (descending)' }
+  { value: 'rating-descending', displayValue: 'Rating (descending)' },
 ];
 
 export default class TopPanel extends Component {
@@ -32,7 +32,7 @@ export default class TopPanel extends Component {
       'current-selected-item': 'new',
       placeholder: 'Select item',
     });
-    selectBoxCurrentItem.value = 'New'
+    selectBoxCurrentItem.value = 'New';
 
     const selectBoxBtnImg = this.elFactory('img', {
       class: 'select-box-open-btn-img',
@@ -84,12 +84,13 @@ export default class TopPanel extends Component {
       selectBoxOptionsItem.addEventListener('click', () => {
         changeCurrentOption(displayValue, value);
 
-        const selectSortItem = selectBoxCurrentItem.getAttribute('current-selected-item');
+        const selectSortItem = selectBoxCurrentItem.getAttribute(
+          'current-selected-item',
+        );
         if (selectSortItem) {
-          const sort = `${selectSortItem}`
-          Filtration.filterByBrand('sort', sort)
-        }  
-
+          const sort = `${selectSortItem}`;
+          Filtration.filterByBrand('sort', sort);
+        }
       });
       selectBoxOptionsDiv.append(selectBoxOptionsItem);
     };
@@ -148,13 +149,10 @@ export default class TopPanel extends Component {
           addAllItemsToOptions();
           selectBoxCurrentItem.setAttribute('current-selected-item', '');
         }
-        
       });
       if ([...selectBoxOptionsDiv.children].length === 0) {
         addNotFoundItemToOptions();
       }
-
-      
     });
 
     sortingPickerSelectBox.append(selectBoxOptionsDiv);
@@ -186,30 +184,32 @@ export default class TopPanel extends Component {
       this.elFactory('div', { class: 'square-grid' }),
     );
 
-    AppState.getGoodsOrientation() === 'vertical' ? changeGridToSquares.classList.add('active') : changeGridToLines.classList.add('active')
+    AppState.getGoodsOrientation() === 'vertical'
+      ? changeGridToSquares.classList.add('active')
+      : changeGridToLines.classList.add('active');
 
-    changeGridToSquares.addEventListener("click", () => {
-      changeGridToSquares.classList.add("active");
-      changeGridToLines.classList.remove("active");
+    changeGridToSquares.addEventListener('click', () => {
+      changeGridToSquares.classList.add('active');
+      changeGridToLines.classList.remove('active');
       const activeBtn = Number(
-        document.querySelector(".active-btn")?.textContent
+        document.querySelector('.active-btn')?.textContent,
       );
 
-      AppState.setGoodsOrientation('vertical')
+      AppState.setGoodsOrientation('vertical');
 
       if (activeBtn) {
         Pagination.paginationBtn(12, activeBtn, productDB, false);
       }
     });
 
-    changeGridToLines.addEventListener("click", () => {
-      changeGridToSquares.classList.remove("active");
-      changeGridToLines.classList.add("active");
+    changeGridToLines.addEventListener('click', () => {
+      changeGridToSquares.classList.remove('active');
+      changeGridToLines.classList.add('active');
       const activeBtn = Number(
-        document.querySelector(".active-btn")?.textContent
+        document.querySelector('.active-btn')?.textContent,
       );
 
-      AppState.setGoodsOrientation('horizontal')
+      AppState.setGoodsOrientation('horizontal');
 
       if (activeBtn) {
         Pagination.paginationBtn(12, activeBtn, productDB, false);

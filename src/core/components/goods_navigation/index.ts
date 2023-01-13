@@ -1,10 +1,9 @@
-import Component from "../../../core/templates/components";
-import productDB from "../../../db/productDB";
-import ProductInterface from "../../../models/products";
-import Pagination from "../pagination/pagination";
-import AppState from "../save-goods-state/index";
+import Component from '../../../core/templates/components';
+import ProductInterface from '../../../models/products';
+import Pagination from '../pagination/pagination';
+import AppState from '../save-goods-state/index';
 
-class GoodsNav extends Component {
+export default class GoodsNav extends Component {
   protected currentPage: number;
   protected goodsPerPage: number;
   protected pagesCount: number = 4;
@@ -27,36 +26,36 @@ class GoodsNav extends Component {
   displayNavBtn(
     arrData: ProductInterface[],
     goodsPerPage: number,
-    currentPage: number
+    currentPage: number,
   ) {
     this.goodsPerPage = goodsPerPage;
     this.currentPage = currentPage;
-    this.arrData = arrData
+    this.arrData = arrData;
 
     this.pagesCount = Math.ceil(this.arrData.length / this.goodsPerPage);
 
-    const unOrderedListItem = this.elFactory("ul", {
-      class: "navigation-wrapper-goods",
+    const unOrderedListItem = this.elFactory('ul', {
+      class: 'navigation-wrapper-goods',
     });
 
     for (let i = 1; i <= this.pagesCount; i++) {
-      const listItem = this.elFactory("li", {
-        class: "navigation-wrapper-goods-item",
+      const listItem = this.elFactory('li', {
+        class: 'navigation-wrapper-goods-item',
       });
       listItem.textContent = `${i}`;
 
       if (+listItem.textContent === this.currentPage) {
-        listItem.classList.add("active-btn");
+        listItem.classList.add('active-btn');
       }
 
-      listItem.addEventListener("click", () => {
+      listItem.addEventListener('click', () => {
         this.currentPage = i;
 
         Pagination.paginationBtn(
           this.goodsPerPage,
           this.currentPage,
           this.arrData,
-          true
+          true,
         );
       });
 
@@ -70,7 +69,7 @@ class GoodsNav extends Component {
     const items = this.displayNavBtn(
       this.arrData,
       this.goodsPerPage,
-      this.currentPage
+      this.currentPage,
     );
 
     this.container.append(items);
@@ -78,5 +77,3 @@ class GoodsNav extends Component {
     return this.container;
   }
 }
-
-export default GoodsNav;

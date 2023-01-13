@@ -1,6 +1,5 @@
 import Component from '../../templates/components';
 import Filtration from '../filtration/filtration';
-import App from '../../../pages/app/index';
 
 export default class Header extends Component {
   constructor(tagName: string, className: string) {
@@ -22,11 +21,11 @@ export default class Header extends Component {
       ),
     );
 
-    logoDiv.addEventListener('click', () => {      
+    logoDiv.addEventListener('click', () => {
       setTimeout(() => {
         Filtration.resetAll();
-      }, 1)
-    })
+      }, 1);
+    });
 
     return logoDiv;
   }
@@ -38,7 +37,7 @@ export default class Header extends Component {
 
     const bagDiv = this.elFactory(
       'a',
-      { class: 'header-bag', href: './#bag'},
+      { class: 'header-bag', href: './#bag' },
       this.elFactory('img', {
         class: 'header-bag-img',
         src: './assets/images/icons/bag.svg',
@@ -50,7 +49,7 @@ export default class Header extends Component {
         itemsCountSpan,
       ),
     );
-    
+
     return bagDiv;
   }
   createHeaderSearch() {
@@ -82,17 +81,16 @@ export default class Header extends Component {
       searchInput.value != '' ? clearBtn.classList.add('visible') : false;
     });
     searchInput.addEventListener('input', () => {
+      const search = `${searchInput.value}`;
+      Filtration.filterByBrand('search', search);
 
-      const search = `${searchInput.value}`
-      Filtration.filterByBrand('search', search)
-      
       searchInput.value != ''
         ? clearBtn.classList.add('visible')
         : clearBtn.classList.remove('visible');
     });
     clearBtn.addEventListener('mousedown', e => {
       searchInput.value = '';
-      Filtration.searched(searchInput.value)  
+      Filtration.searched(searchInput.value);
       clearBtn.classList.remove('visible');
       Filtration.filterByBrand('search', '');
       e.preventDefault();
@@ -107,48 +105,60 @@ export default class Header extends Component {
     return searchDiv;
   }
 
-  createMenuBtn(){
-    const headerMenuBtnWrapper = this.elFactory('div', {class: 'header-menu-btn-block-wrapper'}) 
-    const headerMenuBtn = this.elFactory('div', {class: 'header-menu-btn-block'})
+  createMenuBtn() {
+    const headerMenuBtnWrapper = this.elFactory('div', {
+      class: 'header-menu-btn-block-wrapper',
+    });
+    const headerMenuBtn = this.elFactory('div', {
+      class: 'header-menu-btn-block',
+    });
 
-    const headerMenuTopWrapper = this.elFactory('span', {class: 'header-menu-btn-top-wrapper header-menu-btn-wrapper'})
-    const headerMenuTop = this.elFactory('span', {class: 'header-menu-btn-top header-menu-btn'})
-    headerMenuTopWrapper.append(headerMenuTop)
+    const headerMenuTopWrapper = this.elFactory('span', {
+      class: 'header-menu-btn-top-wrapper header-menu-btn-wrapper',
+    });
+    const headerMenuTop = this.elFactory('span', {
+      class: 'header-menu-btn-top header-menu-btn',
+    });
+    headerMenuTopWrapper.append(headerMenuTop);
 
-    const headerMenuBottomWrapper = this.elFactory('span', {class: 'header-menu-btn-bottom-wrapper header-menu-btn-wrapper'})
-    const headerMenuBottom = this.elFactory('span', {class: 'header-menu-btn-bottom header-menu-btn'})
-    headerMenuBottomWrapper.append(headerMenuBottom)
+    const headerMenuBottomWrapper = this.elFactory('span', {
+      class: 'header-menu-btn-bottom-wrapper header-menu-btn-wrapper',
+    });
+    const headerMenuBottom = this.elFactory('span', {
+      class: 'header-menu-btn-bottom header-menu-btn',
+    });
+    headerMenuBottomWrapper.append(headerMenuBottom);
 
-    headerMenuBtn.append(headerMenuTopWrapper, headerMenuBottomWrapper)
+    headerMenuBtn.append(headerMenuTopWrapper, headerMenuBottomWrapper);
 
-    headerMenuBtnWrapper.append(headerMenuBtn)
+    headerMenuBtnWrapper.append(headerMenuBtn);
 
     headerMenuBtnWrapper.addEventListener('click', () => {
-      headerMenuBtnWrapper.classList.toggle('mobile-menu-open')
-      document.querySelector('.header-mobile-bg')?.classList.toggle('active')
-      document.body.classList.toggle('mobile-menu-open')
-      document.querySelector('.filters-wrapper')?.classList.toggle('mobile-menu-open')
-    })
+      headerMenuBtnWrapper.classList.toggle('mobile-menu-open');
+      document.querySelector('.header-mobile-bg')?.classList.toggle('active');
+      document.body.classList.toggle('mobile-menu-open');
+      document
+        .querySelector('.filters-wrapper')
+        ?.classList.toggle('mobile-menu-open');
+    });
 
-    window.addEventListener('resize', () => {
-      
-    })
+    window.addEventListener('resize', () => {});
 
-    return headerMenuBtnWrapper
+    return headerMenuBtnWrapper;
   }
 
   renderHeaderWrapper() {
-    const mobileBtn = this.createMenuBtn()
+    const mobileBtn = this.createMenuBtn();
     const headerWrapper = this.elFactory('div', { class: 'header' });
     const logo = this.createHeaderLogo();
     const bag = this.createBag();
     const searchBar = this.createHeaderSearch();
-    const headerMobileBg = this.elFactory('div', {class: 'header-mobile-bg'})
-    headerWrapper.append(mobileBtn)
+    const headerMobileBg = this.elFactory('div', { class: 'header-mobile-bg' });
+    headerWrapper.append(mobileBtn);
     headerWrapper.append(logo);
     headerWrapper.append(searchBar);
     headerWrapper.append(bag);
-    headerWrapper.append(headerMobileBg)
+    headerWrapper.append(headerMobileBg);
     this.container.append(headerWrapper);
   }
 

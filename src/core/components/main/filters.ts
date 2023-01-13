@@ -1,4 +1,7 @@
-import { FiltersOptionsBrand, FiltersOptionsCategory } from '../../../db/filtersDB';
+import {
+  FiltersOptionsBrand,
+  FiltersOptionsCategory,
+} from '../../../db/filtersDB';
 import productDB from '../../../db/productDB';
 import Component from '../../templates/components';
 import Filtration from '../filtration/filtration';
@@ -18,10 +21,8 @@ export default class Filters extends Component {
     });
     resetFiltersButton.textContent = 'Reset filters';
     resetFiltersButton.addEventListener('click', () => {
-      Filtration.resetAll(); 
-    })
-
-    
+      Filtration.resetAll();
+    });
 
     const copyLinkButton = this.elFactory('button', {
       class: 'filters-btn copy-link-btn',
@@ -30,11 +31,11 @@ export default class Filters extends Component {
 
     copyLinkButton.addEventListener('click', () => {
       this.copyLinkURLString();
-      copyLinkButton.textContent = 'Copied!'
+      copyLinkButton.textContent = 'Copied!';
       setTimeout(() => {
-        copyLinkButton.textContent = 'Copy link'
-      }, 2000)
-    })
+        copyLinkButton.textContent = 'Copy link';
+      }, 2000);
+    });
 
     filtersButtonsDiv.append(resetFiltersButton);
     filtersButtonsDiv.append(copyLinkButton);
@@ -44,11 +45,14 @@ export default class Filters extends Component {
 
   copyLinkURLString() {
     let copyText = window.location.href;
-    navigator.clipboard.writeText(copyText).then(() => {
-      console.log('Async: Copying to clipboard was successful!');
-    }, err => {
-      console.error('Async: Could not copy text: ', err);
-    });
+    navigator.clipboard.writeText(copyText).then(
+      () => {
+        console.log('Async: Copying to clipboard was successful!');
+      },
+      err => {
+        console.error('Async: Could not copy text: ', err);
+      },
+    );
   }
 
   renderFilterOption(item: string) {
@@ -59,13 +63,13 @@ export default class Filters extends Component {
     const filterOptionCheckboxImg = this.elFactory('img', {
       class: 'filters-item-option-checkbox-img',
       src: './assets/images/icons/selected-item.svg',
-      alt: 'checkbox-img'
-    })
-    filterOptionCheckboxImg.ondragstart = () => false
+      alt: 'checkbox-img',
+    });
+    filterOptionCheckboxImg.ondragstart = () => false;
     const filterOptionCheckbox = this.elFactory(
       'div',
       { class: 'filters-item-option-checkbox', category: item, checked: false },
-      filterOptionCheckboxImg
+      filterOptionCheckboxImg,
     );
 
     const filterOptionName = this.elFactory('span', {
@@ -73,34 +77,31 @@ export default class Filters extends Component {
     });
     filterOptionName.textContent = this.capitilizeFirstLetter(item);
 
-    filterOption.addEventListener('click', (e) => {
+    filterOption.addEventListener('click', e => {
       filterOptionCheckbox.classList.toggle('active');
       filterOptionCheckbox.getAttribute('checked') === ''
         ? filterOptionCheckbox.setAttribute('checked', 'false')
         : filterOptionCheckbox.setAttribute('checked', '');
 
       const target = e.currentTarget;
-        if (target instanceof HTMLElement) {
-
+      if (target instanceof HTMLElement) {
         let checkedCategory = filterOptionCheckbox.getAttribute('category');
         let checkedValue;
 
-        if (filterOptionCheckbox.getAttribute('checked') === ''){
-          checkedValue = 'true'
+        if (filterOptionCheckbox.getAttribute('checked') === '') {
+          checkedValue = 'true';
         } else {
-          checkedValue = 'false'
+          checkedValue = 'false';
         }
 
         if (checkedCategory) {
           Filtration.filterByBrand(checkedCategory, checkedValue);
         }
       }
-
     });
 
     filterOption.append(filterOptionCheckbox);
     filterOption.append(filterOptionName);
-    
 
     return filterOption;
   }
@@ -171,14 +172,20 @@ export default class Filters extends Component {
     filterBrand.append(filterBrandOptions);
 
     // convert functions
-    const convertNumToSplitString = (str: string) => str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
-    const convertStringWithCommasToDefault = (str: string) => str.replace(/,/g,'')
+    const convertNumToSplitString = (str: string) =>
+      str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
+    const convertStringWithCommasToDefault = (str: string) =>
+      str.replace(/,/g, '');
 
     // price
 
-    const minPrice = Math.min(...productDB.map(el => +convertStringWithCommasToDefault(el.price)));
-    const maxPrice = Math.max(...productDB.map(el => +convertStringWithCommasToDefault(el.price)));
-    
+    const minPrice = Math.min(
+      ...productDB.map(el => +convertStringWithCommasToDefault(el.price)),
+    );
+    const maxPrice = Math.max(
+      ...productDB.map(el => +convertStringWithCommasToDefault(el.price)),
+    );
+
     const filterPrice = this.elFactory('div', {
       class: 'filters-item filters-item-price active',
     });
@@ -249,10 +256,11 @@ export default class Filters extends Component {
     const filterPriceMinValue = this.elFactory('span', {
       class: 'filters-item-values-price-min-value',
     });
-    filterPriceMinValue.textContent = convertNumToSplitString(`${filterPriceSliderInputMin.value}`)
-    filterPriceMin.append(addCurrency()); 
+    filterPriceMinValue.textContent = convertNumToSplitString(
+      `${filterPriceSliderInputMin.value}`,
+    );
+    filterPriceMin.append(addCurrency());
     filterPriceMin.append(filterPriceMinValue);
-    
 
     const filterPriceMax = this.elFactory('div', {
       class: 'filters-item-values-price-max',
@@ -260,10 +268,12 @@ export default class Filters extends Component {
     const filterPriceMaxValue = this.elFactory('span', {
       class: 'filters-item-values-price-max-value',
     });
-    filterPriceMaxValue.textContent = convertNumToSplitString(`${filterPriceSliderInputMax.value}`)
+    filterPriceMaxValue.textContent = convertNumToSplitString(
+      `${filterPriceSliderInputMax.value}`,
+    );
     filterPriceMax.append(addCurrency());
     filterPriceMax.append(filterPriceMaxValue);
-    
+
     filterPriceValues.append(filterPriceMin);
     filterPriceValues.append(filterPriceMax);
 
@@ -281,8 +291,12 @@ export default class Filters extends Component {
             filterPriceSliderInputMax.value = `${minVal + gap}`;
           }
         } else {
-          filterPriceMinValue.textContent = convertNumToSplitString(filterPriceSliderInputMin.value);
-          filterPriceMaxValue.textContent = convertNumToSplitString(filterPriceSliderInputMax.value);  
+          filterPriceMinValue.textContent = convertNumToSplitString(
+            filterPriceSliderInputMin.value,
+          );
+          filterPriceMaxValue.textContent = convertNumToSplitString(
+            filterPriceSliderInputMax.value,
+          );
 
           filterPriceSliderProgress.style.left =
             ((minVal - +filterPriceSliderInputMin.min) /
@@ -300,23 +314,21 @@ export default class Filters extends Component {
         }
       });
 
-      
-      el.addEventListener("mouseup", () => {
+      el.addEventListener('mouseup', () => {
         let leftPrice = document.querySelector(
-          ".filters-item-values-price-min-value"
+          '.filters-item-values-price-min-value',
         )?.textContent;
         let rightPrice = document.querySelector(
-          ".filters-item-values-price-max-value"
+          '.filters-item-values-price-max-value',
         )?.textContent;
 
         if (leftPrice && rightPrice) {
           const convertPrice = `${convertStringWithCommasToDefault(
-            leftPrice
+            leftPrice,
           )}to${convertStringWithCommasToDefault(rightPrice)}`;
-          Filtration.filterByBrand("price", convertPrice);
+          Filtration.filterByBrand('price', convertPrice);
         }
       });
-
     });
 
     filterPriceDualProgress.append(filterPriceSlider);
@@ -439,17 +451,17 @@ export default class Filters extends Component {
         }
       });
 
-      el.addEventListener("mouseup", () => {
+      el.addEventListener('mouseup', () => {
         let leftStock = document.querySelector(
-          ".filters-item-values-stock-min-value"
+          '.filters-item-values-stock-min-value',
         )?.textContent;
         let rightStock = document.querySelector(
-          ".filters-item-values-stock-max-value"
+          '.filters-item-values-stock-max-value',
         )?.textContent;
 
         if (leftStock && rightStock) {
           const stock = `${leftStock}to${rightStock}`;
-          Filtration.filterByBrand("stock", stock);
+          Filtration.filterByBrand('stock', stock);
         }
       });
     });

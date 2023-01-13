@@ -1,27 +1,26 @@
 .navigation-wrapper {
-    margin-top: 20px;
-    &-goods {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        list-style-type: none;
-        font-family: 'SF-Pro-Display-Semibold';
-        width: 100%;
-        column-gap: 10px;
-        color: var(--main-dark-grey);
-        &-item { 
-            transition: .3s;           
-            cursor: pointer;
-            padding: 10px;
-            &:hover,
-            &:active {  
-                color: #7C7B80;  
-            }
-
-        }
+  margin-top: 20px;
+  &-goods {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    list-style-type: none;
+    font-family: 'SF-Pro-Display-Semibold';
+    width: 100%;
+    column-gap: 10px;
+    color: var(--main-dark-grey);
+    &-item {
+      transition: 0.3s;
+      cursor: pointer;
+      padding: 10px;
+      &:hover,
+      &:active {
+        color: #7c7b80;
+      }
     }
+  }
 }
 
 .active-btn {
-    color: #7C7B80;  
+  color: #7c7b80;
 }

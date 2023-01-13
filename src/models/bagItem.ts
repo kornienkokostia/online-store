@@ -1,4 +1,4 @@
-export default interface BagItem{
-    id: number
-    count: number
+export default interface BagItem {
+  id: number;
+  count: number;
 }

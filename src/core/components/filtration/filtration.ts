@@ -1,18 +1,16 @@
-import productDB from "../../../db/productDB";
-import ProductInterface from "../../../models/products";
+import productDB from '../../../db/productDB';
+import ProductInterface from '../../../models/products';
 import {
   FiltersOptionsBrand,
   FiltersOptionsCategory,
-} from "../../../db/filtersDB";
-import Pagination from "../pagination/pagination";
-import Sort from "../sort/sort";
-import Search from "../search/search";
-import AppState from "../save-goods-state/index";
-// import { throws } from "assert";
-import MainPage from "../../../pages/main/index";
-import Routing from "../routing/routing";
+} from '../../../db/filtersDB';
+import Pagination from '../pagination/pagination';
+import Sort from '../sort/sort';
+import Search from '../search/search';
+import AppState from '../save-goods-state/index';
+import Routing from '../routing/routing';
 
-class Filtration {
+export default class Filtration {
   static smartphones: boolean;
   static headphones: boolean;
   static laptops: boolean;
@@ -30,26 +28,26 @@ class Filtration {
 
   static getMinPriceVal = (arr: ProductInterface[]) =>
     Math.min(
-      ...arr.map((el) => +this.convertStringWithCommasToDefault(el.price))
+      ...arr.map(el => +this.convertStringWithCommasToDefault(el.price)),
     ).toString();
   static getMaxPriceVal = (arr: ProductInterface[]) =>
     Math.max(
-      ...arr.map((el) => +this.convertStringWithCommasToDefault(el.price))
+      ...arr.map(el => +this.convertStringWithCommasToDefault(el.price)),
     ).toString();
 
   static getMinStockVal = (arr: ProductInterface[]) =>
     Math.min(
-      ...arr.map((el) => +this.convertStringWithCommasToDefault(`${el.stock}`))
+      ...arr.map(el => +this.convertStringWithCommasToDefault(`${el.stock}`)),
     ).toString();
   static getMaxStockVal = (arr: ProductInterface[]) =>
     Math.max(
-      ...arr.map((el) => +this.convertStringWithCommasToDefault(`${el.stock}`))
+      ...arr.map(el => +this.convertStringWithCommasToDefault(`${el.stock}`)),
     ).toString();
 
   static convertStringWithCommasToDefault = (str: string) =>
-    str.replace(/,/g, "");
+    str.replace(/,/g, '');
   static convertNumToSplitString = (str: string) =>
-    str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    str.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
 
   static priceLeft: string = this.getMinPriceVal(productDB);
   static priceRight: string = this.getMaxPriceVal(productDB);
@@ -57,12 +55,11 @@ class Filtration {
   static stockLeft: string = this.getMinStockVal(productDB);
   static stockRight: string = this.getMaxStockVal(productDB);
 
-  static sort: string = "new";
+  static sort: string = 'new';
 
   static orient: string = AppState.getGoodsOrientation();
-  static search: string = "";
+  static search: string = '';
 
-  
   static URLstring: string = `#main-page`;
 
   static changePriceInputs = () => {
@@ -71,19 +68,19 @@ class Filtration {
       const currentMaxPrice = this.getMaxPriceVal(this.product);
 
       const minPriceVal: HTMLElement = document.querySelector(
-        ".filters-item-values-price-min-value"
+        '.filters-item-values-price-min-value',
       ) as HTMLElement;
       const maxPriceVal: HTMLElement = document.querySelector(
-        ".filters-item-values-price-max-value"
+        '.filters-item-values-price-max-value',
       ) as HTMLElement;
       const minPriceEl: HTMLInputElement = document.querySelector(
-        ".filters-item-input-price-min"
+        '.filters-item-input-price-min',
       ) as HTMLInputElement;
       const maxPriceEl: HTMLInputElement = document.querySelector(
-        ".filters-item-input-price-max"
+        '.filters-item-input-price-max',
       ) as HTMLInputElement;
       const priceSliderProgress: HTMLElement = document.querySelector(
-        ".filters-item-slider-price-progress"
+        '.filters-item-slider-price-progress',
       ) as HTMLElement;
 
       minPriceVal.textContent = this.convertNumToSplitString(currentMinPrice);
@@ -98,13 +95,13 @@ class Filtration {
         ((+minPriceEl.value - +minPriceEl.min) /
           (+minPriceEl.max - +minPriceEl.min)) *
           100 +
-        "%";
+        '%';
       priceSliderProgress.style.right =
         100 -
         ((+maxPriceEl.value - +maxPriceEl.min) /
           (+maxPriceEl.max - +maxPriceEl.min)) *
           100 +
-        "%";
+        '%';
     }
   };
 
@@ -114,19 +111,19 @@ class Filtration {
       const currentMaxStock = this.getMaxStockVal(this.product);
 
       const minStockVal: HTMLElement = document.querySelector(
-        ".filters-item-values-stock-min-value"
+        '.filters-item-values-stock-min-value',
       ) as HTMLElement;
       const maxStockVal: HTMLElement = document.querySelector(
-        ".filters-item-values-stock-max-value"
+        '.filters-item-values-stock-max-value',
       ) as HTMLElement;
       const minStockEl: HTMLInputElement = document.querySelector(
-        ".filters-item-input-stock-min"
+        '.filters-item-input-stock-min',
       ) as HTMLInputElement;
       const maxStockEl: HTMLInputElement = document.querySelector(
-        ".filters-item-input-stock-max"
+        '.filters-item-input-stock-max',
       ) as HTMLInputElement;
       const stockSliderProgress: HTMLElement = document.querySelector(
-        ".filters-item-slider-stock-progress"
+        '.filters-item-slider-stock-progress',
       ) as HTMLElement;
 
       minStockVal.textContent = this.convertNumToSplitString(currentMinStock);
@@ -141,27 +138,27 @@ class Filtration {
         ((+minStockEl.value - +minStockEl.min) /
           (+minStockEl.max - +minStockEl.min)) *
           100 +
-        "%";
+        '%';
       stockSliderProgress.style.right =
         100 -
         ((+maxStockEl.value - +maxStockEl.min) /
           (+maxStockEl.max - +maxStockEl.min)) *
           100 +
-        "%";
+        '%';
     }
   };
 
   static filtrationList(item: string, values: boolean) {
     if (
-      item === "smartphones" ||
-      item === "headphones" ||
-      item === "laptops" ||
-      item === "watches" ||
-      item === "tablets" ||
-      item === "apple" ||
-      item === "samsung" ||
-      item === "xiaomi" ||
-      item === "asus"
+      item === 'smartphones' ||
+      item === 'headphones' ||
+      item === 'laptops' ||
+      item === 'watches' ||
+      item === 'tablets' ||
+      item === 'apple' ||
+      item === 'samsung' ||
+      item === 'xiaomi' ||
+      item === 'asus'
     ) {
       this[item] = values;
       this.render();
@@ -170,10 +167,10 @@ class Filtration {
 
   static filterByBrand(fil: string, value: string) {
     if (
-      fil === "apple" ||
-      fil === "samsung" ||
-      fil === "xiaomi" ||
-      fil === "asus"
+      fil === 'apple' ||
+      fil === 'samsung' ||
+      fil === 'xiaomi' ||
+      fil === 'asus'
     ) {
       const currentURL = `&${fil}=${value}`;
 
@@ -181,45 +178,41 @@ class Filtration {
     }
 
     if (
-      fil === "smartphones" ||
-      fil === "headphones" ||
-      fil === "laptops" ||
-      fil === "watches" ||
-      fil === "tablets"
+      fil === 'smartphones' ||
+      fil === 'headphones' ||
+      fil === 'laptops' ||
+      fil === 'watches' ||
+      fil === 'tablets'
     ) {
       const currentURL = `&${fil}=${value}`;
       Routing.changeURL(currentURL);
     }
-    if (fil === "price") {
+    if (fil === 'price') {
       const currentURL = `&price=${value}`;
       Routing.changeURL(currentURL);
     }
 
-    if (fil === "stock") {
+    if (fil === 'stock') {
       const currentURL = `&stock=${value}`;
       Routing.changeURL(currentURL);
     }
 
-    if (fil === "search") {
+    if (fil === 'search') {
       const currentURL = `&search=${value}`;
       Routing.changeURL(currentURL);
     }
 
-    if (fil === "sort") {
+    if (fil === 'sort') {
       const currentURL = `&sort=${value}`;
       Routing.changeURL(currentURL);
     }
-
-    
   }
 
   static brandFunc(fil: string, value: string) {
-    if (value === "true") {
-
+    if (value === 'true') {
       if (this.brandArray.length === 4) {
         this.brandArray.length = 0;
       }
-
 
       if (this.brandArray.includes(fil)) {
         this.brandArray = [...new Set(this.brandArray)];
@@ -232,9 +225,9 @@ class Filtration {
       }
     }
 
-    if (value === "false") {
+    if (value === 'false') {
       if (this.brandArray.length > 0) {
-        this.brandArray = this.brandArray.filter((goods) => goods !== fil);
+        this.brandArray = this.brandArray.filter(goods => goods !== fil);
 
         if (this.brandArray.length === 0) {
           this.brandArray = [...FiltersOptionsBrand];
@@ -250,31 +243,25 @@ class Filtration {
   }
 
   static categoryFunc(fil: string, value: string) {
-    
-
-    if (value === "true") {
+    if (value === 'true') {
       if (this.categoryArray.length === 5) {
         this.categoryArray.length = 0;
       }
 
       if (this.categoryArray.includes(fil)) {
         this.categoryArray = [...new Set(this.categoryArray)];
-       
 
         this.filtrationList(fil, true);
       } else {
         this.categoryArray.push(fil);
-        
 
         this.filtrationList(fil, true);
       }
     }
 
-    if (value === "false") {
+    if (value === 'false') {
       if (this.categoryArray.length > 0) {
-        this.categoryArray = this.categoryArray.filter(
-          (goods) => goods !== fil
-        );
+        this.categoryArray = this.categoryArray.filter(goods => goods !== fil);
 
         if (this.categoryArray.length === 0) {
           this.categoryArray = [...FiltersOptionsCategory];
@@ -289,7 +276,7 @@ class Filtration {
     this.changePriceInputs();
     this.changeStockInputs();
   }
-  
+
   static priceFunc(left: string, right: string) {
     this.priceLeft = left;
     this.priceRight = right;
@@ -304,8 +291,6 @@ class Filtration {
 
     this.render();
     this.changePriceInputs();
-
-    
   }
 
   static filtration() {
@@ -323,15 +308,13 @@ class Filtration {
     for (let i = 0; i < brandLength; i++) {
       const arr = [...productDB];
       this.product.push(
-        ...arr.filter((item) => item.brand === this.brandArray[i])
+        ...arr.filter(item => item.brand === this.brandArray[i]),
       );
     }
 
     for (let i = 0; i < categoryLength; i++) {
       arr.push(
-        ...this.product.filter(
-          (item) => item.category === this.categoryArray[i]
-        )
+        ...this.product.filter(item => item.category === this.categoryArray[i]),
       );
     }
     if (
@@ -344,17 +327,17 @@ class Filtration {
     }
 
     this.product = this.product.filter(
-      (item) =>
+      item =>
         +this.convertStringWithCommasToDefault(item.price) >=
           Number(this.priceLeft) &&
         +this.convertStringWithCommasToDefault(item.price) <=
-          Number(this.priceRight)
+          Number(this.priceRight),
     );
 
     this.product = this.product.filter(
-      (item) =>
+      item =>
         +item.stock >= Number(this.stockLeft) &&
-        +item.stock <= Number(this.stockRight)
+        +item.stock <= Number(this.stockRight),
     );
 
     this.product = new Sort(this.sort, this.product).render();
@@ -377,7 +360,7 @@ class Filtration {
     this.filtration();
 
     const foundItemsSpan = document.querySelector(
-      ".sorting-found-value"
+      '.sorting-found-value',
     ) as HTMLElement;
 
     foundItemsSpan.textContent = this.product.length.toString();
@@ -386,11 +369,11 @@ class Filtration {
   }
 
   static resetAll() {
-    const checkbox = document.querySelectorAll(".filters-item-option-checkbox");
-    const searchField = document.querySelector(".header-search-input");
-    checkbox.forEach((item) => {
-      item.classList.remove("active");
-      item.setAttribute("checked", "false");
+    const checkbox = document.querySelectorAll('.filters-item-option-checkbox');
+    const searchField = document.querySelector('.header-search-input');
+    checkbox.forEach(item => {
+      item.classList.remove('active');
+      item.setAttribute('checked', 'false');
     });
 
     Filtration.smartphones = false;
@@ -413,19 +396,15 @@ class Filtration {
     Filtration.stockRight = this.getMaxStockVal([...productDB]);
 
     this.orient = Pagination.orientation;
-    history.pushState(null, "null", `#main`);
+    history.pushState(null, 'null', `#main`);
     if (searchField instanceof HTMLInputElement) {
-      searchField.value = "";
-      searchField.textContent = "";
+      searchField.value = '';
+      searchField.textContent = '';
     }
 
-    this.search = "";
+    this.search = '';
     Filtration.render();
     this.changePriceInputs();
     this.changeStockInputs();
   }
-
-  
 }
-
-export default Filtration;
