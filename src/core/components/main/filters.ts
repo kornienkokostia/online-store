@@ -223,13 +223,13 @@ export default class Filters extends Component {
     filterPriceSliderProgress.style.left =
       ((+filterPriceSliderInputMin.value - +filterPriceSliderInputMin.min) /
         (+filterPriceSliderInputMin.max - +filterPriceSliderInputMin.min)) *
-        100 +
+      100 +
       '%';
     filterPriceSliderProgress.style.right =
       100 -
       ((+filterPriceSliderInputMax.value - +filterPriceSliderInputMax.min) /
         (+filterPriceSliderInputMax.max - +filterPriceSliderInputMax.min)) *
-        100 +
+      100 +
       '%';
 
     filterPriceSliderInput.append(filterPriceSliderInputMin);
@@ -302,19 +302,19 @@ export default class Filters extends Component {
             ((minVal - +filterPriceSliderInputMin.min) /
               (+filterPriceSliderInputMin.max -
                 +filterPriceSliderInputMin.min)) *
-              100 +
+            100 +
             '%';
           filterPriceSliderProgress.style.right =
             100 -
             ((maxVal - +filterPriceSliderInputMax.min) /
               (+filterPriceSliderInputMax.max -
                 +filterPriceSliderInputMax.min)) *
-              100 +
+            100 +
             '%';
         }
       });
 
-      el.addEventListener('mouseup', () => {
+      const updateGoodsByPrice = () => {
         let leftPrice = document.querySelector(
           '.filters-item-values-price-min-value',
         )?.textContent;
@@ -328,7 +328,9 @@ export default class Filters extends Component {
           )}to${convertStringWithCommasToDefault(rightPrice)}`;
           Filtration.filterByBrand('price', convertPrice);
         }
-      });
+      }
+      el.addEventListener('mouseup', updateGoodsByPrice);
+      el.addEventListener('touchend', updateGoodsByPrice);
     });
 
     filterPriceDualProgress.append(filterPriceSlider);
@@ -378,13 +380,13 @@ export default class Filters extends Component {
     filterStockSliderProgress.style.left =
       ((+filterStockSliderInputMin.value - +filterStockSliderInputMin.min) /
         (+filterStockSliderInputMin.max - +filterStockSliderInputMin.min)) *
-        100 +
+      100 +
       '%';
     filterStockSliderProgress.style.right =
       100 -
       ((+filterStockSliderInputMax.value - +filterStockSliderInputMax.min) /
         (+filterStockSliderInputMax.max - +filterStockSliderInputMax.min)) *
-        100 +
+      100 +
       '%';
 
     filterStockSliderInput.append(filterStockSliderInputMin);
@@ -439,19 +441,19 @@ export default class Filters extends Component {
             ((minVal - +filterStockSliderInputMin.min) /
               (+filterStockSliderInputMin.max -
                 +filterStockSliderInputMin.min)) *
-              100 +
+            100 +
             '%';
           filterStockSliderProgress.style.right =
             100 -
             ((maxVal - +filterStockSliderInputMax.min) /
               (+filterStockSliderInputMax.max -
                 +filterStockSliderInputMax.min)) *
-              100 +
+            100 +
             '%';
         }
       });
-
-      el.addEventListener('mouseup', () => {
+      
+      const updateGoodsByStock = () => {
         let leftStock = document.querySelector(
           '.filters-item-values-stock-min-value',
         )?.textContent;
@@ -463,7 +465,10 @@ export default class Filters extends Component {
           const stock = `${leftStock}to${rightStock}`;
           Filtration.filterByBrand('stock', stock);
         }
-      });
+      }
+      
+      el.addEventListener('mouseup', updateGoodsByStock);
+      el.addEventListener('touchend', updateGoodsByStock);
     });
 
     filterStockDualProgress.append(filterStockSlider);

@@ -15,7 +15,7 @@ export default class Footer extends Component {
     });
     const onlineStoreItemLink = this.elFactory('a', {
       class: 'footer-breadcrumbs-path-el-link',
-      href: '/#main',
+      href: './#main',
     });
     const onlineStoreItems = this.elFactory('div', {
       class: 'footer-breadcrumbs-path-el-items',

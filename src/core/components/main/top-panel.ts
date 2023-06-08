@@ -199,6 +199,7 @@ export default class TopPanel extends Component {
 
       if (activeBtn) {
         Pagination.paginationBtn(12, activeBtn, productDB, false);
+        Filtration.render()
       }
     });
 
@@ -213,6 +214,7 @@ export default class TopPanel extends Component {
 
       if (activeBtn) {
         Pagination.paginationBtn(12, activeBtn, productDB, false);
+        Filtration.render()
       }
     });
 
