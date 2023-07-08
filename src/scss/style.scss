@@ -1,0 +1,99 @@
+/* apple fonts */
+@font-face {
+  font-family: 'SF-Pro-Display-Bold';
+  src: url('./assets/fonts/SF-Pro-Display-Bold.ttf');
+}
+@font-face {
+  font-family: 'SF-Pro-Display-Regular';
+  src: url('./assets/fonts/SF-Pro-Display-Regular.ttf');
+}
+@font-face {
+  font-family: 'SF-Pro-Display-Medium-Italic';
+  src: url('./assets/fonts/SF-Pro-Display-Medium-Italic.ttf');
+}
+@font-face {
+  font-family: 'SF-Pro-Display-Semibold';
+  src: url('./assets/fonts/SF-Pro-Display-Semibold.ttf');
+}
+@font-face {
+  font-family: 'SF-Pro-Display-Thin';
+  src: url('./assets/fonts/SF-Pro-Display-Thin.ttf');
+}
+@font-face {
+  font-family: 'SF-Pro-Display-Light';
+  src: url('./assets/fonts/SF-Pro-Display-Light.ttf');
+}
+@font-face {
+  font-family: 'SF-Pro-Display-Medium';
+  src: url('./assets/fonts/SF-Pro-Display-Medium.ttf');
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--main-bg);
+  font-family: 'SF-Pro-Display-Regular';
+  color: var(--main-black);
+  letter-spacing: 0.015em;
+  height: 100%;
+  width: 100%;
+}
+
+@media (max-width: 1000px) {
+  body {
+    &.mobile-menu-open {
+      position: fixed;
+      overflow-y: scroll;
+    }
+  }
+}
+
+h1 {
+  margin: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* variables */
+:root {
+  --main-bg: #f5f5f7;
+  --main-black: #1d1d1f;
+  --main-light-grey: #e2e2e5;
+  --main-dark-grey: #c2c2c7;
+  --main-text-color: #4d4d4d;
+  --main-text-color-light: #86868b;
+  --main-blue: #0071e3;
+  --main-blue-hover: #0077ed;
+  --main-blue-text: #0066cc;
+  --main-green: #00e075;
+  --additional-dark-grey: #252528;
+  --additioanl-input-placeholder: #a6a6a6;
+  --footer-link-color: #424245;
+  --footer-border-color: #d2d2d7;
+}
+
+#current-page {
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 189px);
+  display: flex;
+  justify-content: center;
+}
+
+@import './normalize';
+@import './main';
+@import './header';
+@import './goods';
+@import './top-panel';
+@import './filters';
+@import './navigation_goods';
+@import './bag';
+@import './product';
+@import './footer';
+@import './media';
