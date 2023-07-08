@@ -491,6 +491,7 @@
   color: #ffffff;
   top: 54px;
   transition: 1.5s;
+  z-index: 11;
   &.active {
     visibility: visible;
     opacity: 1;

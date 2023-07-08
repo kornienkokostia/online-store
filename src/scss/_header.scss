@@ -221,6 +221,7 @@
     height: 0px;
     z-index: 7;
     transition: height 0.56s cubic-bezier(0.52, 0.16, 0.24, 1);
+    z-index: 14;
     &.active {
       height: calc(100% - 52px);
     }

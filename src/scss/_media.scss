@@ -74,6 +74,7 @@
       height: calc(100% - 130px);
       width: calc(100% - 40px);
       transition: height 0.54s 0.1s;
+      z-index: 15;
       & .filters {
         position: relative;
         margin-left: auto;
